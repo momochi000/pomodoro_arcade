@@ -33,6 +33,8 @@ GEM
     better_errors (0.8.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
+    bootstrap-sass (2.3.1.0)
+      sass (~> 3.2)
     builder (3.0.4)
     coderay (1.0.9)
     erubis (2.7.0)
@@ -118,6 +120,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   better_errors
+  bootstrap-sass
   factory_girl_rails
   faker
   haml
