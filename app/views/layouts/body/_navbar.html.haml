@@ -1,4 +1,10 @@
 .navbar.navbar-inverse.navbar-fixed-top
+  .navbar-text.pull-right
+    - if current_user
+      = render :partial => 'layouts/body/topnav/logged_in_menu'
+    - else
+      = render :partial => 'layouts/body/topnav/signin_signup_buttons'
+      
   .navbar-inner
     .container
       = link_to 'Pomodoro Arcade', '#', :class => 'brand'
@@ -10,3 +16,4 @@
             = link_to 'About', '#about'
           %li
             =link_to 'Contact', '#contact'
+
