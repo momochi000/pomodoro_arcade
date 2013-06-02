@@ -1,3 +1,60 @@
+var GuestPomoTimer = (function($){
+  var pauseTimer, startTimer, renderTimer, updateTimer,
+    generatePomoTimerDiv,
+    pomoContainer,
+    current_time, timerIntervalId;
+  current_time = 24000;
+
+  pomoContainer = $("<div id='pomoC'></div>");
+
+  startTimer = function(){
+    timerIntervalId = window.setInterval(updateTimer, 1000);
+  };
+
+  pauseTimer = function(){  
+    window.clearInterval(timerIntervalId);
+  };
+
+
+  generatePomoTimerDiv = function (pomo_timer_value){
+    return $("<div class='timer'>" + pomo_timer_value + "</div>")
+  }
+
+  renderTimer = function(){
+    // if pomo container is not on the page
+    // $('body').append("<div>" + current_time + "</div>"); //append it to the page
+    // else (pomo container is on the page)
+    // update it accordingly
+    var found_container = $('body').find('#pomoC');
+    var pomoTimerDiv = generatePomoTimerDiv(current_time);
+
+    if( found_container.length ){ // If we can find the container on the page
+      found_container.find(".timer").replaceWith(generatePomoTimerDiv(current_time));
+    } else {
+      $('body').append(pomoContainer);
+      pomoContainer.append(pomoTimerDiv);
+    }
+
+  };
+
+  return {
+    pauseTimer: pauseTimer,
+    startTimer: startTimer,
+    renderTimer: renderTimer
+  };
+
+  //private
+
+  updateTimer = function(){
+    current_time -= 1000;
+    //console.log("Current Time: " + current_time);
+    renderTimer();
+  };
+
+})(jQuery);
+
+/* Zach's code: 
+
 var GuestPomoTimer = (function ($){
   var resetTimer, setTime, startTimer, updateTimer,
     generateClockContent, generateStartBtn, generatePauseBtn,
@@ -11,11 +68,11 @@ var GuestPomoTimer = (function ($){
   
   remaining_time = DEFAULT_TIME;
 
-  /* Renders the timer into the page.  If given a DOM id, it will attempt to
-   * render into that id.  If the given id does not exist, it will append the
-   * timer into the body.  If the timer already exists on the page, it will
-   * be re-rendered.
-   */
+  // Renders the timer into the page.  If given a DOM id, it will attempt to
+  // render into that id.  If the given id does not exist, it will append the
+  // timer into the body.  If the timer already exists on the page, it will
+  // be re-rendered.
+  
   renderTimer = function (dom_id){
     var timer_element_id, $timer_element, timer_content, clock_content,
       start_btn, pause_btn;
@@ -98,3 +155,5 @@ var GuestPomoTimer = (function ($){
     startTimer: startTimer
   };
 })(jQuery);
+
+*/
