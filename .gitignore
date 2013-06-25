@@ -6,6 +6,7 @@
 
 # Ignore vim swap files
 *.swp
+*.sw*
 
 # Ignore bundler config
 /.bundle
