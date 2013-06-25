@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :pomodoros
+  has_one :user_profile
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
