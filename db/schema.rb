@@ -11,7 +11,31 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130602064039) do
+ActiveRecord::Schema.define(:version => 20130625064131) do
+
+  create_table "activity_timers", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "title",      :default => "timer"
+    t.integer  "time",       :default => 25
+    t.integer  "break_time", :default => 5
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  create_table "completed_pomodoros", :force => true do |t|
+    t.integer  "activity_timer_id"
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "user_profiles", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
