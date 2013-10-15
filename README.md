@@ -16,9 +16,27 @@ From apple store:
 1. dPomodoro - Interruptions/cancellation.  You can mark a pomodoro as interrupted or canceled.  Could be useful.
 
 
-## LEFT OFF
+## CURRENT
+
+### Rewrite the timer with backbone
+  + Consider angular or some other framework which will work with mobile
+
+## BACKLOG
+
+### Make the timer unobtrusive
+  + Add a data-timer attribute to the timer container
+  + Make it so that the javascript init looks for elements with this data attr
+    and configures timers accordingly.
+
+### Use Foundation (or maybe twitter bootstrap, do some research first) and ensure the site is fully mobile responsive.
+  + It should work pretty much for mobile first over desktop
+  + It should also load fast and send minimal assets
+
+## DONE
 
 ### Create a basic javascript timer
  + (DONE) Build the timer
- + Add a button to start/stop the timer
+ + (DONE) Add a button to start/stop the timer
  + Add a button to reset the timer
+
+
