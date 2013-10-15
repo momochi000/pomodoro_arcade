@@ -8,7 +8,7 @@ gem 'devise'
 gem 'font-awesome-rails'
 #gem 'foreigner'
 #gem 'rake'
-#gem 'rails-backbone'
+gem 'rails-backbone'
 #gem 'pg'
 
 # Bundle edge Rails instead:
