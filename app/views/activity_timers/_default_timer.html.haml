@@ -1,0 +1,7 @@
+.timer.timer-container.span3
+  %i.icon-time
+  #default-timer
+
+- content_for :javascripts do
+  :javascript
+    GuestPomoTimer.init('default-timer');

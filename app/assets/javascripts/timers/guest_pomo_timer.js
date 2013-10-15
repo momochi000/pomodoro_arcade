@@ -1,8 +1,12 @@
+/* Marty's Code */
+/*
 var GuestPomoTimer = (function($){
-  var pauseTimer, startTimer, renderTimer, updateTimer,
-    generatePomoTimerDiv,
+  var pauseTimer, startTimer, renderTimer, updateTimer, timerCompleteCallback,
+    generatePomoTimerDiv, formatTime,
     pomoContainer,
-    current_time, timerIntervalId;
+    current_time, timerIntervalId,
+    $clock_element;
+
   current_time = 24000;
 
   pomoContainer = $("<div id='pomoC'></div>");
@@ -51,38 +55,60 @@ var GuestPomoTimer = (function($){
     renderTimer();
   };
 
-})(jQuery);
+  // LEFT OFF
+  timerCompleteCallback = function (){
+    $.ajax()
+  }
 
-/* Zach's code: 
+})(jQuery);
+*/
+
+/* End Marty's code */
+
+/* Zach's code: */
 
 var GuestPomoTimer = (function ($){
-  var resetTimer, setTime, startTimer, updateTimer,
+  var init, renderTimer, resetTimer, setTime, startTimer, updateTimer,
     generateClockContent, generateStartBtn, generatePauseBtn,
-    remaining_time, timer_id,
+    remaining_time, timer_id, timer_element_id, 
     DEFAULT_TIME, TIME_INTERVAL, DEFAULT_CONTAINER;
 
   timer_id = null;
+  timer_element_id = null;
   DEFAULT_CONTAINER = "guest_pomo_timer";
   DEFAULT_TIME = 24 * 60000; // 24 minutes
   TIME_INTERVAL = 1000; // 1 second
   
   remaining_time = DEFAULT_TIME;
 
-  // Renders the timer into the page.  If given a DOM id, it will attempt to
-  // render into that id.  If the given id does not exist, it will append the
-  // timer into the body.  If the timer already exists on the page, it will
-  // be re-rendered.
+  init = function (timer_id_option){
+    timer_element_id = timer_id_option || DEFAULT_CONTAINER;
+
+    renderTimer();
+  };
+
+  pauseTimer = function (){
+    if(timer_id){ clearInterval(timer_id); }
+  };
+
+  /* renderTimer(<String> dom_id)
+   * Renders the timer into the page.  If given a DOM id, it will attempt to
+   * render into that id.  If the given id does not exist, it will append the
+   * timer into the body.  If the timer already exists on the page, it will
+   * be re-rendered.
+   */
   
   renderTimer = function (dom_id){
-    var timer_element_id, $timer_element, timer_content, clock_content,
+    var $timer_element, timer_content, clock_content,
       start_btn, pause_btn;
 
-    timer_element_id = dom_id || DEFAULT_CONTAINER;
+    timer_element_id = dom_id || timer_element_id || DEFAULT_CONTAINER;
     // timer_element_id = DEFAULT_CONTAINER;
 
     $timer_element = $('#' + timer_element_id);
 
     if($timer_element.length){ // See if timer container exists on the page
+      
       $clock_element = $timer_element.find("#clock");
       // See if the timer has already been built
       if($clock_element.length){ // if yes, then just update the clock
@@ -117,17 +143,12 @@ var GuestPomoTimer = (function ($){
     remaining_time -= step;
     renderTimer();
   };
-
-  pauseTimer = function (){
-    if(timer_id){ clearInterval(timer_id); }
-  };
-
   //private 
 
   generateClockContent = function (){
     var clock_content;
     clock_content = "<div id='clock'>";
-    clock_content += remaining_time;
+    clock_content += formatTime(remaining_time);
     clock_content += "</div>";
     return clock_content;
   };
@@ -148,12 +169,28 @@ var GuestPomoTimer = (function ($){
     return pause_btn_content;
   };
 
+  /* formatTime(<Integer> time_in_ms)
+   *   takes a number of milliseconds and returns a string for time in "MM:SS"
+   */
+  formatTime = function (time_in_ms){
+    var num_secs, num_minutes, remaining_secs, sec_string;
+    num_secs = time_in_ms / 1000;
+    num_minutes = Math.floor(num_secs / 60);
+    remaining_secs = num_secs % 60;
+    min_string = num_minutes+"";
+    sec_string = remaining_secs+"";
+    if(sec_string.length < 2) { sec_string = "0"+sec_string }
+    if(min_string.length < 2) { min_string = "0"+min_string }
+    return (min_string + ":" + sec_string);
+  };
+
   return { 
+    init: init,
     pauseTimer: pauseTimer,
     renderTimer: renderTimer,
+    resetTimer: resetTimer, // IN FLIGHT
     setTime: setTime,
     startTimer: startTimer
   };
 })(jQuery);
 
-*/

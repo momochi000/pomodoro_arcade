@@ -2,7 +2,5 @@
 
 %p Welcome to the Pomodoro Arcade, a place where you can reward yourself for your hard work.
 
-#guest_pomo_timer
-
-- content_for :javascript do
-  = javascript_tag "GuestPomoTimer.renderTimer();"
+.row-fluid
+  = render :partial => 'activity_timers/default_timer'
