@@ -193,4 +193,3 @@ var GuestPomoTimer = (function ($){
     startTimer: startTimer
   };
 })(jQuery);
-

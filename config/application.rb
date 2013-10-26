@@ -64,5 +64,10 @@ module PomodoroArcade
     # On config/application.rb forcing your application to not access the DB
     # or load models when precompiling your assets.
     config.assets.initialize_on_precompile = false
+
+    # For boostrap
+    # Due to a change in Rails that prevents images from being compiled in 
+    # vendor and lib, you'll need to add the following line to your application.rb:
+    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
   end
 end

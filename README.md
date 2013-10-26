@@ -18,25 +18,43 @@ From apple store:
 
 ## CURRENT
 
-### Rewrite the timer with backbone
-  + Consider angular or some other framework which will work with mobile
+### Build out the Index and Timer actions/views.
+  + Index view renders itself.
+  + Index view contains a collection of timer icon views (build these out)
+  + Clicking/touching on a mini timer icon routes to the show view for that
+    timer.
+  + Timer view fills up the screen and contains the timer widget and controls.
+  + Needs a back button to go back to the index action
+
 
 ## BACKLOG
 
-### Make the timer unobtrusive
-  + Add a data-timer attribute to the timer container
-  + Make it so that the javascript init looks for elements with this data attr
-    and configures timers accordingly.
+### Upgrade font awesome
 
-### Use Foundation (or maybe twitter bootstrap, do some research first) and ensure the site is fully mobile responsive.
-  + It should work pretty much for mobile first over desktop
-  + It should also load fast and send minimal assets
+### Build the create timer view
+
+### Style the index view
+  + Design/optimize for mobile first
+
+### Style the show view
+  + Design/optimize for mobile first
 
 ## DONE
+
+### Rewrite the timer with backbone
+  + Consider angular or some other framework which will work with mobile
+    Not doing angular because of increased overhead of learning new framework.
+    Jumping in with backbone because I know how to do it already and it's
+    pretty flexible and easy to use.
 
 ### Create a basic javascript timer
  + (DONE) Build the timer
  + (DONE) Add a button to start/stop the timer
  + Add a button to reset the timer
+
+### Use Foundation (or maybe twitter bootstrap, do some research first) and ensure the site is fully mobile responsive.
+  + It should work pretty much for mobile first over desktop
+  + It should also load fast and send minimal assets
+
 
 

@@ -3,4 +3,10 @@
 %p Welcome to the Pomodoro Arcade, a place where you can reward yourself for your hard work.
 
 .row-fluid
-  = render :partial => 'activity_timers/default_timer'
+  #pomodoro-arcade-container
+  -#= render :partial => 'activity_timers/default_timer'
+
+- content_for :javascripts do
+  :javascript
+    PomodoroArcade.router = new PomodoroArcade.Router({container_id: "pomodoro-arcade-container"});
+    Backbone.history.start();

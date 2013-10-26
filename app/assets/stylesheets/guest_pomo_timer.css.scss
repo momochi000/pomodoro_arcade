@@ -1,6 +1,9 @@
 .timer-container {
   text-align: center;
-  i {
+  i.mini-timer-icon {
     font-size: 3em;
+  }
+  i.large-timer-icon {
+    font-size: 12em;
   }
 }
