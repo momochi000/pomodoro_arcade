@@ -5,9 +5,9 @@ PomodoroArcade.Views.Base = Backbone.View.extend({
   },
   _loadTemplate: function (opts){
     opts = opts || {};
-    console.log("DEBUG: loadTemplate in base view");
-    console.log("DEBUG: Can we find the template? -> "+this.template +"   =====> ");
-    console.log($("#"+this.template));
+    //console.log("DEBUG: loadTemplate in base view");
+    //console.log("DEBUG: Can we find the template? -> "+this.template +"   =====> ");
+    //console.log($("#"+this.template));
     return(_.template($('#'+this.template).html(), opts));
   }
 });

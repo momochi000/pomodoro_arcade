@@ -2,27 +2,28 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   defaults: {
     timer_length_minutes: 24,
     timer_length: (24 * 60000), // 24 minutes
-    time_interval: 1000 // 1 second
+    time_interval: 1000, // 1 second
+    is_paused: true
   },
   initialize: function (){ 
     //console.log("DEBUG: INITIALIZING BASE TIMER");
     this.set("remaining_time", this.get("timer_length"));
     //console.log("DEBUG: ATTRIBUTES ARE => ");
-    console.log(this.attributes);
+    //console.log(this.attributes);
   },
 
   start: function (){
+    this.set("is_paused", false);
     this.set('timer_id', window.setInterval(this._updateTimer.bind(this), this.get('time_interval')));
   },
 
   reset: function (){
-    
+    this.pause();
+    this.set("remaining_time", this.get("timer_length"));
   },
 
   pause: function (){
-    var timer_id;
-    timer_id = this.get("timer_id");
-    if(timer_id){ window.clearInterval(timer_id); }
+    this._stopTimer();
     this.set("is_paused", true);
   },
 
@@ -33,6 +34,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
       seconds: this._secsRemainingString(this.get("remaining_time"))
     };
   },
+
 
   // private 
 
@@ -77,6 +79,12 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     sec_string = this._secsRemaining(time_in_ms)+"";
     if(sec_string.length < 2) { sec_string = "0"+sec_string }
     return sec_string;
+  },
+
+  _stopTimer: function (){
+    var timer_id;
+    timer_id = this.get("timer_id");
+    if(timer_id){ window.clearInterval(timer_id); }
   },
 
   _updateTimer: function (){

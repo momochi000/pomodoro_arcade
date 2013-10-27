@@ -4,7 +4,8 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   template: 'base_timer_template',
   events: { 
     "click .start-btn": "startTimer",
-    "click .pause-btn": "pauseTimer"
+    "click .pause-btn": "pauseTimer",
+    "click .back-btn": "goBack"
   },
 
   initialize: function (){ 
@@ -12,22 +13,24 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     this.model.on("change:remaining_time", this.render.bind(this));
   },
 
+  goBack: function (){
+    PomodoroArcade.router.navigate("index/", {trigger: true});
+  },
+
+  pauseTimer: function (){
+    // call pause timer on this.model
+    // render() should be smarter and display properly when the timer is paused.
+    this.model.pause();
+  },
+
   render: function (){
     var new_html;
-    // LEFT OFF 222222222222222222222222222222222222222222222
-    // Pass the appropriate arguments to the template
-    // Also make the template 
     new_html = this._loadTemplate(this._getTemplateArgs(this.model.presented()));
     this.$el.html(new_html);
   },
 
   startTimer: function (){
     this.model.start();
-  },
-
-  pauseTimer: function (){
-    // call pause timer on this.model
-    // render() should be smarter and display properly when the timer is paused.
   },
 
   // private

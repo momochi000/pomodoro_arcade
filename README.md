@@ -18,20 +18,11 @@ From apple store:
 
 ## CURRENT
 
-### Build out the Index and Timer actions/views.
-  + Index view renders itself.
-  + Index view contains a collection of timer icon views (build these out)
-  + Clicking/touching on a mini timer icon routes to the show view for that
-    timer.
-  + Timer view fills up the screen and contains the timer widget and controls.
-  + Needs a back button to go back to the index action
-
 
 ## BACKLOG
 
-### Upgrade font awesome
-
 ### Build the create timer view
+  + Can be accessed only when logged in.
 
 ### Style the index view
   + Design/optimize for mobile first
@@ -39,7 +30,24 @@ From apple store:
 ### Style the show view
   + Design/optimize for mobile first
 
+### Upgrade font awesome
+  + Looks like this will have to wait, font-awesome-rails gem doesn't use 
+    font awesome 4.0 yet
+
+### Change pause button change to resume button once paused
+  + make the start button do a reset then start
+
 ## DONE
+
+### Wire up the pause button
+
+### Build out the Index and Timer actions/views.
+  + Index view renders itself.
+  + Index view contains a collection of timer icon views (build these out)
+  + Clicking/touching on a mini timer icon routes to the show view for that
+    timer.
+  + Timer view fills up the screen and contains the timer widget and controls.
+  + Needs a back button to go back to the index action
 
 ### Rewrite the timer with backbone
   + Consider angular or some other framework which will work with mobile

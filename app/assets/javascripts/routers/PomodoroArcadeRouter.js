@@ -2,6 +2,7 @@ PomodoroArcade.Router = Backbone.Router.extend({
   DEFAULT_CONTAINER_ID: "pomodoro-arcade-container",
   routes: {
     ".*":           "index",
+    "index/":       "index",
     "show/:id":     "show"
   },
 
@@ -20,8 +21,15 @@ PomodoroArcade.Router = Backbone.Router.extend({
    * 
    */
   index: function (){
+    //console.log("DEBUG: IN INDEX ACTION");
     if(!this.views.index){
+      //console.log("DEBUG: CREATING AND RENDERING A NEW VIEW");
       this.views.index = new PomodoroArcade.Views.Index({collection: this.timer_collection}); // initialize and store the index view
+      //console.log(this.views.index);
+    }else{
+      //console.log("DEBUG: RENDERING THE EXISTING VIEW");
+      //console.log(this.views.index);
+      this.views.index.render();
     }
   },
  
@@ -39,20 +47,20 @@ PomodoroArcade.Router = Backbone.Router.extend({
 
   show: function (id){
     var placeholder_timer;
-    console.log("DEBUG: IN SHOW ACTION");
-    console.log("DEBUG: ID -> " + id);
+    //console.log("DEBUG: IN SHOW ACTION");
+    //console.log("DEBUG: ID -> " + id);
     delete this.views.show; // cleanup the old view
     // TODO: Fetch/load the correct model then feed it to the view
     //   for now, just creating a placeholder model
     placeholder_timer = new PomodoroArcade.Models.BaseTimer();
     this.views.show = new PomodoroArcade.Views.BaseTimer({model: placeholder_timer});
     this.views.show.render();
-    console.log("DEBUG: SHOW VIEW => ");
-    console.log(this.views.show);
-    console.log(this.views.show.$el);
+    //console.log("DEBUG: SHOW VIEW => ");
+    //console.log(this.views.show);
+    //console.log(this.views.show.$el);
 
-    console.log("DEBUG: ROUTER CONTAINER => ");
-    console.log(this.$container());
+    //console.log("DEBUG: ROUTER CONTAINER => ");
+    //console.log(this.$container());
     this.$container().html(this.views.show.$el);
   },
 
