@@ -1,5 +1,6 @@
 PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({ 
   defaults: {
+    title: "Pomodoro",
     timer_length_minutes: 24,
     timer_length: (24 * 60000), // 24 minutes
     time_interval: 1000, // 1 second
@@ -7,6 +8,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   },
   initialize: function (){ 
     //console.log("DEBUG: INITIALIZING BASE TIMER");
+    this.set("timer_length", this.get("timer_length_minutes") * 60000);
     this.set("remaining_time", this.get("timer_length"));
     //console.log("DEBUG: ATTRIBUTES ARE => ");
     //console.log(this.attributes);

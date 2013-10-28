@@ -18,8 +18,6 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   },
 
   pauseTimer: function (){
-    // call pause timer on this.model
-    // render() should be smarter and display properly when the timer is paused.
     this.model.pause();
   },
 

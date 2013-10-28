@@ -4,9 +4,16 @@ class ActivityTimer < ActiveRecord::Base
 
   attr_accessible :title, :time, :break_time
 
-  def start_timer
+  def timer_started
   end
 
-  def stop_timer
+  def timer_stopped
+  end
+
+  def to_backbone
+    {
+      :title                  => title,
+      :timer_length_minutes   => time
+    }.to_json
   end
 end

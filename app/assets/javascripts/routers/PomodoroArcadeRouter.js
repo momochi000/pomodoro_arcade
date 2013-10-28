@@ -9,7 +9,6 @@ PomodoroArcade.Router = Backbone.Router.extend({
 
   initialize: function (options){
     this._processOptions(options);
-    this._initTimerCollection();
     this.views = {};
   },
 
@@ -31,34 +30,21 @@ PomodoroArcade.Router = Backbone.Router.extend({
    * can just switch between them when we go from route to route.
    */
   index: function (){
-    //console.log("DEBUG: IN INDEX ACTION");
     if(!this.views.index){
-      //console.log("DEBUG: CREATING AND RENDERING A NEW VIEW");
       this.views.index = new PomodoroArcade.Views.Index({collection: this.timer_collection}); // initialize and store the index view
-      //console.log(this.views.index);
     }else{
-      //console.log("DEBUG: RENDERING THE EXISTING VIEW");
-      //console.log(this.views.index);
       this.views.index.render();
     }
   },
  
   show: function (id){
     var placeholder_timer;
-    //console.log("DEBUG: IN SHOW ACTION");
-    //console.log("DEBUG: ID -> " + id);
     delete this.views.show; // cleanup the old view
     // TODO: Fetch/load the correct model then feed it to the view
     //   for now, just creating a placeholder model
     placeholder_timer = new PomodoroArcade.Models.BaseTimer();
     this.views.show = new PomodoroArcade.Views.BaseTimer({model: placeholder_timer});
     this.views.show.render();
-    //console.log("DEBUG: SHOW VIEW => ");
-    //console.log(this.views.show);
-    //console.log(this.views.show.$el);
-
-    //console.log("DEBUG: ROUTER CONTAINER => ");
-    //console.log(this.$container());
     this.$container().html(this.views.show.$el);
   },
 
@@ -67,14 +53,24 @@ PomodoroArcade.Router = Backbone.Router.extend({
   containerId: function (){ return this.options.container_id; },
 
   // private
-  _initTimerCollection: function (){
-    // TODO: Do a read from the server for the current user to get their set 
-    // of timers.  For now, just default with the standard pomodoro timer.
-    this.timer_collection = new PomodoroArcade.Collections.TimerCollection();
-    this.timer_collection.add(new PomodoroArcade.Models.BaseTimer());
+  _initTimerCollection: function (collection_data){
+    var collection_json;
+    if(collection_data && !_.isEmpty(collection_data)){
+      //console.log("DEBUG: GOT SOME TIMER COLLECTION DATA, LETS READ IT...");
+      //console.log(collection_data);
+      collection_json = JSON.parse(collection_data)
+      this.timer_collection = new PomodoroArcade.Collections.TimerCollection(collection_json);
+      //console.log("DEBUG: did we create teh timer collection correctly? => ");
+      //console.log(this.timer_collection);
+    }else{
+      this.timer_collection = new PomodoroArcade.Collections.TimerCollection();
+      this.timer_collection.add(new PomodoroArcade.Models.BaseTimer());
+    }
   },
+
   _processOptions: function (opts){
     this.options = {};
     this.options.container_id = opts.container_id || this.DEFAULT_CONTAINER_ID;
+    this._initTimerCollection(opts.timer_collection);
   }
 });

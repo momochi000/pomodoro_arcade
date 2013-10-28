@@ -2,6 +2,7 @@ class TimersController < ApplicationController
   before_filter :authenticate_user!
 
   def index
+    @backbone_timer_collection = current_user.activity_timers.map(&:to_backbone)
   end
 
   def create
