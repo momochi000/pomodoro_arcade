@@ -18,11 +18,22 @@ From apple store:
 
 ## CURRENT
 
-
 ## BACKLOG
+
+### Wire up the actions to the server
+  + Make start timer fire a start timer call
+  + Pause timer fires pause timer call
+  + Timer complete fires timer finished call
+
+### Incorporate rest period into the timer
 
 ### Build the create timer view
   + Can be accessed only when logged in.
+
+### Change pause button change to resume button once paused
+  + make the start button do a reset then start
+
+### Make create timer send ajax call to server to create a timer.
 
 ### Style the index view
   + Design/optimize for mobile first
@@ -34,10 +45,13 @@ From apple store:
   + Looks like this will have to wait, font-awesome-rails gem doesn't use 
     font awesome 4.0 yet
 
-### Change pause button change to resume button once paused
-  + make the start button do a reset then start
+### Play alarm/sound when pomo is done (configurable)
 
 ## DONE
+
+### Logged in users goto the timers/index page where the pomo router now lives
+
+### Create demo timer for splash page
 
 ### Wire up the pause button
 

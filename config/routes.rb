@@ -1,6 +1,8 @@
 PomodoroArcade::Application.routes.draw do
   devise_for :users
 
+  match '/timers' => 'timers#index', :via => :get, :as => 'user_root'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
