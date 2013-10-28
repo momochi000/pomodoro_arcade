@@ -1,1 +1,3 @@
-%p You are logged in!
+%p 
+  You are logged in!
+  = link_to 'Log out', destroy_user_session_path, :class => 'btn btn-danger btn-small', :method => 'delete'
