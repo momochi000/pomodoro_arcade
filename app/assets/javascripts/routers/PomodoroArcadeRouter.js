@@ -3,6 +3,7 @@ PomodoroArcade.Router = Backbone.Router.extend({
   routes: {
     ".*":           "index",
     "index/":       "index",
+    "new/":         "new",
     "show/:id":     "show"
   },
 
@@ -14,11 +15,20 @@ PomodoroArcade.Router = Backbone.Router.extend({
 
   // ROUTES/ACTIONS
 
+  new: function (){
+    console.log("DEBUG: IN NEW ACTION");
+    if(!this.views.new_view){
+      console.log("DEBUG: CREATING NEW VIEW");
+      this.views.new_view = new PomodoroArcade.Views.New();
+    }else{
+      this.views.new_view.render();
+    }
+  },
+
   /*
    * Initialize and render the primary view.
    * Probably want to store all the views that get initialized,  that way we 
    * can just switch between them when we go from route to route.
-   * 
    */
   index: function (){
     //console.log("DEBUG: IN INDEX ACTION");
@@ -33,18 +43,6 @@ PomodoroArcade.Router = Backbone.Router.extend({
     }
   },
  
-
-  // LEFT OFF 11111111111111111111111111111111111111111111111111111
-  // Move the route to the show view for this timer.
-  // This view should have a model on it corresponding to the 
-  // Correct timer.  Ensure that this is the case and route
-  // to the correct action
-  // Also, ensure that the index action does the right thing
-  // when rendering, replacing the contents of the container
-  // Also ensure the show action does the right thing when
-  // rendering, replacing the container's contents
-  // Make the show action work.
-
   show: function (id){
     var placeholder_timer;
     //console.log("DEBUG: IN SHOW ACTION");

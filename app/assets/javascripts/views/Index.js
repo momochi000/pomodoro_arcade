@@ -15,9 +15,16 @@ PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
   template: "timer_index_template",
   tagName: "ul",
   className: "timer-collection",
+  events: {
+    "click .new-btn": "goNew"
+  },
 
   initialize: function (options){
     this.render();
+  },
+
+  goNew: function (){
+    PomodoroArcade.router.navigate("new/", {trigger: true});
   },
 
   render: function (options){
@@ -39,6 +46,9 @@ PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
   _clearTimerCollectionViews: function (){
     if(!_.isEmpty(this.timer_views)){
       delete this.timer_views; // NOTE: might need to iterate through them and delete them individually
+      // Also might want to use undelegateEvents and delegateEvents to manage
+      // event binding so we can simply remove the view from the dom without
+      // destroying/re-creating it.
     }
   },
 
