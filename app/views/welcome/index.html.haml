@@ -4,9 +4,9 @@
 
 .row-fluid
   #pomodoro-arcade-container
-  -#= render :partial => 'activity_timers/default_timer'
 
 - content_for :javascripts do
   :javascript
-    PomodoroArcade.router = new PomodoroArcade.Router({container_id: "pomodoro-arcade-container"});
+    //PomodoroArcade.router = new PomodoroArcade.Router({container_id: "pomodoro-arcade-container"});
+    PomodoroArcade.router = new PomodoroArcade.DemoRouter({container_id: "pomodoro-arcade-container"});
     Backbone.history.start();
