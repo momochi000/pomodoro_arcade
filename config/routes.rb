@@ -1,7 +1,6 @@
 PomodoroArcade::Application.routes.draw do
   devise_for :users
 
-  resources :pomodoros, :only => [:index, :create, :show]
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -52,6 +51,11 @@ PomodoroArcade::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'welcome#index'
+
+  resources :timers, :only => [:index, :create, :destroy] do
+    post 'started'
+    post 'completed'
+  end
 
   # See how all your routes lay out with "rake routes"
 

@@ -1,0 +1,11 @@
+%h1 Your Timers
+
+%p Here is your set of timers.  
+
+.row-fluid
+  #pomodoro-arcade-container
+
+- content_for :javascripts do
+  :javascript
+    PomodoroArcade.router = new PomodoroArcade.Router({container_id: "pomodoro-arcade-container"});
+    Backbone.history.start();
