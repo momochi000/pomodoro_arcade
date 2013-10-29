@@ -4,19 +4,24 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     timer_length_minutes: 24,
     timer_length: (24 * 60000), // 24 minutes
     time_interval: 1000, // 1 second
-    is_paused: true
-  },
-  initialize: function (){ 
-    //console.log("DEBUG: INITIALIZING BASE TIMER");
-    this.set("timer_length", this.get("timer_length_minutes") * 60000);
-    this.set("remaining_time", this.get("timer_length"));
-    //console.log("DEBUG: ATTRIBUTES ARE => ");
-    //console.log(this.attributes);
+    rest_period_minutes: 5,
+    rest_period_length: (5 * 60000),
+    state: "paused",
   },
 
-  start: function (){
-    this.set("is_paused", false);
-    this.set('timer_id', window.setInterval(this._updateTimer.bind(this), this.get('time_interval')));
+  initialize: function (){ 
+    this.set("timer_length", this.get("timer_length_minutes") * 60000);
+    this.set("rest_period_length", this.get("rest_period_minutes") * 60000);
+    this.set("remaining_time", this.get("timer_length"));
+  },
+
+  is_paused: function (){
+    return( (this.get("state" == "paused")) ? true : false );
+  },
+
+  pause: function (){
+    this._stopTimer();
+    this.set("state", "paused");
   },
 
   reset: function (){
@@ -24,9 +29,9 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     this.set("remaining_time", this.get("timer_length"));
   },
 
-  pause: function (){
-    this._stopTimer();
-    this.set("is_paused", true);
+  start: function (){
+    this.set("state", "running");
+    this._startTimer();
   },
 
   // Return a hash of data to be passed to an underscore template.
@@ -37,9 +42,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     };
   },
 
-
   // private 
-
 
   /* formatTime(<Integer> time_in_ms)
    *   takes a number of milliseconds and returns a string for time in "MM:SS"
@@ -83,13 +86,38 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     return sec_string;
   },
 
+  _startTimer: function (){
+    this.set('timer_id', window.setInterval(this._updateTimer.bind(this), this.get('time_interval')));
+  },
+
   _stopTimer: function (){
     var timer_id;
     timer_id = this.get("timer_id");
     if(timer_id){ window.clearInterval(timer_id); }
   },
 
+  // TODO: Fire any necessary callbacks to the server
+  _timerFinished: function (){
+    if(this.get("state") == "running"){ //Kick off the rest period.
+      this._stopTimer();
+      this.set("remaining_time", this.get("rest_period_length"));
+      this.set("state", "break");
+      this._startTimer();
+    }else if(this.get("state") == "break"){
+      this.reset();
+    }else{
+      throw "ERROR: Timer completed from an invalid state";
+    }
+  },
+
   _updateTimer: function (){
-    this.set("remaining_time", this.get("remaining_time")-this.get("time_interval"));
+    var remaining_time
+
+    remaining_time = this.get("remaining_time")-this.get("time_interval");
+    if(remaining_time <= 0){
+      this._timerFinished();
+      return;
+    }
+    this.set("remaining_time", remaining_time);
   }
 });
