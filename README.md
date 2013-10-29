@@ -18,14 +18,17 @@ From apple store:
 
 ## CURRENT
 
+### Incorporate rest period into the timer
+
 ## BACKLOG
 
+### New button stops working when you go back to the index view
+
 ### Wire up the actions to the server
+  + Figure out how to add the server endpoint to the router/collection/timers
   + Make start timer fire a start timer call
   + Pause timer fires pause timer call
   + Timer complete fires timer finished call
-
-### Incorporate rest period into the timer
 
 ### Build the create timer view
   + Can be accessed only when logged in.
@@ -46,6 +49,8 @@ From apple store:
     font awesome 4.0 yet
 
 ### Play alarm/sound when pomo is done (configurable)
+
+### Add state machine to timer (makes more sense to control it's behavior this way)
 
 ## DONE
 
