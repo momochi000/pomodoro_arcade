@@ -8,6 +8,8 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     rest_period_length: (5 * 60000),
     state: "paused",
   },
+  
+  urlRoot: "/timers",
 
   initialize: function (){ 
     this.set("timer_length", this.get("timer_length_minutes") * 60000);
@@ -22,10 +24,12 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   pause: function (){
     this._stopTimer();
     this.set("state", "paused");
+    this._notifyServerTimerPaused();
   },
 
   reset: function (){
-    this.pause();
+    this._stopTimer();
+    this.set("state", "paused"); // Make the state stopped?
     this.set("remaining_time", this.get("timer_length"));
   },
 
@@ -72,6 +76,32 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     return min_string;
   },
 
+
+  _notifyServer: function(url){
+    console.log("DEBUG: ABOU TO MAKE CALL TO -> " + url);
+    $.ajax(url, {
+      dataType: "json",
+      error: function (){},
+      success: function (){},
+      type: "POST"
+    });
+  },
+
+  _notifyServerTimerCompleted: function (){
+    var url = this.url() + "/" +  this.id + "/" + "completed";
+    this._notifyServer(url);
+  },
+
+  _notifyServerTimerPaused: function (){
+    var url = this.url() + "/" +  this.id + "/" + "paused";
+    this._notifyServer(url);
+  },
+
+  _notifyServerTimerStart: function (){
+    var url = this.url() + "/" +  this.id + "/" + "started";
+    this._notifyServer(url);
+  },
+
   _secsRemaining: function (time_in_ms){
     var num_secs, num_minutes, remaining_secs;
     num_minutes = this._minutesRemaining(time_in_ms);
@@ -88,6 +118,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
 
   _startTimer: function (){
     this.set('timer_id', window.setInterval(this._updateTimer.bind(this), this.get('time_interval')));
+    this._notifyServerTimerStart();
   },
 
   _stopTimer: function (){

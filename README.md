@@ -18,17 +18,7 @@ From apple store:
 
 ## CURRENT
 
-### Incorporate rest period into the timer
-
 ## BACKLOG
-
-### New button stops working when you go back to the index view
-
-### Wire up the actions to the server
-  + Figure out how to add the server endpoint to the router/collection/timers
-  + Make start timer fire a start timer call
-  + Pause timer fires pause timer call
-  + Timer complete fires timer finished call
 
 ### Build the create timer view
   + Can be accessed only when logged in.
@@ -53,6 +43,16 @@ From apple store:
 ### Add state machine to timer (makes more sense to control it's behavior this way)
 
 ## DONE
+
+### Wire up the actions to the server
+  + Figure out how to add the server endpoint to the router/collection/timers
+  + Make start timer fire a start timer call
+  + Pause timer fires pause timer call
+  + Timer complete fires timer finished call
+
+### New button stops working when you go back to the index view
+
+### Incorporate rest period into the timer
 
 ### Logged in users goto the timers/index page where the pomo router now lives
 

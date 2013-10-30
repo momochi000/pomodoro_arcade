@@ -8,5 +8,6 @@ PomodoroArcade.Collections.TimerCollection = Backbone.Collection.extend({
         return new PomodoroArcade.Models.BaseTimer(attrs, options);
         break;
     }
-  }
+  },
+  url: "/timers"
 });

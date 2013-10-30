@@ -7,5 +7,5 @@
 
 - content_for :javascripts do
   :javascript
-    PomodoroArcade.router = new PomodoroArcade.Router({container_id: "pomodoro-arcade-container", timer_collection: #{@backbone_timer_collection}});
+    PomodoroArcade.router = new PomodoroArcade.Router({container_id: "pomodoro-arcade-container", timer_collection: #{@backbone_timer_collection}, endpoint: "#{timers_url}"});
     Backbone.history.start();
