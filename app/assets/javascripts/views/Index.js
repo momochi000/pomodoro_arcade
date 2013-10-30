@@ -39,6 +39,7 @@ PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
       self.$el.append(curr_timer.$el);
     });
     PomodoroArcade.router.$container().html(this.$el); // Place the view on the page correctly
+    this.delegateEvents();
   },
 
   //private
