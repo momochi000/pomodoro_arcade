@@ -23,7 +23,8 @@ PomodoroArcade.Views.New = PomodoroArcade.Views.Base.extend({
     var new_timer;
     new_timer = new PomodoroArcade.Models.BaseTimer({
       name: this.$el.find("#new-timer-name").val(),
-      timer_length: parseInt(this.$el.find("#new-timer-time").val())
+      timer_length_minutes: parseInt(this.$el.find("#new-timer-time").val()),
+      rest_period_minutes: parseInt(this.$el.find("#new-timer-break-time").val())
     });
     new_timer.save();
   }
