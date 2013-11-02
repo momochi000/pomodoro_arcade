@@ -18,18 +18,22 @@ From apple store:
 
 ## CURRENT
 
+### Wire up create timer to the server
+
 ## BACKLOG
 
-### Build the create timer view
-  + Can be accessed only when logged in.
+### Build the server backend to capture starting a timer
+  + capture pause timer
+  + capture timer complete
 
 ### Change pause button change to resume button once paused
   + make the start button do a reset then start
 
-### Make create timer send ajax call to server to create a timer.
-
 ### Style the index view
-  + Design/optimize for mobile first
+  + Design/optimize for mobile first. Follow new bootstrap docs to make the 
+    layout mobile friendly from the start
+  + Fix the header text (that's outside of the backbone app)
+    The markup around the backbone app should be minimal.
 
 ### Style the show view
   + Design/optimize for mobile first
