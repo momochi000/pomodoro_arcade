@@ -22,6 +22,8 @@ From apple store:
 
 ## BACKLOG
 
+### Load timers owned by the user in the index view
+
 ### Build the server backend to capture starting a timer
   + capture pause timer
   + capture timer complete
