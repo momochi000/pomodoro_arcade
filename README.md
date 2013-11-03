@@ -19,8 +19,12 @@ From apple store:
 ## CURRENT
 
 ### Wire up create timer to the server
+  + ensure new timer created gets added to the collection
+  + make create button re-route back to the index view
 
 ## BACKLOG
+
+### Add delete action/option
 
 ### Load timers owned by the user in the index view
 
