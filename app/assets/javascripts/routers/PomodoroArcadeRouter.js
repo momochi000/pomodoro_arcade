@@ -31,12 +31,13 @@ PomodoroArcade.Router = Backbone.Router.extend({
   },
  
   show: function (id){
-    var placeholder_timer;
+    var timer;
     delete this.views.show; // cleanup the old view
-    // TODO: Fetch/load the correct model then feed it to the view
-    //   for now, just creating a placeholder model
-    placeholder_timer = new PomodoroArcade.Models.BaseTimer();
-    this.views.show = new PomodoroArcade.Views.BaseTimer({model: placeholder_timer, id: id});
+    timer = this.timer_collection.get(id);
+    if(!timer){
+      timer = new PomodoroArcade.Models.BaseTimer(); // setup a default timer cause none was found
+    }
+    this.views.show = new PomodoroArcade.Views.BaseTimer({model: timer, id: id});
     this.views.show.render();
     this.$container().html(this.views.show.$el);
   },
@@ -49,9 +50,7 @@ PomodoroArcade.Router = Backbone.Router.extend({
   _initTimerCollection: function (collection_data){
     var collection_json;
     if(collection_data && !_.isEmpty(collection_data)){
-      collection_json = JSON.parse(collection_data);
-      //collection_json['url']  = this.options.endpoint;
-      this.timer_collection = new PomodoroArcade.Collections.TimerCollection(collection_json);
+      this.timer_collection = new PomodoroArcade.Collections.TimerCollection(collection_data);
     }else{
       this.timer_collection = new PomodoroArcade.Collections.TimerCollection();
       this.timer_collection.add(new PomodoroArcade.Models.BaseTimer());

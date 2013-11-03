@@ -22,10 +22,18 @@ PomodoroArcade.Views.New = PomodoroArcade.Views.Base.extend({
   create: function (){
     var new_timer;
     new_timer = new PomodoroArcade.Models.BaseTimer({
-      name: this.$el.find("#new-timer-name").val(),
+      title: this.$el.find("#new-timer-name").val(),
       timer_length_minutes: parseInt(this.$el.find("#new-timer-time").val()),
       rest_period_minutes: parseInt(this.$el.find("#new-timer-break-time").val())
     });
-    new_timer.save();
+    new_timer.save({
+      wait: true, 
+      success: function (){
+        console.log("DEBUG: SUCCESSFUL SAVE!!!!");
+      },
+      error: function (){
+        console.log("DEBUG: ERROR WHILE ATTEMPTING TO CREATE NEW TIMER");
+      }
+    });
   }
 });

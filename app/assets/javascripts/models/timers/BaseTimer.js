@@ -40,10 +40,12 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
 
   // Return a hash of data to be passed to an underscore template.
   presented: function (){
-    return {
+    var time_properties
+    time_properties = {
       minutes: this._minutesRemainingString(this.get("remaining_time")),
       seconds: this._secsRemainingString(this.get("remaining_time"))
     };
+    return _.extend(this.attributes, time_properties);
   },
 
   // private 
@@ -78,7 +80,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
 
 
   _notifyServer: function(url){
-    console.log("DEBUG: ABOU TO MAKE CALL TO -> " + url);
+    //console.log("DEBUG: ABOU TO MAKE CALL TO -> " + url);
     $.ajax(url, {
       dataType: "json",
       error: function (){},

@@ -7,7 +7,7 @@ PomodoroArcade.Views.BaseMiniTimer = PomodoroArcade.Views.Base.extend({
   initialize: function (){},
   render: function (){
     var new_html;
-    this.$el.html(this._loadTemplate());
+    this.$el.html(this._loadTemplate(this.model.attributes));
   },
 
   //private
