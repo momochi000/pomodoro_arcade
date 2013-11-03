@@ -18,11 +18,11 @@ group :development do
   gem 'haml-rails'
   gem 'better_errors'
   gem 'awesome_print'
-  gem 'factory_girl_rails'
-  gem 'faker'
 end
 
 group :development, :test do
+  gem 'factory_girl_rails'
+  gem 'faker'
   gem 'rspec-rails'
 end
 
