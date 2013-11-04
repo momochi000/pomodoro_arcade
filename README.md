@@ -20,28 +20,14 @@ From apple store:
 
 ## CURRENT
 
-#### Make the press on mini timer (routes to show view) start the timer as well
 
 ---
 
 ## BACKLOG
 
-#### Ensure each user has a default pomodoro by default
-
-  + Javascript ensures a default Pomodoro is available, but if the user starts 
-    this, it won't be tracked.  Need to ensure that every user has at least
-    one activity timer to their name which is the default Pomodoro. Also ensure
-    the default one created by javascript doesn't get added if that database
-    one is present.
-
 #### Build the server backend to capture starting a timer
 
-  + capture pause timer
   + capture timer complete
-
-#### Change pause button change to resume button once paused
-
-  + make the start button do a reset then start
 
 #### Style the index view
 
@@ -53,6 +39,14 @@ From apple store:
 #### Style the show view
 
   + Design/optimize for mobile first
+
+#### Ensure each user has a default pomodoro by default
+
+  + Javascript ensures a default Pomodoro is available, but if the user starts 
+    this, it won't be tracked.  Need to ensure that every user has at least
+    one activity timer to their name which is the default Pomodoro. Also ensure
+    the default one created by javascript doesn't get added if that database
+    one is present.
 
 #### Add delete action/option
 
@@ -74,9 +68,20 @@ From apple store:
 
 #### Add ability to rearrange timers
 
+#### Capture pause timer
+
+#### Replace start button with resume button when paused
+
 ---
 
 ## DONE
+
+#### Start button becomes pause when running
+
+  + when paused, pause button becomes resume.
+  + once started (or paused) a stop button appears after the start
+
+#### Make the press on mini timer (routes to show view) start the timer as well
 
 #### Wire up create timer to the server
 
