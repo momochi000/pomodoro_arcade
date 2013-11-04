@@ -20,11 +20,13 @@ From apple store:
 
 ## CURRENT
 
+#### Make the press on mini timer (routes to show view) start the timer as well
+
 ---
 
 ## BACKLOG
 
-### Ensure each user has a default pomodoro by default
+#### Ensure each user has a default pomodoro by default
 
   + Javascript ensures a default Pomodoro is available, but if the user starts 
     this, it won't be tracked.  Need to ensure that every user has at least
@@ -32,68 +34,75 @@ From apple store:
     the default one created by javascript doesn't get added if that database
     one is present.
 
-### Make the press on mini timer (routes to show view) start the timer as well
-
-### Add delete action/option
-
-### Load timers owned by the user in the index view
-
-### Build the server backend to capture starting a timer
+#### Build the server backend to capture starting a timer
 
   + capture pause timer
   + capture timer complete
 
-### Change pause button change to resume button once paused
+#### Change pause button change to resume button once paused
 
   + make the start button do a reset then start
 
-### Style the index view
+#### Style the index view
 
   + Design/optimize for mobile first. Follow new bootstrap docs to make the 
     layout mobile friendly from the start
   + Fix the header text (that's outside of the backbone app)
     The markup around the backbone app should be minimal.
 
-### Style the show view
+#### Style the show view
 
   + Design/optimize for mobile first
 
-### Upgrade font awesome
+#### Add delete action/option
+
+  + This needs to be in a separate view, I don't think an edit action is 
+    appropriate.  You cannot edit a timer since a timer keeps track of
+    your efforts.  If you change the timer settings then we'll lose data on
+    the effort you spent.  I'm thinking of delete being someting like how iOS
+    handles edit/delete actions.  There's a little info button that takes you
+    to another screen where you can delete.
+
+#### Upgrade font awesome
 
   + Looks like this will have to wait, font-awesome-rails gem doesn't use 
     font awesome 4.0 yet
 
-### Play alarm/sound when pomo is done (configurable)
+#### Play alarm/sound when pomo is done (configurable)
 
-### Add state machine to timer (makes more sense to control it's behavior this way)
+#### Add state machine to timer (makes more sense to control it's behavior this way)
+
+#### Add ability to rearrange timers
 
 ---
 
 ## DONE
 
-### Wire up create timer to the server
+#### Wire up create timer to the server
 
   + ensure new timer created gets added to the collection
   + make create button re-route back to the index view
 
-### Wire up the actions to the server
+#### Load timers owned by the user in the index view
+
+#### Wire up the actions to the server
 
   + Figure out how to add the server endpoint to the router/collection/timers
   + Make start timer fire a start timer call
   + Pause timer fires pause timer call
   + Timer complete fires timer finished call
 
-### New button stops working when you go back to the index view
+#### New button stops working when you go back to the index view
 
-### Incorporate rest period into the timer
+#### Incorporate rest period into the timer
 
-### Logged in users goto the timers/index page where the pomo router now lives
+#### Logged in users goto the timers/index page where the pomo router now lives
 
-### Create demo timer for splash page
+#### Create demo timer for splash page
 
-### Wire up the pause button
+#### Wire up the pause button
 
-### Build out the Index and Timer actions/views.
+#### Build out the Index and Timer actions/views.
 
   + Index view renders itself.
   + Index view contains a collection of timer icon views (build these out)
@@ -102,20 +111,20 @@ From apple store:
   + Timer view fills up the screen and contains the timer widget and controls.
   + Needs a back button to go back to the index action
 
-### Rewrite the timer with backbone
+#### Rewrite the timer with backbone
 
   + Consider angular or some other framework which will work with mobile
     Not doing angular because of increased overhead of learning new framework.
     Jumping in with backbone because I know how to do it already and it's
     pretty flexible and easy to use.
 
-### Create a basic javascript timer
+#### Create a basic javascript timer
 
   + (DONE) Build the timer
   + (DONE) Add a button to start/stop the timer
   + Add a button to reset the timer
 
-### Use Foundation (or maybe twitter bootstrap, do some research first) and ensure the site is fully mobile responsive.
+#### Use Foundation (or maybe twitter bootstrap, do some research first) and ensure the site is fully mobile responsive.
 
   + It should work pretty much for mobile first over desktop
   + It should also load fast and send minimal assets
