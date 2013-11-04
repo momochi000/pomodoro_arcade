@@ -4,7 +4,8 @@ PomodoroArcade.Views.New = PomodoroArcade.Views.Base.extend({
   className: "timer-new",
 
   events: {
-    "click .create-btn": "create"
+    "click .create-btn": "create",
+    "click .back-btn":   "goBack"
   },
 
   initialize: function (){
@@ -15,25 +16,33 @@ PomodoroArcade.Views.New = PomodoroArcade.Views.Base.extend({
     var new_html;
     new_html = this._loadTemplate();
     PomodoroArcade.router.$container().html(this.$el.html(new_html));
+    this.delegateEvents();
   },
 
   // Read the values from the form and submit them to the server.
   // Then return to the index view
   create: function (){
-    var new_timer;
-    new_timer = new PomodoroArcade.Models.BaseTimer({
+    var new_timer, new_timer_attrs;
+    new_timer_attrs = {
       title: this.$el.find("#new-timer-name").val(),
       timer_length_minutes: parseInt(this.$el.find("#new-timer-time").val()),
       rest_period_minutes: parseInt(this.$el.find("#new-timer-break-time").val())
-    });
-    new_timer.save({
+    }
+
+    PomodoroArcade.router.timer_collection.create(
+      new_timer_attrs, {
       wait: true, 
       success: function (){
         console.log("DEBUG: SUCCESSFUL SAVE!!!!");
+        PomodoroArcade.router.navigate("index/", {trigger: true});
       },
       error: function (){
         console.log("DEBUG: ERROR WHILE ATTEMPTING TO CREATE NEW TIMER");
       }
     });
+  },
+
+  goBack: function (){
+    PomodoroArcade.router.navigate("index/", {trigger: true});
   }
 });
