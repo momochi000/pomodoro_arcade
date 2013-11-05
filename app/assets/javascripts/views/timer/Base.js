@@ -21,29 +21,36 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   pauseTimer: function (){
     this._hidePauseBtn();
     this.model.pause();
+    this._showBackBtn();
   },
 
   render: function (){
     var new_html;
-    new_html = this._loadTemplate(this._getTemplateArgs(this.model.presented()));
+    new_html = this._loadTemplate(this._getTemplateArgs());
     this.$el.html(new_html);
   },
 
   resetTimer: function (){
     this._hideStopBtn();
     this._hidePauseBtn();
+    this._showBackBtn();
     this.model.reset();
   },
 
   startTimer: function (){
     this._hideStartBtn();
     this._showStopBtn();
+    this._hideBackBtn();
     this.model.start();
   },
 
   // private
   _getTemplateArgs: function (){
     if(this.model) {return this.model.presented() || {};}
+  },
+
+  _hideBackBtn: function (){
+    this.$el.find(".back-btn").hide();
   },
 
   _hidePauseBtn: function (){
@@ -58,6 +65,10 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   _hideStartBtn: function (){
     this.$el.find(".start-btn").hide();
     this.$el.find(".pause-btn").show();
+  },
+
+  _showBackBtn: function (){
+    this.$el.find(".back-btn").show();
   },
 
   _showStopBtn: function (){
