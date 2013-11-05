@@ -1,4 +1,10 @@
 PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({ 
+  TIMER_STARTED_PATH:         '/started',
+  TIMER_COMPLETED_PATH:       '/completed',
+  TIMER_PAUSED_PATH:          '/paused',
+  REST_PERIOD_COMPLETED_PATH: '/rest_completed',
+
+  
   defaults: {
     title: "Pomodoro",
     timer_length_minutes: 24,
@@ -36,6 +42,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   start: function (){
     this.set("state", "running");
     this._startTimer();
+    this._notifyServerTimerStart();
   },
 
   // Return a hash of data to be passed to an underscore template.
@@ -89,18 +96,23 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     });
   },
 
+  _notifyServerRestPeriodCompleted: function (){
+    var url = this.url() + "/rest_completed";
+    this._notifyServer(url);
+  },
+
   _notifyServerTimerCompleted: function (){
-    var url = this.url() + "/" +  this.id + "/" + "completed";
+    var url = this.url() + "/completed";
     this._notifyServer(url);
   },
 
   _notifyServerTimerPaused: function (){
-    var url = this.url() + "/" +  this.id + "/" + "paused";
+    var url = this.url() + "/paused";
     this._notifyServer(url);
   },
 
   _notifyServerTimerStart: function (){
-    var url = this.url() + "/" +  this.id + "/" + "started";
+    var url = this.url() + "/started";
     this._notifyServer(url);
   },
 
@@ -120,7 +132,6 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
 
   _startTimer: function (){
     this.set('timer_id', window.setInterval(this._updateTimer.bind(this), this.get('time_interval')));
-    this._notifyServerTimerStart();
   },
 
   _stopTimer: function (){
@@ -133,10 +144,12 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   _timerFinished: function (){
     if(this.get("state") == "running"){ //Kick off the rest period.
       this._stopTimer();
+      this._notifyServerTimerCompleted();
       this.set("remaining_time", this.get("rest_period_length"));
       this.set("state", "break");
       this._startTimer();
     }else if(this.get("state") == "break"){
+      this._notifyServerRestPeriodCompleted();
       this.reset();
     }else{
       throw "ERROR: Timer completed from an invalid state";

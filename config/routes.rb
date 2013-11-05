@@ -57,6 +57,7 @@ PomodoroArcade::Application.routes.draw do
   resources :timers, :only => [:index, :create, :destroy] do
     post 'started'
     post 'completed'
+    post 'rest_completed'
   end
 
   # See how all your routes lay out with "rake routes"

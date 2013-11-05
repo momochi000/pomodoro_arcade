@@ -24,15 +24,19 @@ class TimersController < ApplicationController
 
   def started
     respond_to do |format|
-      format.json do
-      end
+      format.json { render :nothing => true}
     end
   end
 
   def completed
     respond_to do |format|
-      format.json do
-      end
+      format.json { render :nothing => true}
+    end
+  end
+
+  def rest_completed
+     respond_to do |format|
+      format.json { render :nothing => true}
     end
   end
 end
