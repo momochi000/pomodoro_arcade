@@ -28,6 +28,16 @@ From apple store:
 #### Build the server backend to capture starting a timer
 
   + capture timer complete
+  + capture rest period complete
+  + capture timer reset/abandoned (actually we don't care.. if timer started 
+    and wasn't completed then that's not a complete cycle.  Only start and 
+    complete events together represent a completed timer, and then including 
+    the rest period is the full cycle complete.  Will need to experiment forcing
+    the user to take action (press a button) to start the rest period
+
+#### Deploy to heroku
+
+  + might consider deploying before styling
 
 #### Style the index view
 
@@ -47,6 +57,8 @@ From apple store:
     one activity timer to their name which is the default Pomodoro. Also ensure
     the default one created by javascript doesn't get added if that database
     one is present.
+
+#### Going to index view should reset all the timers.
 
 #### Add delete action/option
 
