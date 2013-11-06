@@ -30,26 +30,11 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
-#### Build the server backend to capture starting a timer
-
-  * Capture timer start
-  + Capture timer complete
-  + Capture rest period complete
-  + Capture timer reset/abandoned (actually we don't care.. if timer started 
-    and wasn't completed then that's not a complete cycle.  Only start and 
-    complete events together represent a completed timer, and then including 
-    the rest period is the full cycle complete.  Will need to experiment forcing
-    the user to take action (press a button) to start the rest period
-  + Once the server actions are being correctly hit, create the appropriate 
-    models
+#### Deploy to heroku
 
 ---
 
 ## BACKLOG
-
-#### Deploy to heroku
-
-  + might consider deploying before styling
 
 #### Style the index view
 
@@ -129,6 +114,19 @@ period in order to truly leverage the pomodoro technique.
 ---
 
 ## DONE
+
+#### Build the server backend to capture starting a timer
+
+  * Capture timer start
+  + Capture timer complete
+  + Capture rest period complete
+  + Capture timer reset/abandoned (actually we don't care.. if timer started 
+    and wasn't completed then that's not a complete cycle.  Only start and 
+    complete events together represent a completed timer, and then including 
+    the rest period is the full cycle complete.  Will need to experiment forcing
+    the user to take action (press a button) to start the rest period
+  + Once the server actions are being correctly hit, create the appropriate 
+    models
 
 #### Start button becomes pause when running
 

@@ -1,6 +1,5 @@
 class ActivityTimer < ActiveRecord::Base
   belongs_to :user
-  has_many :completed_pomodoros
   has_many :completed_events, :as => :target, :class_name => 'Event::Timer::UserCompletedTimer'
   has_many :started_events, :as => :target, :class_name => 'Event::Timer::UserStartedTimer'
   has_many :rest_completed_events, :as => :target, :class_name => 'Event::Timer::UserCompletedRestPeriod'
@@ -67,9 +66,6 @@ class ActivityTimer < ActiveRecord::Base
     attrs_to_backbone_attrs.each do |k,v|
       output[v] = self[k.to_sym].to_s
     end
-    p "DEBUG: OUTPUTTING TIMER TO BACKBONE => "
-    p self
-    p output
     output
   end
 end
