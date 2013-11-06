@@ -1,6 +1,9 @@
 class ActivityTimer < ActiveRecord::Base
   belongs_to :user
   has_many :completed_pomodoros
+  has_many :completed_events, :as => :target, :class_name => 'Event::Timer::UserCompletedTimer'
+  has_many :started_events, :as => :target, :class_name => 'Event::Timer::UserStartedTimer'
+  has_many :rest_completed_events, :as => :target, :class_name => 'Event::Timer::UserCompletedRestPeriod'
 
   attr_accessible :title, :time, :break_time
 
@@ -26,10 +29,37 @@ class ActivityTimer < ActiveRecord::Base
     }
   end
 
-  def timer_started
+  def completed
+    Event::Timer::UserCompletedTimer.create(:target => self)
   end
 
-  def timer_stopped
+  # Takes a hash which came from a backbone model and sets the correct 
+  # attributes of self
+  def from_backbone(params, user=nil)
+    attrs_to_backbone_attrs.each do |k,v|
+      self.public_send("#{k}=", params[v])
+    end
+    self.user = user if user
+    self
+  end
+
+  # Number of this timer completed by a given user
+  def number_completed
+    completed_events.count
+  end
+  alias_method :num_completed, :number_completed 
+
+  # Number of times the full timer cycle has completed including rest period
+  def number_fully_completed
+    rest_completed_events.count
+  end
+
+  def rest_completed
+    Event::Timer::UserCompletedRestPeriod.create(:target => self)
+  end
+
+  def started
+    Event::Timer::UserStartedTimer.create(:target => self)
   end
 
   def to_backbone
@@ -41,16 +71,6 @@ class ActivityTimer < ActiveRecord::Base
     p self
     p output
     output
-  end
-
-  # Takes a hash which came from a backbone model and sets the correct 
-  # attributes of self
-  def from_backbone(params, user=nil)
-    attrs_to_backbone_attrs.each do |k,v|
-      self.public_send("#{k}=", params[v])
-    end
-    self.user = user if user
-    self
   end
 end
 

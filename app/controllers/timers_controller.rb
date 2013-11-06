@@ -1,5 +1,6 @@
 class TimersController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :load_timer, :except => [:index]
 
   def index
     @backbone_timer_collection = current_user.activity_timers.map(&:to_backbone).to_json
@@ -23,20 +24,29 @@ class TimersController < ApplicationController
   end
 
   def started
+    @timer.started
     respond_to do |format|
       format.json { render :nothing => true}
     end
   end
 
   def completed
+    @timer.completed
     respond_to do |format|
       format.json { render :nothing => true}
     end
   end
 
   def rest_completed
-     respond_to do |format|
+    @timer.rest_completed
+    respond_to do |format|
       format.json { render :nothing => true}
     end
+  end
+
+  private
+
+  def load_timer
+    @timer = ActivityTimer.find(params[:id] || params[:timer_id])
   end
 end
