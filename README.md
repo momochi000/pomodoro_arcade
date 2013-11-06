@@ -17,23 +17,35 @@ From apple store:
 
 1. dPomodoro - Interruptions/cancellation.  You can mark a pomodoro as interrupted or canceled.  Could be useful.
 
+### Things to test
 
-## CURRENT
+#### Force user to take action to start the rest period.
 
+This is to emphasize that the user really should take advantage of the rest 
+period in order to truly leverage the pomodoro technique.
 
 ---
 
-## BACKLOG
+---
+
+## CURRENT
 
 #### Build the server backend to capture starting a timer
 
-  + capture timer complete
-  + capture rest period complete
-  + capture timer reset/abandoned (actually we don't care.. if timer started 
+  * Capture timer start
+  + Capture timer complete
+  + Capture rest period complete
+  + Capture timer reset/abandoned (actually we don't care.. if timer started 
     and wasn't completed then that's not a complete cycle.  Only start and 
     complete events together represent a completed timer, and then including 
     the rest period is the full cycle complete.  Will need to experiment forcing
     the user to take action (press a button) to start the rest period
+  + Once the server actions are being correctly hit, create the appropriate 
+    models
+
+---
+
+## BACKLOG
 
 #### Deploy to heroku
 
@@ -74,6 +86,16 @@ From apple store:
   + Looks like this will have to wait, font-awesome-rails gem doesn't use 
     font awesome 4.0 yet
 
+#### Add ability to choose icon for a timer
+
+#### Add ability to show progress 
+
+#### Add ability to set goals
+  + daily
+  + weekly
+  + monthly
+  + milestones
+
 #### Play alarm/sound when pomo is done (configurable)
 
 #### Add state machine to timer (makes more sense to control it's behavior this way)
@@ -82,7 +104,27 @@ From apple store:
 
 #### Capture pause timer
 
-#### Replace start button with resume button when paused
+#### Show analytics on a timer
+  + goal progress
+  + number completed per day
+  + time of day that they're completed
+  + good days/months
+  + ability to place notes?
+  + calendar view? 
+
+#### Add ability to reward self for progress
+
+#### Levels / leveling up
+
+#### Share progress with friends
+
+#### Facebook share
+
+#### Tweet share
+
+#### Public profile view
+
+#### Omni auth
 
 ---
 
