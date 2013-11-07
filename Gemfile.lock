@@ -166,5 +166,4 @@ DEPENDENCIES
   rails-backbone
   rspec-rails
   sass-rails (~> 3.2.3)
-  sqlite3
   uglifier (>= 1.0.3)
