@@ -9,7 +9,7 @@ gem 'font-awesome-rails'
 #gem 'foreigner'
 #gem 'rake'
 gem 'rails-backbone'
-#gem 'pg'
+gem 'pg'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
