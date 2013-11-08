@@ -87,6 +87,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
 
 
   _notifyServer: function(url){
+    if(!this.id){return;}
     //console.log("DEBUG: ABOU TO MAKE CALL TO -> " + url);
     $.ajax(url, {
       dataType: "json",
