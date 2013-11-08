@@ -15,7 +15,7 @@ PomodoroArcade.DemoRouter = Backbone.Router.extend({
   show: function (){
     var placeholder_timer;
     placeholder_timer = new PomodoroArcade.Models.BaseTimer();
-    this.views.show = new PomodoroArcade.Views.DemoBaseTimer({model: placeholder_timer, });
+    this.views.show = new PomodoroArcade.Views.DemoBaseTimer({model: placeholder_timer});
     this.views.show.render();
     this.$container().html(this.views.show.$el);
   },
