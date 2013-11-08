@@ -30,8 +30,6 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
-#### Deploy to heroku
-
 ---
 
 ## BACKLOG
@@ -57,7 +55,7 @@ period in order to truly leverage the pomodoro technique.
 
 #### Going to index view should reset all the timers.
 
-#### Add delete action/option
+#### delete action/option
 
   + This needs to be in a separate view, I don't think an edit action is 
     appropriate.  You cannot edit a timer since a timer keeps track of
@@ -65,11 +63,6 @@ period in order to truly leverage the pomodoro technique.
     the effort you spent.  I'm thinking of delete being someting like how iOS
     handles edit/delete actions.  There's a little info button that takes you
     to another screen where you can delete.
-
-#### Upgrade font awesome
-
-  + Looks like this will have to wait, font-awesome-rails gem doesn't use 
-    font awesome 4.0 yet
 
 #### Add ability to choose icon for a timer
 
@@ -97,6 +90,11 @@ period in order to truly leverage the pomodoro technique.
   + ability to place notes?
   + calendar view? 
 
+#### Upgrade font awesome
+
+  + Looks like this will have to wait, font-awesome-rails gem doesn't use 
+    font awesome 4.0 yet
+
 #### Add ability to reward self for progress
 
 #### Levels / leveling up
@@ -114,6 +112,17 @@ period in order to truly leverage the pomodoro technique.
 ---
 
 ## DONE
+
+#### BUG: guest timer tries to hit the server, but it shouldn't because it has no id
+#### BUG: guest timer is pretty much broken.
+
+  + Start button doesn't disappear after it's started
+  + Can press start button multiple times and the timer ticks down faster
+  + Might be time to implement state machine.
+
+#### Deploy to heroku
+
+  + convert to postgres
 
 #### Build the server backend to capture starting a timer
 
