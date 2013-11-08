@@ -15,6 +15,7 @@ PomodoroArcade.Views.DemoBaseTimer = PomodoroArcade.Views.Base.extend({
 
   pauseTimer: function (){
     this._hidePauseBtn();
+    this._showStartBtn();
     this.model.pause();
   },
 
@@ -22,11 +23,14 @@ PomodoroArcade.Views.DemoBaseTimer = PomodoroArcade.Views.Base.extend({
     var new_html;
     new_html = this._loadTemplate(this._getTemplateArgs());
     this.$el.html(new_html);
+    this._hideStopBtn();
+    this._hidePauseBtn();
   },
 
   resetTimer: function (){
     this._hideStopBtn();
     this._hidePauseBtn();
+    this._showStartBtn();
     this.model.reset();
   },
 
@@ -43,7 +47,6 @@ PomodoroArcade.Views.DemoBaseTimer = PomodoroArcade.Views.Base.extend({
 
   _hidePauseBtn: function (){
     this.$el.find(".pause-btn").hide();
-    this.$el.find(".start-btn").show();
   },
 
   _hideStopBtn: function (){
@@ -53,6 +56,10 @@ PomodoroArcade.Views.DemoBaseTimer = PomodoroArcade.Views.Base.extend({
   _hideStartBtn: function (){
     this.$el.find(".start-btn").hide();
     this.$el.find(".pause-btn").show();
+  },
+
+  _showStartBtn: function (){
+    this.$el.find(".start-btn").show();
   },
 
   _showStopBtn: function (){
