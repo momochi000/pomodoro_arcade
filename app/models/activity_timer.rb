@@ -4,8 +4,6 @@ class ActivityTimer < ActiveRecord::Base
   has_many :started_events, :as => :target, :class_name => 'Event::Timer::UserStartedTimer'
   has_many :rest_completed_events, :as => :target, :class_name => 'Event::Timer::UserCompletedRestPeriod'
 
-  attr_accessible :title, :time, :break_time
-
   def self.new_from_backbone(params, user=nil)
     new_timer = self.new
     new_timer.from_backbone(params, user)
