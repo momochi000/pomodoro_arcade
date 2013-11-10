@@ -30,10 +30,6 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
----
-
-## BACKLOG
-
 #### Style the index view
 
   + Design/optimize for mobile first. Follow new bootstrap docs to make the 
@@ -41,9 +37,20 @@ period in order to truly leverage the pomodoro technique.
   + Fix the header text (that's outside of the backbone app)
     The markup around the backbone app should be minimal.
 
+---
+
+## BACKLOG
+
 #### Style the show view
 
   + Design/optimize for mobile first
+
+#### Make the timers more mobile responsive.
+
+  + https://developers.google.com/mobile/articles/fast_buttons
+  + use touchstart and touchend events.. pretty much follow the above article
+
+#### Test the timers_controller
 
 #### Ensure each user has a default pomodoro by default
 
