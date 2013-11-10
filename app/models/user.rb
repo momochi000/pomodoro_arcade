@@ -9,8 +9,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  # Setup accessible (or protected) attributes for your model #DEPRECATED for rails 4
+  #attr_accessible :email, :password, :password_confirmation, :remember_me
 
   def timers #Alias for activity_timers relation
     activity_timers

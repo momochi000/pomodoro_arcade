@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '4.0.0'
 gem 'haml'
 gem 'haml-rails'
 gem 'devise'
@@ -29,7 +29,7 @@ end
 # in production environments by default.
 group :assets do
   gem 'bootstrap-sass'
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
