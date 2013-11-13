@@ -31,7 +31,6 @@ period in order to truly leverage the pomodoro technique.
 ## CURRENT
 
 #### Style the index view
-
   + Design/optimize for mobile first. Follow new bootstrap docs to make the 
     layout mobile friendly from the start
   + Fix the header text (that's outside of the backbone app)
@@ -42,18 +41,14 @@ period in order to truly leverage the pomodoro technique.
 ## BACKLOG
 
 #### Style the show view
-
   + Design/optimize for mobile first
 
 #### Make the timers more mobile responsive.
-
   + https://developers.google.com/mobile/articles/fast_buttons
   + use touchstart and touchend events.. pretty much follow the above article
 
 #### Test the timers_controller
-
 #### Ensure each user has a default pomodoro by default
-
   + Javascript ensures a default Pomodoro is available, but if the user starts 
     this, it won't be tracked.  Need to ensure that every user has at least
     one activity timer to their name which is the default Pomodoro. Also ensure
@@ -61,9 +56,7 @@ period in order to truly leverage the pomodoro technique.
     one is present.
 
 #### Going to index view should reset all the timers.
-
 #### delete action/option
-
   + This needs to be in a separate view, I don't think an edit action is 
     appropriate.  You cannot edit a timer since a timer keeps track of
     your efforts.  If you change the timer settings then we'll lose data on
@@ -72,9 +65,7 @@ period in order to truly leverage the pomodoro technique.
     to another screen where you can delete.
 
 #### Add ability to choose icon for a timer
-
 #### Add ability to show progress 
-
 #### Add ability to set goals
   + daily
   + weekly
@@ -82,13 +73,9 @@ period in order to truly leverage the pomodoro technique.
   + milestones
 
 #### Play alarm/sound when pomo is done (configurable)
-
 #### Add state machine to timer (makes more sense to control it's behavior this way)
-
 #### Add ability to rearrange timers
-
 #### Capture pause timer
-
 #### Show analytics on a timer
   + goal progress
   + number completed per day
@@ -98,22 +85,15 @@ period in order to truly leverage the pomodoro technique.
   + calendar view? 
 
 #### Upgrade font awesome
-
   + Looks like this will have to wait, font-awesome-rails gem doesn't use 
     font awesome 4.0 yet
 
 #### Add ability to reward self for progress
-
 #### Levels / leveling up
-
 #### Share progress with friends
-
 #### Facebook share
-
 #### Tweet share
-
 #### Public profile view
-
 #### Omni auth
 
 ---
@@ -122,17 +102,14 @@ period in order to truly leverage the pomodoro technique.
 
 #### BUG: guest timer tries to hit the server, but it shouldn't because it has no id
 #### BUG: guest timer is pretty much broken.
-
   + Start button doesn't disappear after it's started
   + Can press start button multiple times and the timer ticks down faster
   + Might be time to implement state machine.
 
 #### Deploy to heroku
-
   + convert to postgres
 
 #### Build the server backend to capture starting a timer
-
   * Capture timer start
   + Capture timer complete
   + Capture rest period complete
@@ -145,38 +122,27 @@ period in order to truly leverage the pomodoro technique.
     models
 
 #### Start button becomes pause when running
-
   + when paused, pause button becomes resume.
   + once started (or paused) a stop button appears after the start
 
 #### Make the press on mini timer (routes to show view) start the timer as well
-
 #### Wire up create timer to the server
-
   + ensure new timer created gets added to the collection
   + make create button re-route back to the index view
 
 #### Load timers owned by the user in the index view
-
 #### Wire up the actions to the server
-
   + Figure out how to add the server endpoint to the router/collection/timers
   + Make start timer fire a start timer call
   + Pause timer fires pause timer call
   + Timer complete fires timer finished call
 
 #### New button stops working when you go back to the index view
-
 #### Incorporate rest period into the timer
-
 #### Logged in users goto the timers/index page where the pomo router now lives
-
 #### Create demo timer for splash page
-
 #### Wire up the pause button
-
 #### Build out the Index and Timer actions/views.
-
   + Index view renders itself.
   + Index view contains a collection of timer icon views (build these out)
   + Clicking/touching on a mini timer icon routes to the show view for that
@@ -185,20 +151,17 @@ period in order to truly leverage the pomodoro technique.
   + Needs a back button to go back to the index action
 
 #### Rewrite the timer with backbone
-
   + Consider angular or some other framework which will work with mobile
     Not doing angular because of increased overhead of learning new framework.
     Jumping in with backbone because I know how to do it already and it's
     pretty flexible and easy to use.
 
 #### Create a basic javascript timer
-
   + (DONE) Build the timer
   + (DONE) Add a button to start/stop the timer
   + Add a button to reset the timer
 
 #### Use Foundation (or maybe twitter bootstrap, do some research first) and ensure the site is fully mobile responsive.
-
   + It should work pretty much for mobile first over desktop
   + It should also load fast and send minimal assets
 
