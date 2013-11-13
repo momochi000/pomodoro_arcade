@@ -1,6 +1,7 @@
-@import "bootstrap";
+@import "bootstrap_and_overrides";
 @import "font-awesome"; 
 
+@import "layout/app";
 @import "layout/nav";
 
-@import "guest_pomo_timer";
+@import "pomo_timer";

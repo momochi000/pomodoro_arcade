@@ -1,19 +1,20 @@
-.navbar.navbar-inverse.navbar-fixed-top
-  .navbar-text.pull-right
-    - if current_user
-      = render :partial => 'layouts/body/topnav/logged_in_menu'
-    - else
-      = render :partial => 'layouts/body/topnav/signin_signup_buttons'
-      
-  .navbar-inner
-    .container
-      = link_to 'Pomodoro Arcade', '#', :class => 'brand'
-      .nav-collapse.collapse
-        %ul.nav
-          %li.active
-            = link_to 'Home', '#'
-          %li
-            = link_to 'About', '#about'
-          %li
-            =link_to 'Contact', '#contact'
-
+%header.navbar.navbar-inverse.navbar-fixed-top{:role => 'banner'}
+  .navbar-header
+    = link_to 'Pomodoro Arcade', root_url, :class => 'navbar-brand'
+  %nav.navbar-collapse.bs-navbar-collapse{:role => 'navigation'}
+    .nav.navbar-nav.navbar-right
+      - if current_user
+        = render :partial => 'layouts/body/topnav/logged_in_menu'
+      - else
+        = render :partial => 'layouts/body/topnav/signin_signup_buttons'
+        
+    -#.navbar-inner
+      .container
+        .nav-collapse.collapse
+          %ul.nav
+            %li.active
+              = link_to 'Home', '#'
+            %li
+              = link_to 'About', '#about'
+            %li
+              =link_to 'Contact', '#contact'

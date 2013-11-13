@@ -1,0 +1,24 @@
+.timer-container {
+  text-align: center;
+  i.mini-timer-icon {
+    font-size: 3em;
+  }
+  i.large-timer-icon {
+    font-size: 12em;
+  }
+}
+
+.timer-index-container { }
+
+.mini-timer {
+  background-color: red;
+  border: solid thin gray;
+  padding: 5px;
+  margin: 0;
+  text-align: center;
+}
+.mini-timer-icon {
+  display:block;
+  font-size: 3em;
+}
+.mini-timer-title { }

@@ -6,14 +6,13 @@
  * Render the collection of timers on the page
  * We need to be able to have a collection which isn't bound
  * to a particular model.  The collection should handle any subtype of
- * the BaseTimer model.  Not sure exactly hwo to do that but there's
+ * the BaseTimer model.  Not sure exactly how to do that but there's
  * a post here which should start the answer
  * http://stackoverflow.com/questions/6933524/a-backbone-js-collection-of-multiple-model-subclasses
  */
 
 PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
   template: "timer_index_template",
-  tagName: "ul",
   className: "timer-collection",
   events: {
     "click .new-btn": "goNew"
@@ -36,7 +35,7 @@ PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
     this._initTimerCollectionViews();
     _.each(this.timer_views, function (curr_timer, index, list){
       curr_timer.render();
-      self.$el.append(curr_timer.$el);
+      self.$el.find(".timer-index-container").append(curr_timer.$el);
     });
     PomodoroArcade.router.$container().html(this.$el); // Place the view on the page correctly
     this.delegateEvents();
