@@ -12,6 +12,7 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   initialize: function (){ 
     if(!this.model){ throw "ERROR: BaseTimer view initialized without a model"; }
     this.model.on("change:remaining_time", this._updateTime.bind(this));
+    this._bindModelEvents();
   },
 
   goBack: function (){
@@ -45,6 +46,11 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   },
 
   // private
+
+  _bindModelEvents: function (){
+    this.model.on("change:state", this._updateTimerButtons.bind(this));
+  }, 
+
   _getTemplateArgs: function (){
     if(this.model) {return this.model.presented() || {};}
   },
@@ -55,7 +61,7 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
 
   _hidePauseBtn: function (){
     this.$el.find(".pause-btn").hide();
-    this.$el.find(".start-btn").show();
+    this._showStartBtn();
   },
 
   _hideStopBtn: function (){
@@ -64,11 +70,19 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
 
   _hideStartBtn: function (){
     this.$el.find(".start-btn").hide();
-    this.$el.find(".pause-btn").show();
+    this._showPauseBtn();
   },
 
   _showBackBtn: function (){
     this.$el.find(".back-btn").show();
+  },
+
+  _showPauseBtn: function (){
+    this.$el.find(".pause-btn").show();
+  },
+
+  _showStartBtn: function (){
+    this.$el.find(".start-btn").show();
   },
 
   _showStopBtn: function (){
@@ -80,5 +94,30 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     presenter = this.model.presented();
     this.$el.find(".clock .minutes").html(presenter.minutes);
     this.$el.find(".clock .seconds").html(presenter.seconds);
+  },
+
+  _updateTimerButtons: function (){
+    switch(this.model.get("state")){
+      case("paused"):
+        console.log("DEBUG: IN VIEW: MODEL state changed to paused");
+        this._hidePauseBtn();
+        this._hideStopBtn();
+        this._showStartBtn();
+        break;
+      case("running"):
+        console.log("DEBUG: IN VIEW: MODEL state changed to running");
+        this._hideStartBtn();
+        this._showPauseBtn();
+        this._showStopBtn();
+        break;
+      case("break"):
+        console.log("DEBUG: IN VIEW: MODEL state changed to break");
+        this._hideStartBtn();
+        this._showPauseBtn();
+        this._showStopBtn();
+        break;
+      default:
+        break;
+    }
   },
 });

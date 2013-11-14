@@ -1,5 +1,6 @@
 class ActivityTimer < ActiveRecord::Base
   belongs_to :user
+  has_many :events, :as => :target, :class_name => 'Event'
   has_many :completed_events, :as => :target, :class_name => 'Event::Timer::UserCompletedTimer'
   has_many :started_events, :as => :target, :class_name => 'Event::Timer::UserStartedTimer'
   has_many :rest_completed_events, :as => :target, :class_name => 'Event::Timer::UserCompletedRestPeriod'

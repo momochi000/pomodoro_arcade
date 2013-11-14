@@ -3,6 +3,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   TIMER_COMPLETED_PATH:       '/completed',
   TIMER_PAUSED_PATH:          '/paused',
   REST_PERIOD_COMPLETED_PATH: '/rest_completed',
+  VALID_STATES: ["paused, running, break"],
 
   
   defaults: {
