@@ -3,3 +3,7 @@ $top-nav-height: 50px;
 body {
   padding-top: $top-nav-height+1;
 }
+
+.flash .alert{
+  margin-bottom: 0;
+}

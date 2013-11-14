@@ -1,5 +1,11 @@
-- if flash.any?
-  .container
-    .flash
-      %p.notice= notice
-      %p.alert= alert
+- if flash[:notice]
+  .flash
+    .alert.alert-info.alert-dismissable
+      %button.close{:type => 'button', 'aria-hidden' => true, :data => {'dismiss' => 'alert'} } &times;
+      = flash[:notice]
+
+- if flash[:alert]
+  .flash
+    .alert.alert-danger.alert-dismissable
+      %button.close{:type => 'button', 'aria-hidden' => true, :data => {'dismiss' => 'alert'} } &times;
+      = flash[:alert]
