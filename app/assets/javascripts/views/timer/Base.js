@@ -99,19 +99,16 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   _updateTimerButtons: function (){
     switch(this.model.get("state")){
       case("paused"):
-        console.log("DEBUG: IN VIEW: MODEL state changed to paused");
         this._hidePauseBtn();
         this._hideStopBtn();
         this._showStartBtn();
         break;
       case("running"):
-        console.log("DEBUG: IN VIEW: MODEL state changed to running");
         this._hideStartBtn();
         this._showPauseBtn();
         this._showStopBtn();
         break;
       case("break"):
-        console.log("DEBUG: IN VIEW: MODEL state changed to break");
         this._hideStartBtn();
         this._showPauseBtn();
         this._showStopBtn();
