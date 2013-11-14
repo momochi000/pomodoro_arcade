@@ -30,18 +30,22 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
-#### Style the index view
-  + Design/optimize for mobile first. Follow new bootstrap docs to make the 
-    layout mobile friendly from the start
-  + Fix the header text (that's outside of the backbone app)
-    The markup around the backbone app should be minimal.
-
 ---
 
 ## BACKLOG
 
+#### BUG: when rest period ends, pause/stop doesn't reset back to initial state
+  + This might push the final move to state machine
+
 #### Style the show view
   + Design/optimize for mobile first
+
+#### Design a more complete style/site design.
+  + Need colors
+  + Need shapes
+
+#### Make a slick timer widget
+  + Something that shows the progression of time
 
 #### Make the timers more mobile responsive.
   + https://developers.google.com/mobile/articles/fast_buttons
@@ -99,6 +103,12 @@ period in order to truly leverage the pomodoro technique.
 ---
 
 ## DONE
+
+#### Style the index view
+  + Design/optimize for mobile first. Follow new bootstrap docs to make the 
+    layout mobile friendly from the start
+  + Fix the header text (that's outside of the backbone app)
+    The markup around the backbone app should be minimal.
 
 #### BUG: guest timer tries to hit the server, but it shouldn't because it has no id
 #### BUG: guest timer is pretty much broken.
