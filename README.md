@@ -21,7 +21,7 @@ From apple store:
 
 #### Force user to take action to start the rest period.
 
-This is to emphasize that the user really should take advantage of the rest 
+To emphasize that the user really should take advantage of the rest 
 period in order to truly leverage the pomodoro technique.
 
 ---
@@ -34,18 +34,11 @@ period in order to truly leverage the pomodoro technique.
 
 ## BACKLOG
 
-#### BUG: when rest period ends, pause/stop doesn't reset back to initial state
-  + This might push the final move to state machine
-
 #### Style the show view
   + Design/optimize for mobile first
-
-#### Design a more complete style/site design.
-  + Need colors
-  + Need shapes
-
-#### Make a slick timer widget
-  + Something that shows the progression of time
+  + Make a slick timer widget
+    - Something that shows the progression of time
+    - Timer is essentially a progress bar
 
 #### Make the timers more mobile responsive.
   + https://developers.google.com/mobile/articles/fast_buttons
@@ -76,6 +69,10 @@ period in order to truly leverage the pomodoro technique.
   + monthly
   + milestones
 
+#### Design a more complete style/site design.
+  + Need colors
+  + Need shapes
+
 #### Play alarm/sound when pomo is done (configurable)
 #### Add state machine to timer (makes more sense to control it's behavior this way)
 #### Add ability to rearrange timers
@@ -103,6 +100,9 @@ period in order to truly leverage the pomodoro technique.
 ---
 
 ## DONE
+
+#### BUG: when rest period ends, pause/stop doesn't reset back to initial state
+  + This might push the final move to state machine
 
 #### Style the index view
   + Design/optimize for mobile first. Follow new bootstrap docs to make the 
