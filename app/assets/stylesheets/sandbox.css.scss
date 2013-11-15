@@ -1,0 +1,56 @@
+.radial-progress-container {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  background-color: red;
+  z-index: 10;
+}
+
+.rp-quad-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+}
+.rp-quad-container1 {
+  transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+}
+.rp-quad {
+  display:none;
+  &.rp-quad1 {
+    display: block;
+    position: relative;
+    background-color: blue;
+    //top: 50%;
+    //left: 50%;
+    height: 50px;
+    width: 50px;
+  }
+}
+.rp-ring-bg {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  z-index: 12;
+  background-color: yellow;
+}
+
+.rp-ring-outer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  z-index: 14;
+  background-color: yellow;
+}
+
+.rp-ring-inner {
+  position: absolute;
+  z-index: 17;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  background-color: red;
+}
