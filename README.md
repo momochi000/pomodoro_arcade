@@ -30,6 +30,8 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
+#### Research/Tinker with Raphael js to build a pretty timer.
+
 ---
 
 ## BACKLOG
@@ -40,11 +42,18 @@ period in order to truly leverage the pomodoro technique.
     - Something that shows the progression of time
     - Timer is essentially a progress bar
 
-#### Make the timers more mobile responsive.
+#### Make the buttons more mobile responsive
   + https://developers.google.com/mobile/articles/fast_buttons
   + use touchstart and touchend events.. pretty much follow the above article
 
+#### Make the timer work properly in the background on mobile
+  + When the phone is locked or the browser is navigated away
+  + http://stackoverflow.com/questions/7047989/javascript-stops-as-i-lock-iphone-can-it-still-run
+
+#### Add ability to choose icon for a timer
 #### Test the timers_controller
+#### Add some jasmines, or at least a jasmine test harness
+#### Add a sound or tone that plays when the timer finishes
 #### Ensure each user has a default pomodoro by default
   + Javascript ensures a default Pomodoro is available, but if the user starts 
     this, it won't be tracked.  Need to ensure that every user has at least
@@ -52,7 +61,9 @@ period in order to truly leverage the pomodoro technique.
     the default one created by javascript doesn't get added if that database
     one is present.
 
-#### Going to index view should reset all the timers.
+#### Allow the tune/tone that plays to be configurable
+
+#### Going to index view should reset all the timers
 #### delete action/option
   + This needs to be in a separate view, I don't think an edit action is 
     appropriate.  You cannot edit a timer since a timer keeps track of
@@ -61,7 +72,6 @@ period in order to truly leverage the pomodoro technique.
     handles edit/delete actions.  There's a little info button that takes you
     to another screen where you can delete.
 
-#### Add ability to choose icon for a timer
 #### Add ability to show progress 
 #### Add ability to set goals
   + daily
