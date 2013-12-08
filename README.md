@@ -30,17 +30,9 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
-#### Research/Tinker with Raphael js to build a pretty timer.
-
 ---
 
 ## BACKLOG
-
-#### Style the show view
-  + Design/optimize for mobile first
-  + Make a slick timer widget
-    - Something that shows the progression of time
-    - Timer is essentially a progress bar
 
 #### Make the buttons more mobile responsive
   + https://developers.google.com/mobile/articles/fast_buttons
@@ -50,6 +42,8 @@ period in order to truly leverage the pomodoro technique.
   + When the phone is locked or the browser is navigated away
   + http://stackoverflow.com/questions/7047989/javascript-stops-as-i-lock-iphone-can-it-still-run
 
+#### Ensure the timer progress bar works properly with rest period.
+#### Further style the timer progress bar with colors/glow/border/etc
 #### Add ability to choose icon for a timer
 #### Test the timers_controller
 #### Add some jasmines, or at least a jasmine test harness
@@ -110,6 +104,13 @@ period in order to truly leverage the pomodoro technique.
 ---
 
 ## DONE
+
+#### Research/Tinker with Raphael js to build a pretty timer.
+#### Style the show view
+  + Design/optimize for mobile first
+  + Make a slick timer widget
+    - Something that shows the progression of time
+    - Timer is essentially a progress bar
 
 #### BUG: when rest period ends, pause/stop doesn't reset back to initial state
   + This might push the final move to state machine
