@@ -22,6 +22,10 @@ PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
     this.render();
   },
 
+  awaken: function (){
+    this.delegateEvents();
+  },
+
   goNew: function (){
     PomodoroArcade.router.navigate("new/", {trigger: true});
   },
@@ -39,6 +43,10 @@ PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
     });
     PomodoroArcade.router.$container().html(this.$el); // Place the view on the page correctly
     this.delegateEvents();
+  },
+
+  sleep: function (){
+    this.undelegateEvents();
   },
 
   //private
@@ -59,5 +67,6 @@ PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
     this.collection.each(function (element, index, list){
       self.timer_views.push(new PomodoroArcade.Views.BaseMiniTimer({model: element}));
     });
-  }
+  },
+  
 });

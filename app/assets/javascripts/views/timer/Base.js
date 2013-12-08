@@ -11,8 +11,15 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
 
   initialize: function (){ 
     if(!this.model){ throw "ERROR: BaseTimer view initialized without a model"; }
-    this.model.on("change:remaining_time", this._updateTime.bind(this));
     this._bindModelEvents();
+  },
+
+  awaken: function (){
+    this.delegateEvents();
+  },
+
+  destroy: function (){
+    this._cleanupCircleTool();
   },
 
   goBack: function (){
@@ -28,7 +35,9 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   render: function (){
     var new_html;
     new_html = this._loadTemplate(this._getTemplateArgs());
+
     this.$el.html(new_html);
+    this._initializeCircleTool();
   },
 
   resetTimer: function (){
@@ -38,6 +47,11 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     this.model.reset();
   },
 
+  sleep: function (){
+    this.undelegateEvents();
+    this._cleanupCircleTool();
+  },
+
   startTimer: function (){
     this._hideStartBtn();
     this._showStopBtn();
@@ -45,11 +59,42 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     this.model.start();
   },
 
+  // Overridden Backbone methods
+
+  delegateEvents: function (){
+    Backbone.View.prototype.delegateEvents.call(this);
+    this._bindModelEvents();
+  },
+
+  undelegateEvents: function (){
+    Backbone.View.prototype.undelegateEvents.call(this);
+    this._unbindModelEvents();
+  },
+
   // private
+
+  _cleanupCircleTool: function (){
+    this.circle_tool.destroy();
+    this.circle_tool = null;
+  },
 
   _bindModelEvents: function (){
     this.model.on("change:state", this._updateTimerButtons.bind(this));
+    this.model.on("change:remaining_time", this._updateTime.bind(this));
   }, 
+
+  _clearArc: function (){
+    if(this.timer_arc){ this.timer_arc.remove(); }
+  },
+
+  _drawArc: function (){
+    var center_x, center_y;
+    if(!this.circle_tool){throw "Trying to draw arc while circle tool not initialized in BaseTimer";}
+    center_x = 30;
+    center_y = 30;
+    
+    this.timer_arc = this.circle_tool.drawArc(400, 400, this.model.pctComplete(), center_x, center_y);
+  },
 
   _getTemplateArgs: function (){
     if(this.model) {return this.model.presented() || {};}
@@ -73,6 +118,17 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     this._showPauseBtn();
   },
 
+  _initializeCircleTool: function (){
+    var h, w, svg_container;
+    if(!this.circle_tool) {
+      // NOTE: Width & height not available yet because the view hasn't been inserted into the page yet
+      w = (this.$el.width() > 0)  ? this.$el.width()  : 700;
+      h = (this.$el.height() > 0) ? this.$el.height() : 700;
+      this.circle_tool = DrawCircle.init(this.$el.find(".svg-wrap").get(0), h, w);
+      $(this.circle_tool.getCanvas()).css({position: "absolute"});
+    }
+  },
+
   _showBackBtn: function (){
     this.$el.find(".back-btn").show();
   },
@@ -89,11 +145,18 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     this.$el.find(".stop-btn").show();
   },
 
+  _unbindModelEvents: function (){
+    this.model.off("change:state");
+    this.model.off("change:remaining_time");
+  },
+
   _updateTime: function (){
     var presenter;
     presenter = this.model.presented();
     this.$el.find(".clock .minutes").html(presenter.minutes);
     this.$el.find(".clock .seconds").html(presenter.seconds);
+    this._clearArc();
+    this._drawArc();
   },
 
   _updateTimerButtons: function (){

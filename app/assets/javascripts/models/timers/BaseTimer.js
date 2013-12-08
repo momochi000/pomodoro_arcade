@@ -24,6 +24,10 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     this.set("remaining_time", this.get("timer_length"));
   },
 
+  elapsedTime: function (){
+    return(this.get("timer_length") - this.get("remaining_time"));
+  },
+
   is_paused: function (){
     return( (this.get("state" == "paused")) ? true : false );
   },
@@ -32,6 +36,15 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     this._stopTimer();
     this.set("state", "paused");
     this._notifyServerTimerPaused();
+  },
+
+  pctComplete: function (){
+    //var pct = (this.elapsedTime() / this.get("timer_length")) * 100 ;
+    //console.log("DEBUG: percent of the timer complete ---> "+pct);
+    //return pct;
+    //return((this.elapsedTime() / this.get("timer_length")) * 100 );
+    //return((this.elapsedTime() / this.get("timer_length")) * 100 );
+    return( this.get("remaining_time") / this.get("timer_length") * 100  ); //TODO: REMOVE. TEST TO START THE CIRCLE AS FULL
   },
 
   reset: function (){
@@ -89,7 +102,6 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
 
   _notifyServer: function(url){
     if(!this.id){return;}
-    //console.log("DEBUG: ABOU TO MAKE CALL TO -> " + url);
     $.ajax(url, {
       dataType: "json",
       error: function (){},
