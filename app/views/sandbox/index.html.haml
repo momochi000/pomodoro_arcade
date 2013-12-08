@@ -1,8 +1,7 @@
 %br
 %br
 %br
-%br
-%br
+
 .radial-progress-container
   .rp-quad-container.rp-quad-container1
     .rp-quad.rp-quad1
@@ -15,3 +14,31 @@
   .rp-ring-bg
     .rp-ring-outer
     .rp-ring-inner
+
+%br
+%br
+%br
+
+#raphael-paper
+
+-# NEXT STEPS:
+-#   (DONE)Add this code to the timer view.
+-#   Create a container that holds the timer stuff.  The moving timer widget, 
+-#     not including the title
+-#   Make this container position relative
+-#   On timer start, render the raphael canvas (the svg element).
+-#   Make the canvas position absolute, left 0 so it overlaps the container 
+-#     perfectly
+-#   Draw the timer circle
+-#   On update of the timer, render the arc that fills in.
+- content_for :javascripts do
+  :javascript
+    window.onload = function (){
+      var canvas_width, canvas_height;
+
+      canvas_width = 500;
+      canvas_height = 500;
+
+      DrawCircle.init("raphael-paper", canvas_width, canvas_height);
+      DrawCircle.drawArc(canvas_width, canvas_height, 100);
+    };
