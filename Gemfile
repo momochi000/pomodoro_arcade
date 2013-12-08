@@ -11,6 +11,7 @@ gem 'haml-rails'
 gem 'pg'
 gem 'rails-backbone'
 #gem 'rake'
+gem 'raphael-rails'
 gem 'sass-rails'
 gem 'uglifier', '>= 1.0.3'
 
