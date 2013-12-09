@@ -34,6 +34,8 @@ period in order to truly leverage the pomodoro technique.
 
 ## BACKLOG
 
+#### BUG: With multiple timers on screen in index action, they all goto the same show timer
+#### BUG: Create action doesn't properly send user back to index
 #### Make the buttons more mobile responsive
   + https://developers.google.com/mobile/articles/fast_buttons
   + use touchstart and touchend events.. pretty much follow the above article
