@@ -13,12 +13,12 @@ PomodoroArcade.Views.Base = Backbone.View.extend({
   },
 
   // Unbind all events, etc.
-  _sleep: function (){
+  sleep: function (){
     this.undelegateEvents();
   },
 
   // Rebind events
-  _awaken: function (){
+  awaken: function (){
     this.delegateEvents();
   }
 });
