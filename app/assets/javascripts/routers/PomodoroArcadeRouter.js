@@ -42,14 +42,15 @@ PomodoroArcade.Router = Backbone.Router.extend({
 
     if(this.current_view){this.current_view.sleep();}
     timer = this.timer_collection.get(id);
-    if(!timer){
-      timer = new PomodoroArcade.Models.BaseTimer(); // setup a default timer cause none was found
-    }
+    if(!timer){ timer = new PomodoroArcade.Models.BaseTimer(); } // setup a default timer cause none was found
+
     if(this.views.show){
-      this.views.show.awaken();
-    }else{
-      this.views.show = new PomodoroArcade.Views.BaseTimer({model: timer, id: id});
+      this.views.show.destroy();
+      delete this.views.show;
+      this.views.show = null;
     }
+
+    this.views.show = new PomodoroArcade.Views.BaseTimer({model: timer, id: id});
     this.views.show.render();
     this.$container().html(this.views.show.$el);
     this.views.show.startTimer();

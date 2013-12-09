@@ -20,6 +20,8 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
 
   destroy: function (){
     this._cleanupCircleTool();
+    this.remove();
+    delete this;
   },
 
   goBack: function (){
@@ -74,7 +76,7 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   // private
 
   _cleanupCircleTool: function (){
-    this.circle_tool.destroy();
+    if(this.circle_tool){this.circle_tool.destroy()};
     this.circle_tool = null;
   },
 
