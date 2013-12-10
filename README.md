@@ -34,10 +34,6 @@ period in order to truly leverage the pomodoro technique.
 
 ## BACKLOG
 
-#### Make the buttons more mobile responsive
-  + https://developers.google.com/mobile/articles/fast_buttons
-  + use touchstart and touchend events.. pretty much follow the above article
-
 #### Make the timer work properly in the background on mobile
   + When the phone is locked or the browser is navigated away
   + http://stackoverflow.com/questions/7047989/javascript-stops-as-i-lock-iphone-can-it-still-run
@@ -55,6 +51,8 @@ period in order to truly leverage the pomodoro technique.
     the default one created by javascript doesn't get added if that database
     one is present.
 
+#### Come up with a logo
+  + Make a tiny version for favico
 #### Allow the tune/tone that plays to be configurable
 
 #### Going to index view should reset all the timers
@@ -104,6 +102,11 @@ period in order to truly leverage the pomodoro technique.
 ---
 
 ## DONE
+
+#### Make the buttons more mobile responsive
+  + https://developers.google.com/mobile/articles/fast_buttons
+  + use touchstart and touchend events.. pretty much follow the above article
+  + alternatively, look at fastclick.js
 
 #### BUG: Create action doesn't properly send user back to index
 #### BUG: With multiple timers on screen in index action, they all goto the same show timer

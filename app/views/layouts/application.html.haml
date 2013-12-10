@@ -14,3 +14,7 @@
     = render :partial => 'layouts/backbone_templates/pomodoro_arcade_templates'
     = javascript_include_tag "application"
     = yield :javascripts
+    :javascript
+      window.addEventListener('load', function() {
+        new FastClick(document.body);
+      }, false);
