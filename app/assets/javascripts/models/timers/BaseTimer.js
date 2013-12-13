@@ -14,6 +14,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     rest_period_minutes: 5,
     rest_period_length: (5 * 60000),
     state: "paused",
+    start_time: null
   },
   
   urlRoot: "/timers",
@@ -55,6 +56,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
 
   start: function (){
     this.set("state", "running");
+    this.set("start_time", new Date().getTime());
     this._startTimer();
     this._notifyServerTimerStart();
   },
@@ -152,6 +154,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     var timer_id;
     timer_id = this.get("timer_id");
     if(timer_id){ window.clearInterval(timer_id); }
+    delete this.get("start_time"); this.set("start_time", null); //deallocate
   },
 
   // TODO: Fire any necessary callbacks to the server
@@ -178,6 +181,30 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
       this._timerFinished();
       return;
     }
-    this.set("remaining_time", remaining_time);
+    //this.set("remaining_time", remaining_time);
+    this._verifyTime();
+  },
+
+  // Check the current time against the when the timer started
+  // Update the remaining time accordingly
+  _verifyTime: function (){
+    var start_time, curr_time, calculated_seconds_remaining, calculated_time_remaining;
+
+    curr_time = new Date().getTime();
+    start_time = this.get("start_time");
+    calculated_seconds_remaining = Math.floor((curr_time - start_time) / 1000);
+    calculated_time_remaining = calculated_seconds_remaining * 1000;
+    // NOTE: depending on the timer state, we either need to update by what time is left or
+    switch(this.get("state")){
+      case "running":
+        this.set("remaining_time", (this.get("timer_length") - calculated_time_remaining));
+        break;
+      case "break":
+        this.set("remaining_time", (this.get("rest_period_length") - calculated_time_remaining));
+        break;
+      default:
+        throw "Timer is running in an invalid state; unable to verify time remaining";
+    }
+    delete curr_time; curr_time = null;
   }
 });
