@@ -30,20 +30,43 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
+#### Make the timer work properly in the background on mobile
+  + When the phone is locked or the browser is navigated away
+  + http://stackoverflow.com/questions/7047989/javascript-stops-as-i-lock-iphone-can-it-still-run
+  + Ok, so here's the findings from this research:
+    Mobile browsers will absolutely stop javascript running when sleep mode.
+    There may be some hacks that could work on safari or perhaps chrome but
+    essentially, the behavior is unreliable.
+  + Given that we cannot rely on the javascript running while the phone is 
+    asleep, we need a different solution.
+  + Another strategy might be to store the start time on the model and when
+    the timer updates, we can check the current time against the start time
+    and update the timer accordingly.
+  + The problem is then how can we ring an alarm 
+
 ---
 
 ## BACKLOG
 
-#### Make the timer work properly in the background on mobile
-  + When the phone is locked or the browser is navigated away
-  + http://stackoverflow.com/questions/7047989/javascript-stops-as-i-lock-iphone-can-it-still-run
-
-#### Ensure the timer progress bar works properly with rest period.
-#### Further style the timer progress bar with colors/glow/border/etc
-#### Add ability to choose icon for a timer
-#### Test the timers_controller
-#### Add some jasmines, or at least a jasmine test harness
 #### Add a sound or tone that plays when the timer finishes
+  + http://stackoverflow.com/questions/10951524/play-and-replay-a-sound-on-safari-mobile
+    function initAudio() {
+        var audio = new Audio('./path/to/my/sound.mp3');
+        audio.addEventListener('play', function () {
+            // When the audio is ready to play, immediately pause.
+            audio.pause();
+            audio.removeEventListener('play', arguments.callee, false);
+        }, false);
+        document.addEventListener('click', function () {
+            // Start playing audio when the user clicks anywhere on the page,
+            // to force Mobile Safari to load the audio.
+            document.removeEventListener('click', arguments.callee, false);
+            audio.play();
+        }, false);
+    }
+
+#### Add ability to choose icon for a timer
+#### Further style the timer progress bar with colors/glow/border/etc
 #### Ensure each user has a default pomodoro by default
   + Javascript ensures a default Pomodoro is available, but if the user starts 
     this, it won't be tracked.  Need to ensure that every user has at least
@@ -51,6 +74,9 @@ period in order to truly leverage the pomodoro technique.
     the default one created by javascript doesn't get added if that database
     one is present.
 
+#### Test the timers_controller
+#### Add some jasmines, or at least a jasmine test harness
+#### Ensure the timer progress bar works properly with rest period.
 #### Come up with a logo
   + Make a tiny version for favico
 #### Allow the tune/tone that plays to be configurable
