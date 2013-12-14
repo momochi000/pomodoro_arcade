@@ -30,16 +30,14 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
+#### Test that timer behaves properly when rest period begins while phone sleeps
+  + It should simply start the rest period once the phone or device continues
+    operation of the js
+
 ---
 
 ## BACKLOG
 
-#### BUG: break timer seems to be broken.
-  + Probably related to the new _verifyTime method.   I suspect the time is 
-    being saved but when the state changes, the time isn't being re-saved.
-#### Test that timer behaves properly when rest period begins while phone sleeps
-  + It should simply start the rest period once the phone or device continues
-    operation of the js
 #### Add a sound or tone that plays when the timer finishes
   + http://stackoverflow.com/questions/10951524/play-and-replay-a-sound-on-safari-mobile
     function initAudio() {
@@ -59,9 +57,6 @@ period in order to truly leverage the pomodoro technique.
   + If the phone is asleep while the timer completes, the tone should play once 
     the javascript resumes
 
-#### BUG: when the progress bar renders in landscape and phone rotates to portrait
-  + The progress bar is broken/shifted to the left
-  + Might want to recenter on each render.
 #### Add ability to choose icon for a timer
 #### Fix the size of the timer progress bar (too big for phones now) 
   + Should adapt depending on the size of the screen, maybe use a media query
@@ -73,6 +68,10 @@ period in order to truly leverage the pomodoro technique.
     one activity timer to their name which is the default Pomodoro. Also ensure
     the default one created by javascript doesn't get added if that database
     one is present.
+
+#### BUG: when the progress bar renders in landscape and phone rotates to portrait
+  + The progress bar is broken/shifted to the left
+  + Might want to recenter on each render.
 
 #### Test the timers_controller
 #### Add some jasmines, or at least a jasmine test harness
@@ -128,6 +127,11 @@ period in order to truly leverage the pomodoro technique.
 ---
 
 ## DONE
+
+#### BUG: When the rest period completes, the back button doesn't display
+#### BUG: break timer seems to be broken.
+  + Probably related to the new _verifyTime method.   I suspect the time is 
+    being saved but when the state changes, the time isn't being re-saved.
 
 #### Make the timer work properly in the background on mobile
   + When the phone is locked or the browser is navigated away
