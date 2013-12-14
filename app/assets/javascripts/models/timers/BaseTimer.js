@@ -56,7 +56,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
 
   start: function (){
     this.set("state", "running");
-    this.set("start_time", new Date().getTime());
+    this._resetStartTime();
     this._startTimer();
     this._notifyServerTimerStart();
   },
@@ -132,6 +132,10 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     this._notifyServer(url);
   },
 
+  _resetStartTime: function (){
+    this.set("start_time", new Date().getTime());
+  },
+
   _secsRemaining: function (time_in_ms){
     var num_secs, num_minutes, remaining_secs;
     num_minutes = this._minutesRemaining(time_in_ms);
@@ -161,6 +165,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   _timerFinished: function (){
     if(this.get("state") == "running"){ //Kick off the rest period.
       this._stopTimer();
+      this._resetStartTime();
       this._notifyServerTimerCompleted();
       this.set("remaining_time", this.get("rest_period_length"));
       this.set("state", "break");
