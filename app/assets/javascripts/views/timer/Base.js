@@ -167,6 +167,7 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
         this._hidePauseBtn();
         this._hideStopBtn();
         this._showStartBtn();
+        this._showBackBtn();
         break;
       case("running"):
         this._hideStartBtn();
