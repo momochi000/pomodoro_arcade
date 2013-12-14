@@ -30,24 +30,16 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
-#### Make the timer work properly in the background on mobile
-  + When the phone is locked or the browser is navigated away
-  + http://stackoverflow.com/questions/7047989/javascript-stops-as-i-lock-iphone-can-it-still-run
-  + Ok, so here's the findings from this research:
-    Mobile browsers will absolutely stop javascript running when sleep mode.
-    There may be some hacks that could work on safari or perhaps chrome but
-    essentially, the behavior is unreliable.
-  + Given that we cannot rely on the javascript running while the phone is 
-    asleep, we need a different solution.
-  + Another strategy might be to store the start time on the model and when
-    the timer updates, we can check the current time against the start time
-    and update the timer accordingly.
-  + The problem is then how can we ring an alarm 
-
 ---
 
 ## BACKLOG
 
+#### BUG: break timer seems to be broken.
+  + Probably related to the new _verifyTime method.   I suspect the time is 
+    being saved but when the state changes, the time isn't being re-saved.
+#### Test that timer behaves properly when rest period begins while phone sleeps
+  + It should simply start the rest period once the phone or device continues
+    operation of the js
 #### Add a sound or tone that plays when the timer finishes
   + http://stackoverflow.com/questions/10951524/play-and-replay-a-sound-on-safari-mobile
     function initAudio() {
@@ -64,8 +56,16 @@ period in order to truly leverage the pomodoro technique.
             audio.play();
         }, false);
     }
+  + If the phone is asleep while the timer completes, the tone should play once 
+    the javascript resumes
 
+#### BUG: when the progress bar renders in landscape and phone rotates to portrait
+  + The progress bar is broken/shifted to the left
+  + Might want to recenter on each render.
 #### Add ability to choose icon for a timer
+#### Fix the size of the timer progress bar (too big for phones now) 
+  + Should adapt depending on the size of the screen, maybe use a media query
+    in the javascript to render one of several size arcs.
 #### Further style the timer progress bar with colors/glow/border/etc
 #### Ensure each user has a default pomodoro by default
   + Javascript ensures a default Pomodoro is available, but if the user starts 
@@ -128,6 +128,20 @@ period in order to truly leverage the pomodoro technique.
 ---
 
 ## DONE
+
+#### Make the timer work properly in the background on mobile
+  + When the phone is locked or the browser is navigated away
+  + http://stackoverflow.com/questions/7047989/javascript-stops-as-i-lock-iphone-can-it-still-run
+  + Ok, so here's the findings from this research:
+    Mobile browsers will absolutely stop javascript running when sleep mode.
+    There may be some hacks that could work on safari or perhaps chrome but
+    essentially, the behavior is unreliable.
+  + Given that we cannot rely on the javascript running while the phone is 
+    asleep, we need a different solution.
+  + Another strategy might be to store the start time on the model and when
+    the timer updates, we can check the current time against the start time
+    and update the timer accordingly.
+  + The problem is then how can we ring an alarm 
 
 #### Make the buttons more mobile responsive
   + https://developers.google.com/mobile/articles/fast_buttons
