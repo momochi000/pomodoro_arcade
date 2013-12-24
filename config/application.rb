@@ -69,5 +69,7 @@ module PomodoroArcade
     # Due to a change in Rails that prevents images from being compiled in 
     # vendor and lib, you'll need to add the following line to your application.rb:
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+
+    config.assets.paths << "#{Rails.root}/app/assets/audio"
   end
 end

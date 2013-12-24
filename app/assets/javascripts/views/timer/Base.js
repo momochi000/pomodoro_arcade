@@ -11,6 +11,7 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
 
   initialize: function (){ 
     if(!this.model){ throw "ERROR: BaseTimer view initialized without a model"; }
+    this._initializeAudio();
     this._bindModelEvents();
   },
 
@@ -20,6 +21,7 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
 
   destroy: function (){
     this._cleanupCircleTool();
+    delete this.audio;
     this.remove();
     delete this;
   },
@@ -83,6 +85,7 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   _bindModelEvents: function (){
     this.model.on("change:state", this._updateTimerButtons.bind(this));
     this.model.on("change:remaining_time", this._updateTime.bind(this));
+    this.model.on("change:state", this._playSound.bind(this));
   }, 
 
   _clearArc: function (){
@@ -120,6 +123,27 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     this._showPauseBtn();
   },
 
+  _initializeAudio: function (){
+    var audio = PomodoroArcade.Models.PomAudio.create("assets/farm003.mp3");
+    this.audio = audio;
+    //var audio = new Audio("assets/farm003.mp3");
+    
+    //audio.addEventListener('play', function () {
+    //  // When the audio is ready to play, immediately pause.
+    //  console.log("DEBUG: got a play event on the audio element, should be pausing now");
+    //  audio.pause();
+    //  audio.removeEventListener('play', arguments.callee, false);
+    //}, false);
+    //document.addEventListener('click', function () {
+    //  // Start playing audio when the user clicks anywhere on the page,
+    //  // to force Mobile Safari to load the audio.
+    //  document.removeEventListener('click', arguments.callee, false);
+    //  audio.play();
+    //}, false);
+
+    //this.audio = audio;
+  },
+
   _initializeCircleTool: function (){
     var h, w, svg_container;
     if(!this.circle_tool) {
@@ -128,6 +152,14 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
       h = (this.$el.height() > 0) ? this.$el.height() : 700;
       this.circle_tool = DrawCircle.init(this.$el.find(".svg-wrap").get(0), h, w);
       $(this.circle_tool.getCanvas()).css({position: "absolute"});
+    }
+  },
+
+  _playSound: function (){
+    console.log("DEBUG: in play sound (which means we got a change:state event on the model) model --> "+this.model.get('state'));
+    if(this.model.isOnBreak()){
+      console.log("DEBUG: _playSound called ~~~~~~~~~~~~~~~~~~~~~~~~~");
+      this.audio.play();
     }
   },
 
