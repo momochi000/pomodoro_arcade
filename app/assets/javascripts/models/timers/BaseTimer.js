@@ -5,7 +5,6 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   REST_PERIOD_COMPLETED_PATH: '/rest_completed',
   VALID_STATES: ["paused, running, break"],
 
-  
   defaults: {
     title: "Pomodoro",
     timer_length_minutes: 24,
@@ -29,8 +28,16 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     return(this.get("timer_length") - this.get("remaining_time"));
   },
 
-  is_paused: function (){
-    return( (this.get("state" == "paused")) ? true : false );
+  isPaused: function (){
+    return( (this.get("state") === "paused") );
+  },
+
+  isRunning: function (){
+    return( (this.get("state") === "running") );
+  },
+
+  isOnBreak: function (){
+    return( (this.get("state") === "break") );
   },
 
   pause: function (){
@@ -186,8 +193,8 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
       this._timerFinished();
       return;
     }
-    //this.set("remaining_time", remaining_time);
-    this._verifyTime();
+    //this.set("remaining_time", remaining_time); // ENABLE FOR TESTING
+    this._verifyTime(); // DISABLE FOR TESTING
   },
 
   // Check the current time against the when the timer started
