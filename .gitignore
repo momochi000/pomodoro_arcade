@@ -21,3 +21,6 @@
 
 # Ignore dev notes
 DEVNOTES.md
+
+# Ignore non-minified js
+/vendor/assets/javascripts/fastclick.js
