@@ -27,6 +27,7 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   },
 
   goBack: function (){
+    this.model.reset();
     PomodoroArcade.router.navigate("index/", {trigger: true});
   },
 
