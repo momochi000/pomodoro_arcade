@@ -30,33 +30,27 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
-#### Test that timer behaves properly when rest period begins while phone sleeps
-  + It should simply start the rest period once the phone or device continues
-    operation of the js
+#### Going to index view should reset all the timers
 
 ---
 
 ## BACKLOG
 
-#### Add a sound or tone that plays when the timer finishes
-  + http://stackoverflow.com/questions/10951524/play-and-replay-a-sound-on-safari-mobile
-    function initAudio() {
-        var audio = new Audio('./path/to/my/sound.mp3');
-        audio.addEventListener('play', function () {
-            // When the audio is ready to play, immediately pause.
-            audio.pause();
-            audio.removeEventListener('play', arguments.callee, false);
-        }, false);
-        document.addEventListener('click', function () {
-            // Start playing audio when the user clicks anywhere on the page,
-            // to force Mobile Safari to load the audio.
-            document.removeEventListener('click', arguments.callee, false);
-            audio.play();
-        }, false);
-    }
-  + If the phone is asleep while the timer completes, the tone should play once 
-    the javascript resumes
+#### Add ability to show progress 
+  + First do some design on paper as to how this should look.
+  + First a simple how many of each pomo completed
+  + Graph of pomodoros over time
+  + Need some kind of calendar/history view.  Realistically your goal is going 
+    to be something like 3 pomos per day per task.  With this purpose in mind,
+    there isn't any value in using a line graph to show a user hitting 3 every 
+    day.  There needs to be a better presentation to get the idea across of
+    successful sustained work over time, while still allowing for max effort.
+    My personal use case is to deliver as many pomos of code as possible per
+    day.  However, I also want to throw in a few reading or music study or
+    whatever, this should cover a bunch of the use cases I can envision.
 
+#### Ensure audio play correctly on mobile devices/browsers
+  + For now just check chrome on android and ios
 #### Add ability to choose icon for a timer
 #### Fix the size of the timer progress bar (too big for phones now) 
   + Should adapt depending on the size of the screen, maybe use a media query
@@ -79,8 +73,6 @@ period in order to truly leverage the pomodoro technique.
 #### Come up with a logo
   + Make a tiny version for favico
 #### Allow the tune/tone that plays to be configurable
-
-#### Going to index view should reset all the timers
 #### delete action/option
   + This needs to be in a separate view, I don't think an edit action is 
     appropriate.  You cannot edit a timer since a timer keeps track of
@@ -89,7 +81,26 @@ period in order to truly leverage the pomodoro technique.
     handles edit/delete actions.  There's a little info button that takes you
     to another screen where you can delete.
 
-#### Add ability to show progress 
+#### Make the audio more accomodating to more browsers
+  + audio support spotty, doesn't seem to play on chrome or safari
+  + http://stackoverflow.com/questions/10951524/play-and-replay-a-sound-on-safari-mobile
+    function initAudio() {
+        var audio = new Audio('./path/to/my/sound.mp3');
+        audio.addEventListener('play', function () {
+            // When the audio is ready to play, immediately pause.
+            audio.pause();
+            audio.removeEventListener('play', arguments.callee, false);
+        }, false);
+        document.addEventListener('click', function () {
+            // Start playing audio when the user clicks anywhere on the page,
+            // to force Mobile Safari to load the audio.
+            document.removeEventListener('click', arguments.callee, false);
+            audio.play();
+        }, false);
+    }
+  + If the phone is asleep while the timer completes, the tone should play once 
+    the javascript resumes
+
 #### Add ability to set goals
   + daily
   + weekly
@@ -100,7 +111,6 @@ period in order to truly leverage the pomodoro technique.
   + Need colors
   + Need shapes
 
-#### Play alarm/sound when pomo is done (configurable)
 #### Add state machine to timer (makes more sense to control it's behavior this way)
 #### Add ability to rearrange timers
 #### Capture pause timer
@@ -116,6 +126,13 @@ period in order to truly leverage the pomodoro technique.
   + Looks like this will have to wait, font-awesome-rails gem doesn't use 
     font awesome 4.0 yet
 
+#### Test that timer behaves properly when rest period begins while phone sleeps
+  + It should simply start the rest period once the phone or device continues
+    operation of the js
+
+#### Use html5 vibrate if phone volume is down
+  + Is this even possible?
+
 #### Add ability to reward self for progress
 #### Levels / leveling up
 #### Share progress with friends
@@ -128,6 +145,7 @@ period in order to truly leverage the pomodoro technique.
 
 ## DONE
 
+#### Add audio on timer completion
 #### BUG: When the rest period completes, the back button doesn't display
 #### BUG: break timer seems to be broken.
   + Probably related to the new _verifyTime method.   I suspect the time is 
