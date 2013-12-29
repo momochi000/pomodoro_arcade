@@ -30,15 +30,13 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
-#### Going to index view should reset all the timers
 
----
-
-## BACKLOG
+#### Dick around with the index view styling a bit
+  + Need to indicate when the timer is in rest mode
+  + The timer index view and show view is still in raw developer style
 
 #### Add ability to show progress 
-  + First do some design on paper as to how this should look.
-  + First a simple how many of each pomo completed
+  + (DONE)First do some design on paper as to how this should look.
   + Graph of pomodoros over time
   + Need some kind of calendar/history view.  Realistically your goal is going 
     to be something like 3 pomos per day per task.  With this purpose in mind,
@@ -48,13 +46,43 @@ period in order to truly leverage the pomodoro technique.
     My personal use case is to deliver as many pomos of code as possible per
     day.  However, I also want to throw in a few reading or music study or
     whatever, this should cover a bunch of the use cases I can envision.
+  + daily
+    * list of timers with goal/velocity/current reached
+  + weekly
+    * 
+  + monthly
+    * calendar view with blank O X * ∆
+    * for none, some progress, reached velocity, reached goal, exceeded goal
+  + velocity over time
 
+#### Daily progress (self) analytic view
+  + list of timers with goal/velocity/current reached
+  + simple bar graphs for now.
+  + must choose graphing suite
+  + probably use d3
+  1. install d3 (or highcharts depending on whose api is more up to date)
+  2. create the backend around goals velocity etc. Must be tested
+  3. 
+
+---
+
+## BACKLOG
+
+#### Build a deploy rake task
+#### BUG: Pausing the timer and continuing it seems to reset it
+#### BUG: Goign back and forth with the browser resets the timer correctly but multiple callbacks are bound and the timer decremnts like mad.
+#### Play a different sound for rest timer completion
+#### Open tracker proj
+  + This mess is getting too big for a text file.
+#### Refreshing the page while timer running doesn't interrupt it
 #### Ensure audio play correctly on mobile devices/browsers
   + For now just check chrome on android and ios
+
 #### Add ability to choose icon for a timer
 #### Fix the size of the timer progress bar (too big for phones now) 
   + Should adapt depending on the size of the screen, maybe use a media query
     in the javascript to render one of several size arcs.
+
 #### Further style the timer progress bar with colors/glow/border/etc
 #### Ensure each user has a default pomodoro by default
   + Javascript ensures a default Pomodoro is available, but if the user starts 
@@ -72,6 +100,7 @@ period in order to truly leverage the pomodoro technique.
 #### Ensure the timer progress bar works properly with rest period.
 #### Come up with a logo
   + Make a tiny version for favico
+
 #### Allow the tune/tone that plays to be configurable
 #### delete action/option
   + This needs to be in a separate view, I don't think an edit action is 
@@ -101,17 +130,13 @@ period in order to truly leverage the pomodoro technique.
   + If the phone is asleep while the timer completes, the tone should play once 
     the javascript resumes
 
-#### Add ability to set goals
-  + daily
-  + weekly
-  + monthly
-  + milestones
-
 #### Design a more complete style/site design.
   + Need colors
   + Need shapes
 
 #### Add state machine to timer (makes more sense to control it's behavior this way)
+#### Style: in index view, make the timers appear as tiles
+  + on mobile view (phone) have them span the entire row
 #### Add ability to rearrange timers
 #### Capture pause timer
 #### Show analytics on a timer
@@ -145,6 +170,7 @@ period in order to truly leverage the pomodoro technique.
 
 ## DONE
 
+#### Going to index view should reset all the timers
 #### Add audio on timer completion
 #### BUG: When the rest period completes, the back button doesn't display
 #### BUG: break timer seems to be broken.
