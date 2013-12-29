@@ -11,9 +11,9 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
 
   initialize: function (){ 
     if(!this.model){ throw "ERROR: BaseTimer view initialized without a model"; }
-    this._COLOR_RUNNING = 'green';
-    this._COLOR_PAUSED = 'red';
-    this._COLOR_REST = 'blue';
+    this._COLOR_RUNNING = "rgb(121, 119, 46)";
+    this._COLOR_PAUSED = "rgb(180, 209, 215)";
+    this._COLOR_REST = "rgb(4, 137, 190)";
     this._initializeAudio();
     this._bindModelEvents();
   },

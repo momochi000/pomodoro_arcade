@@ -27,19 +27,26 @@
   z-index: -1;
 }
 
-.timer-index-container { }
+.timer-index-container { 
+  .mini-timer {
+    background-color: $color-picton-blue;
+    border-top: solid 3px $color-jungle-mist;
+    border-bottom: none;
+    padding: 5px;
+    margin: 0;
+    text-align: center;
 
-.mini-timer {
-  background-color: red;
-  border: solid thin gray;
-  padding: 5px;
-  margin: 0;
-  text-align: center;
+    &.last { border-bottom: solid 3px $color-jungle-mist; }
+    &.create-new-timer {
+      background-color: $color-husk;
+      @include angled-stripes();
+    }
+    .mini-timer-icon {
+      display:block;
+      font-size: 3em;
+    }
+    .mini-timer-title { }
+  }
 }
 
-.mini-timer-icon {
-  display:block;
-  font-size: 3em;
-}
 
-.mini-timer-title { }

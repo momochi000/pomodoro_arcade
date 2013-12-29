@@ -75,7 +75,7 @@ PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
     var new_btn;
     
     new_btn = "";
-    new_btn += "<div class=\"mini-timer create-new-timer col-xs-12 col-sm-12 col-md-12\">";
+    new_btn += "<div class=\"mini-timer create-new-timer last col-xs-12 col-sm-12 col-md-12\">";
     new_btn +=   "<i class=\"mini-timer-icon fa fa-clock-o center-block\"></i>";
     new_btn +=   "<div class=\"mini-timer-title\"> Create New Timer </div>";
     new_btn += "</div>";
