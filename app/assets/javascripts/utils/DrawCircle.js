@@ -1,5 +1,5 @@
 var DrawCircle = (function (Raphael){
-  var init, canvas_height, canvas_width, paper,
+  var init, canvas_height, canvas_width, paper, current_arc,
     destroy, adjustCanvas, angleFromPercent, degreesToRadians, drawArc, drawCircle, 
     getCanvas, $getCanvas,
     getCanvasWidth, getCanvasHeight, getPointOnCircle, getCenterOfCanvas, 
@@ -29,17 +29,33 @@ var DrawCircle = (function (Raphael){
   };
 
   destroy = function (){
+    if(current_arc) { delete current_arc; }
     paper.remove();
     delete this;
   };
 
-  drawArc = function(width, height, percent, xoffset, yoffset) {
+  /* Draw an arc of a circle based on a center point, and dimension
+   * Valid options: 
+   * width      =10
+   * height     =10 
+   * percent    =100
+   * xoffset    =0
+   * yoffset    =0
+   * color      =null
+   */
+  drawArc = function(options){
     var arc, cx, cy, sx, sy, r, x, y, path_string, center,
       arg_xoffset, arg_yoffset;
 
+    width = options.width || 10;
+    height = options.height || width;
+    percent = options.percent || 100;
+    xoffset = options.xoffset || 0;
+    yoffset = options.yoffset || 0;
+    color = options.color || "#ccc";
+
     arg_xoffset = xoffset||0;
     arg_yoffset = yoffset||0;
-    // LEFT OFF: get the drawing to happen at the center of the canvas.
     center = getCenterOfRect(width, height, xoffset, yoffset);
     cx = center[0];
     cy = center[1];
@@ -47,7 +63,9 @@ var DrawCircle = (function (Raphael){
     sx = width/2 + arg_xoffset; //start position
     sy = 0 + arg_yoffset; //start position
     path_string = pathStringForArcOfCircle(cx, cy, sx, sy, r, angleFromPercent(percent), 270);
-    arc = paper.path(path_string).attr({stroke: "#ccc", "stroke-width": 20});
+    console.log("DEBUG: IN drawArc, CURRENT COLOR -----------> " + color);
+    arc = paper.path(path_string).attr({stroke: color, "stroke-width": 20});
+    current_arc = arc;
     return arc;
   };
 

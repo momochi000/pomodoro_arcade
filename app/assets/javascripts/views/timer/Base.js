@@ -94,12 +94,19 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   },
 
   _drawArc: function (){
-    var center_x, center_y;
+    var center_x, center_y, color;
     if(!this.circle_tool){throw "Trying to draw arc while circle tool not initialized in BaseTimer";}
     center_x = 30;
     center_y = 30;
-    
-    this.timer_arc = this.circle_tool.drawArc(400, 400, this.model.pctComplete(), center_x, center_y);
+
+    this.timer_arc = this.circle_tool.drawArc({
+      width: 400, 
+      height: 400, 
+      percent: this.model.pctComplete(), 
+      xoffset: center_x, 
+      yoffset: center_y,
+      color: this.timer_color
+    });
   },
 
   _getTemplateArgs: function (){
