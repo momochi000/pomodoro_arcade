@@ -1,6 +1,7 @@
 PomodoroArcade.Views.BaseMiniTimer = PomodoroArcade.Views.Base.extend({
   template: "base_mini_timer_template",
-  className: "mini-timer row",
+
+  className: "mini-timer col-xs-12 col-sm-12 col-md-12",
   events: {
     "click": "_handleClick"
   },
