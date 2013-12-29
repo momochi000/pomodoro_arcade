@@ -41,7 +41,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   },
 
   pause: function (){
-    this._stopTimer();
+    this._pauseTimer();
     this.set("state", "paused");
     this._notifyServerTimerPaused();
   },
@@ -62,6 +62,12 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   },
 
   start: function (){
+    if(this.get("state") == "paused"){
+      //TODO: STATE MACHINE REFACTOR
+      this.set("state", "running");
+      this._startTimer();
+      return;
+    }
     this.set("state", "running");
     this._resetStartTime();
     this._startTimer();
@@ -139,6 +145,12 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     this._notifyServer(url);
   },
 
+  _pauseTimer: function (){
+    var timer_id;
+    timer_id = this.get("timer_id");
+    if(timer_id){ window.clearInterval(timer_id); }
+  },
+
   _resetStartTime: function (){
     this.set("start_time", new Date().getTime());
   },
@@ -169,6 +181,8 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   },
 
   // TODO: Fire any necessary callbacks to the server
+  // This essentially does the state change. Needs to be replaced with a real
+  // state machine
   _timerFinished: function (){
     if(this.get("state") == "running"){ //Kick off the rest period.
       this._stopTimer();
