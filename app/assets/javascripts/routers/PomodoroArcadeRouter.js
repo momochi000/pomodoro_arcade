@@ -4,7 +4,8 @@ PomodoroArcade.Router = Backbone.Router.extend({
     ".*":           "index",
     "index/":       "index",
     "new/":         "new",
-    "show/:id":     "show"
+    "show/:id":     "show",
+    "edit/:id":     "edit",
   },
 
   initialize: function (options){
@@ -55,6 +56,18 @@ PomodoroArcade.Router = Backbone.Router.extend({
     this.$container().html(this.views.show.$el);
     this.views.show.startTimer();
     this.current_view = this.views.show;
+  },
+
+  edit: function (id){
+    if(this.current_view){this.current_view.sleep();}
+    timer = this.timer_collection.get(id);
+
+    if(!this.views.edit_view){
+      this.views.edit_view = new PomodoroArcade.Views.Edit({model: tiemr, id: id});
+    }else{
+      this.views.new_view.render();
+      this.views.new_view.awaken();
+    }
   },
 
   // INSTANCE METHODS

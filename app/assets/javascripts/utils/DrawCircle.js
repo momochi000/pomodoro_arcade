@@ -63,7 +63,6 @@ var DrawCircle = (function (Raphael){
     sx = width/2 + arg_xoffset; //start position
     sy = 0 + arg_yoffset; //start position
     path_string = pathStringForArcOfCircle(cx, cy, sx, sy, r, angleFromPercent(percent), 270);
-    console.log("DEBUG: IN drawArc, CURRENT COLOR -----------> " + color);
     arc = paper.path(path_string).attr({stroke: color, "stroke-width": 20});
     current_arc = arc;
     return arc;

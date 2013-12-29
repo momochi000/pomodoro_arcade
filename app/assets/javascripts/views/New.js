@@ -15,6 +15,7 @@ PomodoroArcade.Views.New = PomodoroArcade.Views.Base.extend({
   render: function (){
     var new_html;
     new_html = this._loadTemplate();
+    // TODO: This is smelly, should move the container into an initialize option.  The base view behavior can fall back to this in case the container isn't set
     PomodoroArcade.router.$container().html(this.$el.html(new_html));
     this.delegateEvents();
   },
@@ -26,7 +27,8 @@ PomodoroArcade.Views.New = PomodoroArcade.Views.Base.extend({
     new_timer_attrs = {
       title: this.$el.find("#new-timer-name").val(),
       timer_length_minutes: parseInt(this.$el.find("#new-timer-time").val()),
-      rest_period_minutes: parseInt(this.$el.find("#new-timer-break-time").val())
+      rest_period_minutes: parseInt(this.$el.find("#new-timer-break-time").val()),
+      goal: parseInt(this.$el.find("#new-timer-goal").val())
     }
 
     PomodoroArcade.router.timer_collection.create(

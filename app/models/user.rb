@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :activity_timers
   has_many :completed_events, :through => :activity_timers
+  has_many :goals, :through => :activity_timers
   has_one :user_profile
 
   # Include default devise modules. Others available are:
@@ -19,5 +20,4 @@ class User < ActiveRecord::Base
   def timers #Alias for activity_timers relation
     activity_timers
   end
-
 end

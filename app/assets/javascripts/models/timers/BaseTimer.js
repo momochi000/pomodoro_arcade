@@ -9,6 +9,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     title: "Pomodoro",
     timer_length_minutes: 24,
     timer_length: (24 * 60000), // 24 minutes
+    goal: null,
     time_interval: 1000, // 1 second
     rest_period_minutes: 5,
     rest_period_length: (5 * 60000),

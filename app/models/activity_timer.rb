@@ -1,6 +1,7 @@
 class ActivityTimer < ActiveRecord::Base
   belongs_to :user
   has_many :events, :as => :target, :class_name => 'Event'
+  has_many :goals, :autosave => true
   has_many :completed_events, :as => :target, :class_name => 'Event::Timer::UserCompletedTimer'
   has_many :started_events, :as => :target, :class_name => 'Event::Timer::UserStartedTimer'
   has_many :rest_completed_events, :as => :target, :class_name => 'Event::Timer::UserCompletedRestPeriod'
@@ -23,12 +24,23 @@ class ActivityTimer < ActiveRecord::Base
       :title      => 'title',
       :time       => 'timer_length_minutes',
       :break_time => 'rest_period_minutes',
-      :id         => 'id'
+      :id         => 'id',
+      :goal       => 'goal'
     }
   end
 
   def completed
     Event::Timer::UserCompletedTimer.create(:target => self)
+  end
+
+  def completed_events_on_day(date)
+    completed_events.where("created_at >= :start_date AND created_at <= :end_date", {
+      :start_date => date.beginning_of_day,
+      :end_date => date.end_of_day});
+  end
+
+  def completed_events_today
+    completed_events_on_day(Time.now)
   end
 
   # Takes a hash which came from a backbone model and sets the correct 
@@ -39,6 +51,22 @@ class ActivityTimer < ActiveRecord::Base
     end
     self.user = user if user
     self
+  end
+
+  def goal
+    curr_goals = goals.order("created_at DESC")
+    if curr_goals.empty?
+      goals.first || NullGoal.new
+    else
+      curr_goals.first
+    end
+  end
+
+  def goal=(value)
+    create_new_goal(value)
+  end
+
+  def goal_reached?(date=nil)
   end
 
   # Number of this timer completed by a given user
@@ -52,6 +80,10 @@ class ActivityTimer < ActiveRecord::Base
     rest_completed_events.count
   end
 
+  def number_completed_events_today
+    completed_events_today.count
+  end
+
   def rest_completed
     Event::Timer::UserCompletedRestPeriod.create(:target => self)
   end
@@ -63,9 +95,32 @@ class ActivityTimer < ActiveRecord::Base
   def to_backbone
     output = {}
     attrs_to_backbone_attrs.each do |k,v|
-      output[v] = self[k.to_sym].to_s
+      if v=='goal'
+        output[v] = goal.value # TODO: SMELLY?.. KNOWLEDGE OF GOAL IS REQUIRED
+      else
+        output[v] = self[k.to_sym].to_s
+      end
     end
     output
+  end
+
+  # The average number of pomos completed per day on this timer over the past 10 days
+  def velocity
+    completed_events_per_day = (1..10).map do |itor|
+      completed_events_on_day(Time.now - itor.days)
+    end.map(&:count)
+    completed_events_per_day.sum / completed_events_per_day.count
+  end
+
+  private
+
+  def create_new_goal(new_value=nil)
+    return unless new_value
+    if self.persisted?
+      goals.create(:value => new_value)
+    else
+      goals.build(:value => new_value)
+    end
   end
 end
 
