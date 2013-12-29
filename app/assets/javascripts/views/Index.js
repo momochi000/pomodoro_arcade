@@ -15,7 +15,7 @@ PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
   template: "timer_index_template",
   className: "timer-collection",
   events: {
-    "click .new-btn": "goNew"
+    "click .create-new-timer": "goNew"
   },
 
   initialize: function (options){
@@ -32,6 +32,7 @@ PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
 
   render: function (options){
     var html, self;
+
     self = this;
     html = this._loadTemplate();
     this.$el.html(html);
@@ -41,6 +42,7 @@ PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
       curr_timer.render();
       self.$el.find(".timer-index-container").append(curr_timer.$el);
     });
+    this.$el.find(".timer-index-container").append(this._renderNewBtn());
     PomodoroArcade.router.$container().html(this.$el); // Place the view on the page correctly
     this.delegateEvents();
   },
@@ -68,5 +70,15 @@ PomodoroArcade.Views.Index = PomodoroArcade.Views.Base.extend({
       self.timer_views.push(new PomodoroArcade.Views.BaseMiniTimer({model: element}));
     });
   },
-  
+
+  _renderNewBtn: function (){
+    var new_btn;
+    
+    new_btn = "";
+    new_btn += "<div class=\"mini-timer create-new-timer col-xs-12 col-sm-12 col-md-12\">";
+    new_btn +=   "<i class=\"mini-timer-icon fa fa-clock-o center-block\"></i>";
+    new_btn +=   "<div class=\"mini-timer-title\"> Create New Timer </div>";
+    new_btn += "</div>";
+    return $(new_btn);
+  }
 });
