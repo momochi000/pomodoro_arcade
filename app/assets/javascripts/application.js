@@ -16,6 +16,7 @@
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
+//= require backbone_statemachine
 //= require fastclick.min
 //= require raphael
 //= require bootstrap/collapse
