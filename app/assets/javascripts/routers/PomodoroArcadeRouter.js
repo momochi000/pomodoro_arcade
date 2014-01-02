@@ -54,8 +54,8 @@ PomodoroArcade.Router = Backbone.Router.extend({
     this.views.show = new PomodoroArcade.Views.BaseTimer({model: timer, id: id});
     this.views.show.render();
     this.$container().html(this.views.show.$el);
-    this.views.show.startTimer();
     this.current_view = this.views.show;
+    this.current_view.startTimer();
   },
 
   edit: function (id){

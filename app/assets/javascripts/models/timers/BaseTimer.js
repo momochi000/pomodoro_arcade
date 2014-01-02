@@ -3,17 +3,18 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   TIMER_COMPLETED_PATH:       '/completed',
   TIMER_PAUSED_PATH:          '/paused',
   REST_PERIOD_COMPLETED_PATH: '/rest_completed',
-  VALID_STATES: ["paused, running, break"],
+  VALID_STATES: ["paused, paused_break, running, on_break, stopped"],
 
   defaults: {
     title: "Pomodoro",
     timer_length_minutes: 24,
     timer_length: (24 * 60000), // 24 minutes
+    time_elapsed: 0,
     goal: null,
     time_interval: 1000, // 1 second
     rest_period_minutes: 5,
     rest_period_length: (5 * 60000),
-    state: "paused",
+    state: "stopped",
     start_time: null
   },
   
@@ -22,7 +23,11 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   initialize: function (){ 
     this.set("timer_length", this.get("timer_length_minutes") * 60000);
     this.set("rest_period_length", this.get("rest_period_minutes") * 60000);
-    this.set("remaining_time", this.get("timer_length"));
+    this._setupStateMachine();
+    this.startStateMachine();
+    this.trigger("initialized");
+
+    return this;
   },
 
   elapsedTime: function (){
@@ -30,21 +35,19 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   },
 
   isPaused: function (){
-    return( (this.get("state") === "paused") );
+    return( this.currentState === "paused" );
   },
 
   isRunning: function (){
-    return( (this.get("state") === "running") );
+    return( this.currentState === "running" );
   },
 
   isOnBreak: function (){
-    return( (this.get("state") === "break") );
+    return( this.currentState === "on_break" );
   },
 
   pause: function (){
-    this._pauseTimer();
-    this.set("state", "paused");
-    this._notifyServerTimerPaused();
+    this.trigger("pause");
   },
 
   pctComplete: function (){
@@ -57,22 +60,12 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   },
 
   reset: function (){
-    this._stopTimer();
-    this.set("state", "paused"); // Make the state stopped?
-    this.set("remaining_time", this.get("timer_length"));
+    this.trigger("reset");
   },
 
   start: function (){
-    if(this.get("state") == "paused"){
-      //TODO: STATE MACHINE REFACTOR
-      this.set("state", "running");
-      this._startTimer();
-      return;
-    }
-    this.set("state", "running");
-    this._resetStartTime();
-    this._startTimer();
-    this._notifyServerTimerStart();
+    console.log("DEBUG: IN BASE TIMER start();  Current state -> "+ this.currentState + "Triggering start on state machine...");
+    this.trigger("start");
   },
 
   // Return a hash of data to be passed to an underscore template.
@@ -116,7 +109,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   },
 
 
-  _notifyServer: function(url){
+  _notifyServer: function (url){
     if(!this.id){return;}
     $.ajax(url, {
       dataType: "json",
@@ -125,25 +118,30 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
       type: "POST"
     });
   },
+  
+  _notifyServerAtPath: function (path){
+    var url = this.url() + path;
+    this._notifyServer(url);
+  },
+
+  _notifyServerRestPeriodStarted: function (){
+    this._notifyServerAtPath("/rest_started");
+  },
 
   _notifyServerRestPeriodCompleted: function (){
-    var url = this.url() + "/rest_completed";
-    this._notifyServer(url);
+    this._notifyServerAtPath("/rest_completed");
   },
 
   _notifyServerTimerCompleted: function (){
-    var url = this.url() + "/completed";
-    this._notifyServer(url);
+    this._notifyServerAtPath("/completed");
   },
 
   _notifyServerTimerPaused: function (){
-    var url = this.url() + "/paused";
-    this._notifyServer(url);
+    this._notifyServerAtPath("/paused");
   },
 
   _notifyServerTimerStart: function (){
-    var url = this.url() + "/started";
-    this._notifyServer(url);
+    this._notifyServerAtPath("/started");
   },
 
   _pauseTimer: function (){
@@ -170,8 +168,127 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     return sec_string;
   },
 
+  _setupStateMachine: function (){
+    var self = this;
+    _.extend(this, Backbone.StateMachine, Backbone.Events, {
+      states: {
+        on_break: {},
+        paused: {},
+        paused_break: {},
+        running: {},
+        stopped: {},
+      },
+      transitions: {
+        init: { initialized: "stopped" },
+
+        on_break: {
+          pause: { enterState: "paused_break",
+            callbacks: ["pauseRunningTimer"]
+          },
+          finish: { enterState: "stopped",
+            callbacks: ["completeBreakTimer", "prepareTimer"]
+          }
+        },
+
+        paused: {
+          reset: { enterState: "stopped",
+            callbacks: ["resetTimer"]
+          },
+          start: { enterState: "running",
+            callbacks: ["resumeTimer"]
+          }
+        },
+
+        paused_break: {
+          reset: { enterState: "stopped",
+            callbacks: ["resetTimer"]
+          },
+          start: { enterState: "on_break",
+            callbacks: ["resumeTimer"]
+          }
+        },
+
+        running: {
+          pause: { enterState: "paused",
+            callbacks: ["pauseRunningTimer"]
+          },
+          reset: { enterState: "stopped",
+            callbacks: ["resetTimer"]
+          },
+          finish: { enterState: "on_break",
+            callbacks: ["completeTimer", "prepareBreakTimer", "notifyServerTimerStart"]
+          }
+        },
+
+        stopped: {
+          start: { enterState: "running",
+            callbacks: ["prepareTimer", "startTimer", "notifyServerTimerStart"]
+          }
+        }
+      },
+
+      //callbacks
+      completeBreakTimer: function (){
+        console.log("DEBUG: in callback completeBreakTimer");
+        self._notifyServerRestPeriodCompleted();
+        self._stopTimer();
+      },
+
+      completeTimer: function (){
+        console.log("DEBUG: in complete timer callback...");
+        self._stopTimer();
+        self._notifyServerTimerCompleted();
+      },
+
+      notifyServerTimerStart: function (){
+        self._notifyServerTimerStart();
+      },
+
+      notifyServerBreakStarted: function (){ 
+        self._notifyServerRestPeriodStarted();
+      },
+
+      pauseRunningTimer: function (){
+        self._pauseTimer();
+        self._notifyServerTimerPaused();
+      },
+
+      prepareBreakTimer: function (){
+        console.log("DEBUG: preparing break timer (callback)");
+        self._windBreakClock();
+        self._resetStartTime();
+        // TODO: REFACTOR: preparing the break timer shouldn't start the timer,
+        // it belongs in the enterstate for on break.
+        self._startTimer(); 
+      },
+
+      prepareTimer: function (){
+        self._windClock();
+        self._resetStartTime();
+      },
+
+      resetTimer: function (){
+        self._stopTimer();
+        self._windClock();
+      },
+
+      resumeTimer: function (){
+        self._startTimer();
+      },
+
+      startTimer: function (){
+        self._windClock();
+        self._resetStartTime();
+        self._startTimer();
+        self._notifyServerTimerStart();
+      }
+    });
+  },
+
   _startTimer: function (){
-    this.set('timer_id', window.setInterval(this._updateTimer.bind(this), this.get('time_interval')));
+    console.log("DEBUG: STARTING THE TIMER ====>");
+    this.set("timer_id", window.setInterval(this._updateTimer.bind(this), this.get("time_interval")));
+    console.log(this.get("timer_id"));
   },
 
   _stopTimer: function (){
@@ -181,37 +298,24 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     delete this.get("start_time"); this.set("start_time", null); //deallocate
   },
 
-  // TODO: Fire any necessary callbacks to the server
-  // This essentially does the state change. Needs to be replaced with a real
-  // state machine
-  _timerFinished: function (){
-    if(this.get("state") == "running"){ //Kick off the rest period.
-      this._stopTimer();
-      this._resetStartTime();
-      this._notifyServerTimerCompleted();
-      this.set("remaining_time", this.get("rest_period_length"));
-      this.set("state", "break");
-      this._startTimer();
-    }else if(this.get("state") == "break"){
-      this._notifyServerRestPeriodCompleted();
-      this.reset();
-    }else{
-      throw "ERROR: Timer completed from an invalid state";
-    }
-  },
-
   _updateTimer: function (){
     var remaining_time
 
     remaining_time = this.get("remaining_time")-this.get("time_interval");
     if(remaining_time <= 0){
-      this._timerFinished();
+      console.log("DEBUG: in update timer, triggering finish, currentState ---> " + this.currentState);
+      this.trigger("finish");
+      //this._timerFinished();
       return;
     }
-    //this.set("remaining_time", remaining_time); // ENABLE FOR TESTING
-    this._verifyTime(); // DISABLE FOR TESTING
+    // The following are two methods of keeping time. Perhaps I should 
+    // encapsulate this functionality and run an updateTime method
+    this.set("remaining_time", remaining_time); // ENABLE FOR TESTING
+    //this._verifyTime(); // DISABLE FOR TESTING
   },
 
+
+  // TODO: MARKED FOR REFACTOR.  This method is flawed and needs update 
   // Check the current time against the when the timer started
   // Update the remaining time accordingly
   _verifyTime: function (){
@@ -233,5 +337,13 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
         throw "Timer is running in an invalid state; unable to verify time remaining";
     }
     delete curr_time; curr_time = null;
+  },
+
+  _windClock: function (){
+    this.set("remaining_time", this.get("timer_length"));
+  },
+
+  _windBreakClock: function (){
+    this.set("remaining_time", this.get("rest_period_length"));
   }
 });

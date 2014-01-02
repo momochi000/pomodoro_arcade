@@ -13,7 +13,7 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     if(!this.model){ throw "ERROR: BaseTimer view initialized without a model"; }
     this._COLOR_RUNNING = "rgb(121, 119, 46)";
     this._COLOR_PAUSED = "rgb(180, 209, 215)";
-    this._COLOR_REST = "rgb(4, 137, 190)";
+    this._COLOR_ON_BREAK = "rgb(4, 137, 190)";
     this._initializeAudio();
     this._bindModelEvents();
   },
@@ -35,10 +35,7 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   },
 
   pauseTimer: function (){
-    this._hidePauseBtn();
     this.model.pause();
-    this._showBackBtn();
-    this._drawArc(); // TODO: STATE MACHINE REFACTOR
   },
 
   render: function (){
@@ -50,9 +47,6 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   },
 
   resetTimer: function (){
-    this._hideStopBtn();
-    this._hidePauseBtn();
-    this._showBackBtn();
     this.model.reset();
   },
 
@@ -62,11 +56,7 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   },
 
   startTimer: function (){
-    this._hideStartBtn();
-    this._showStopBtn();
-    this._hideBackBtn();
     this.model.start();
-    this._drawArc(); // TODO: STATE MACHINE REFACTOR
   },
 
   // Overridden Backbone methods
@@ -90,21 +80,55 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
 
   // TODO STATE MACHINE REFACTOR
   _bindModelEvents: function (){
-    this.model.on("change:state", this._updateTimerButtons.bind(this));
+    // Update display when the model time changes
     this.model.on("change:remaining_time", this._updateTime.bind(this));
-    this.model.on("change:state", this._playSound.bind(this));
-    this.model.on("change:state", this._updateIcon.bind(this));
-    this.model.on("change:state", this._updateColor.bind(this));
-  }, 
+    
+    // Redraw the timer arc whenever there's a transition
+    this.model.on("transition", this._drawArc.bind(this));
 
-  _changeTimerRingColor: function (){
-    //interface with raphael bit   
-    if(!this.circle_tool){return null;}
-    //this.circle_tool.
-  },
+    // Update controls based on state
+    this.model.on("enterState:paused", this._displayPausedControls.bind(this));
+    this.model.on("enterState:running", this._displayRunningControls.bind(this));
+    this.model.on("enterState:stopped", this._displayPausedControls.bind(this));
+    this.model.on("enterState:on_break", this._displayBreakControls.bind(this));
+
+    // Update clock color based on state
+    this.model.on("enterState:paused", this._updateClockColor.bind(this, this._COLOR_PAUSED));
+    this.model.on("enterState:running", this._updateClockColor.bind(this, this._COLOR_RUNNING));
+    this.model.on("enterState:stopped", this._updateClockColor.bind(this, 'red'));
+    this.model.on("enterState:on_break", this._updateClockForBreak.bind(this));
+
+    // Change clock icon based on state
+    this.model.on("enterState:running", this._showStandardClockIcon.bind(this));
+    this.model.on("enterState:stopped", this._showStandardClockIcon.bind(this));
+    this.model.on("enterState:break", this._showBreakIcon.bind(this));
+
+    // Play sound when timer completes
+    this.model.on("enterState:on_break", this._playSound.bind(this));
+  }, 
 
   _clearArc: function (){
     if(this.timer_arc){ this.timer_arc.remove(); }
+  },
+
+  _displayPausedControls: function (){
+    this._hidePauseBtn();
+    this._hideStopBtn();
+    this._showStartBtn();
+    this._showBackBtn();
+  },
+
+  _displayRunningControls: function (){
+    this._hideStartBtn();
+    this._hideBackBtn();
+    this._showPauseBtn();
+    this._showStopBtn();
+  },
+
+  _displayBreakControls: function (){
+    this._hideStartBtn();
+    this._showPauseBtn();
+    this._showStopBtn();
   },
 
   _drawArc: function (){
@@ -122,6 +146,10 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
       yoffset: center_y,
       color: this.timer_color
     });
+  },
+
+  _getModelState: function (){
+    this.model.currentState;
   },
 
   _getTemplateArgs: function (){
@@ -163,14 +191,14 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   },
 
   _playSound: function (){
-    console.log("DEBUG: in play sound (which means we got a change:state event on the model) model --> "+this.model.get('state'));
+    console.log("DEBUG: in play sound (which means we got a change:state event on the model) model --> "+this._getModelState());
     if(this.model.isOnBreak()){
       console.log("DEBUG: _playSound called ~~~~~~~~~~~~~~~~~~~~~~~~~");
       this.audio.play();
     }
   },
 
-  _restIcon: function (){
+  _onBreakIcon: function (){
     return "<div class=\"rest-icon large-timer-icon\"></div>";
   },
 
@@ -182,8 +210,16 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     this.$el.find(".back-btn").show();
   },
 
+  _showBreakIcon: function (){
+    this.$el.find(".large-timer-icon").replaceWith($(this._onBreakIcon()));
+  },
+
   _showPauseBtn: function (){
     this.$el.find(".pause-btn").show();
+  },
+
+  _showStandardClockIcon: function (){
+    this.$el.find(".large-timer-icon").replaceWith($(this._runningIcon()));
   },
 
   _showStartBtn: function (){
@@ -194,41 +230,13 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     this.$el.find(".stop-btn").show();
   },
 
-  // TODO: STATE MACHINE REFACTOR
-  _updateColor: function (){
-    switch(this.model.get("state")){
-      case("paused"):
-        this.timer_color = this._COLOR_PAUSED;
-        break;
-      case("running"):
-        this.timer_color = this._COLOR_RUNNING;
-        break;
-      case("break"):
-        this.timer_color = this._COLOR_REST;
-        this.$el.find(".large-timer-icon").replaceWith($(this._restIcon()));
-        break;
-      default:
-        this.timer_color = null;
-    };
-    return this;
+  _updateClockColor: function (color){
+    this.timer_color = color;
   },
 
-  // TODO: STATE MACHINE REFACTOR
-  // I can tell this is really bad, this will need to stay in sync with any
-  // markup changes on the timer template.
-  _updateIcon: function (){
-    switch(this.model.get("state")){
-      case("paused"):
-        break;
-      case("running"):
-        this.$el.find(".large-timer-icon").replaceWith($(this._runningIcon()));
-        break;
-      case("break"):
-        this.$el.find(".large-timer-icon").replaceWith($(this._restIcon()));
-        break;
-      default:
-        break;
-    };
+  _updateClockForBreak: function (){
+    this._updateClockColor(this._COLOR_ON_BREAK);
+    this._showBreakIcon();
   },
 
   _updateTime: function (){
@@ -236,35 +244,16 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     presenter = this.model.presented();
     this.$el.find(".clock .minutes").html(presenter.minutes);
     this.$el.find(".clock .seconds").html(presenter.seconds);
-    this._clearArc();
+    this._clearArc(); //TODO: See if this is needed, clear is already called in drawArc
     this._drawArc();
   },
 
-  // TODO: STATE_MACHINE_REFACTOR
-  _updateTimerButtons: function (){
-    switch(this.model.get("state")){
-      case("paused"):
-        this._hidePauseBtn();
-        this._hideStopBtn();
-        this._showStartBtn();
-        this._showBackBtn();
-        break;
-      case("running"):
-        this._hideStartBtn();
-        this._showPauseBtn();
-        this._showStopBtn();
-        break;
-      case("break"):
-        this._hideStartBtn();
-        this._showPauseBtn();
-        this._showStopBtn();
-        break;
-      default:
-        break;
-    }
-  },
   _unbindModelEvents: function (){
-    this.model.off("change:state");
     this.model.off("change:remaining_time");
+    this.model.off("enterState:paused");
+    this.model.off("enterState:running");
+    this.model.off("enterState:stopped");
+    this.model.off("enterState:on_break");
+    this.model.off("transition");
   }
 });
