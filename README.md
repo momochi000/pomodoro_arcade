@@ -30,11 +30,15 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
+---
 
-#### Dick around with the index view styling a bit
-  + Need to indicate when the timer is in rest mode
-  + The timer index view and show view is still in raw developer style
+## BACKLOG
 
+#### BUG: Pausing the timer and continuing it seems to reset it
+#### BUG: Goign back and forth with the browser resets the timer correctly but multiple callbacks are bound and the timer decremnts like mad.
+#### Update the demo timer work correctly off of the base timer
+  + Perhaps demo timer should inherit from the base timer.. it needs to not 
+    talk to the server
 #### Add ability to show progress 
   + (DONE)First do some design on paper as to how this should look.
   + Graph of pomodoros over time
@@ -54,7 +58,6 @@ period in order to truly leverage the pomodoro technique.
     * calendar view with blank O X * ∆
     * for none, some progress, reached velocity, reached goal, exceeded goal
   + velocity over time
-
 #### Daily progress (self) analytic view
   + list of timers with goal/velocity/current reached
   + simple bar graphs for now.
@@ -62,27 +65,16 @@ period in order to truly leverage the pomodoro technique.
   + probably use d3
   1. install d3 (or highcharts depending on whose api is more up to date)
   2. create the backend around goals velocity etc. Must be tested
-  3. 
-
----
-
-## BACKLOG
-
-#### Build a deploy rake task
-#### BUG: Pausing the timer and continuing it seems to reset it
-#### BUG: Goign back and forth with the browser resets the timer correctly but multiple callbacks are bound and the timer decremnts like mad.
 #### Play a different sound for rest timer completion
 #### Open tracker proj
   + This mess is getting too big for a text file.
 #### Refreshing the page while timer running doesn't interrupt it
 #### Ensure audio play correctly on mobile devices/browsers
   + For now just check chrome on android and ios
-
 #### Add ability to choose icon for a timer
 #### Fix the size of the timer progress bar (too big for phones now) 
   + Should adapt depending on the size of the screen, maybe use a media query
     in the javascript to render one of several size arcs.
-
 #### Further style the timer progress bar with colors/glow/border/etc
 #### Ensure each user has a default pomodoro by default
   + Javascript ensures a default Pomodoro is available, but if the user starts 
@@ -90,17 +82,14 @@ period in order to truly leverage the pomodoro technique.
     one activity timer to their name which is the default Pomodoro. Also ensure
     the default one created by javascript doesn't get added if that database
     one is present.
-
 #### BUG: when the progress bar renders in landscape and phone rotates to portrait
   + The progress bar is broken/shifted to the left
   + Might want to recenter on each render.
-
 #### Test the timers_controller
 #### Add some jasmines, or at least a jasmine test harness
 #### Ensure the timer progress bar works properly with rest period.
 #### Come up with a logo
   + Make a tiny version for favico
-
 #### Allow the tune/tone that plays to be configurable
 #### delete action/option
   + This needs to be in a separate view, I don't think an edit action is 
@@ -109,7 +98,6 @@ period in order to truly leverage the pomodoro technique.
     the effort you spent.  I'm thinking of delete being someting like how iOS
     handles edit/delete actions.  There's a little info button that takes you
     to another screen where you can delete.
-
 #### Make the audio more accomodating to more browsers
   + audio support spotty, doesn't seem to play on chrome or safari
   + http://stackoverflow.com/questions/10951524/play-and-replay-a-sound-on-safari-mobile
@@ -170,13 +158,18 @@ period in order to truly leverage the pomodoro technique.
 
 ## DONE
 
+#### Fix the colors
+  + color changes on the timer hand are inconsistent
+#### Build a deploy rake task
+#### Dick around with the index view styling a bit
+  + Need to indicate when the timer is in rest mode
+  + The timer index view and show view is still in raw developer style
 #### Going to index view should reset all the timers
 #### Add audio on timer completion
 #### BUG: When the rest period completes, the back button doesn't display
 #### BUG: break timer seems to be broken.
   + Probably related to the new _verifyTime method.   I suspect the time is 
     being saved but when the state changes, the time isn't being re-saved.
-
 #### Make the timer work properly in the background on mobile
   + When the phone is locked or the browser is navigated away
   + http://stackoverflow.com/questions/7047989/javascript-stops-as-i-lock-iphone-can-it-still-run

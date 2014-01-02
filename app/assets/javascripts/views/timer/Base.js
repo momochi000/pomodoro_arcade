@@ -83,9 +83,6 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     // Update display when the model time changes
     this.model.on("change:remaining_time", this._updateTime.bind(this));
     
-    // Redraw the timer arc whenever there's a transition
-    this.model.on("transition", this._drawArc.bind(this));
-
     // Update controls based on state
     this.model.on("enterState:paused", this._displayPausedControls.bind(this));
     this.model.on("enterState:running", this._displayRunningControls.bind(this));
@@ -232,6 +229,7 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
 
   _updateClockColor: function (color){
     this.timer_color = color;
+    this._drawArc();
   },
 
   _updateClockForBreak: function (){
