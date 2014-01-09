@@ -84,24 +84,28 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
     this.model.on("change:remaining_time", this._updateTime.bind(this));
     
     // Update controls based on state
-    this.model.on("enterState:paused", this._displayPausedControls.bind(this));
-    this.model.on("enterState:running", this._displayRunningControls.bind(this));
-    this.model.on("enterState:stopped", this._displayPausedControls.bind(this));
-    this.model.on("enterState:on_break", this._displayBreakControls.bind(this));
+    this.model.on("enterState:paused",          this._displayPausedControls.bind(this));
+    this.model.on("enterState:paused_break",    this._displayPausedControls.bind(this));
+    this.model.on("enterState:running",         this._displayRunningControls.bind(this));
+    this.model.on("enterState:stopped",         this._displayPausedControls.bind(this));
+    this.model.on("enterState:on_break",        this._displayRunningControls.bind(this));
 
     // Update clock color based on state
     this.model.on("enterState:paused", this._updateClockColor.bind(this, this._COLOR_PAUSED));
     this.model.on("enterState:running", this._updateClockColor.bind(this, this._COLOR_RUNNING));
     this.model.on("enterState:stopped", this._updateClockColor.bind(this, 'red'));
-    this.model.on("enterState:on_break", this._updateClockForBreak.bind(this));
+    this.model.on("enterState:on_break", this._updateClockColor.bind(this, this._COLOR_ON_BREAK));
 
     // Change clock icon based on state
     this.model.on("enterState:running", this._showStandardClockIcon.bind(this));
     this.model.on("enterState:stopped", this._showStandardClockIcon.bind(this));
-    this.model.on("enterState:break", this._showBreakIcon.bind(this));
+    this.model.on("enterState:on_break", this._showBreakIcon.bind(this));
 
     // Play sound when timer completes
     this.model.on("enterState:on_break", this._playSound.bind(this));
+
+    // Redraw the arc when the timer stops
+    this.model.on("enterState:stopped", this._drawArc.bind(this));
   }, 
 
   _clearArc: function (){
@@ -118,12 +122,6 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
   _displayRunningControls: function (){
     this._hideStartBtn();
     this._hideBackBtn();
-    this._showPauseBtn();
-    this._showStopBtn();
-  },
-
-  _displayBreakControls: function (){
-    this._hideStartBtn();
     this._showPauseBtn();
     this._showStopBtn();
   },

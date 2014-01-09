@@ -31,7 +31,8 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   },
 
   elapsedTime: function (){
-    return(this.get("timer_length") - this.get("remaining_time"));
+    //return(this.get("timer_length") - this.get("remaining_time"));
+    return(this._calculateTimeElapsed() * 1000);
   },
 
   isPaused: function (){
@@ -50,13 +51,21 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     this.trigger("pause");
   },
 
+  //TODO: STATE MACHINE REFACTOR
   pctComplete: function (){
     //var pct = (this.elapsedTime() / this.get("timer_length")) * 100 ;
     //console.log("DEBUG: percent of the timer complete ---> "+pct);
     //return pct;
+
     //return((this.elapsedTime() / this.get("timer_length")) * 100 );
-    //return((this.elapsedTime() / this.get("timer_length")) * 100 );
-    return( this.get("remaining_time") / this.get("timer_length") * 100  ); //TODO: REMOVE. TEST TO START THE CIRCLE AS FULL
+
+    if(this.currentState == "on_break" || this.currentState == "paused_break"){
+      console.log("PCT COMPLETE CALLED ON BREAK");
+      return( this.get("remaining_time") / this.get("rest_period_length") * 100  ); //TODO: REMOVE. TEST TO START THE CIRCLE AS FULL
+    }else{
+      console.log("PCT COMPLETE CALLED OTHERWISE");
+      return( this.get("remaining_time") / this.get("timer_length") * 100  ); //TODO: REMOVE. TEST TO START THE CIRCLE AS FULL
+    }
   },
 
   reset: function (){
@@ -150,6 +159,18 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     if(timer_id){ window.clearInterval(timer_id); }
   },
 
+  _recordElapsedTime: function (){
+    this.set("elapsed_time", this._calculateTimeElapsed());
+  },
+
+  _resetElapsedTime: function (){
+    this.set("elapsed_time", 0);
+  },
+
+  _resetRemainingTime: function (){
+    this.set("remaining_time", 0);
+  },
+
   _resetStartTime: function (){
     this.set("start_time", new Date().getTime());
   },
@@ -183,11 +204,14 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
 
         on_break: {
           pause: { enterState: "paused_break",
-            callbacks: ["pauseRunningTimer"]
+            callbacks: ["recordElapsedTime", "pauseRunningTimer"]
           },
           finish: { enterState: "stopped",
-            callbacks: ["completeBreakTimer", "prepareTimer"]
-          }
+            callbacks: ["completeBreakTimer", "resetTimer"]
+          },
+          reset: { enterState: "stopped",
+            callbacks: ["resetTimer"]
+          },
         },
 
         paused: {
@@ -210,13 +234,13 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
 
         running: {
           pause: { enterState: "paused",
-            callbacks: ["pauseRunningTimer"]
+            callbacks: ["recordElapsedTime", "pauseRunningTimer"]
           },
           reset: { enterState: "stopped",
             callbacks: ["resetTimer"]
           },
           finish: { enterState: "on_break",
-            callbacks: ["completeTimer", "prepareBreakTimer", "notifyServerTimerStart"]
+            callbacks: ["completeTimer", "prepareBreakTimer", "resumeTimer"]
           }
         },
 
@@ -231,7 +255,6 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
       completeBreakTimer: function (){
         console.log("DEBUG: in callback completeBreakTimer");
         self._notifyServerRestPeriodCompleted();
-        self._stopTimer();
       },
 
       completeTimer: function (){
@@ -257,22 +280,34 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
         console.log("DEBUG: preparing break timer (callback)");
         self._windBreakClock();
         self._resetStartTime();
-        // TODO: REFACTOR: preparing the break timer shouldn't start the timer,
-        // it belongs in the enterstate for on break.
-        self._startTimer(); 
+        self._resetElapsedTime();
       },
 
       prepareTimer: function (){
         self._windClock();
         self._resetStartTime();
+        self._resetElapsedTime();
+      },
+
+      recordElapsedTime: function (){
+        self._recordElapsedTime();
       },
 
       resetTimer: function (){
         self._stopTimer();
         self._windClock();
+        self._resetStartTime();
+        self._resetElapsedTime();
       },
 
       resumeTimer: function (){
+        self._resetStartTime();
+        self._startTimer();
+      },
+
+      startBreakTimer: function (){
+        self._windBreakClock();
+        self._resetStartTime();
         self._startTimer();
       },
 
@@ -280,7 +315,6 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
         self._windClock();
         self._resetStartTime();
         self._startTimer();
-        self._notifyServerTimerStart();
       }
     });
   },
@@ -299,44 +333,56 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
   },
 
   _updateTimer: function (){
-    var remaining_time
+    var total_elapsed_time, remaining_time;
 
-    remaining_time = this.get("remaining_time")-this.get("time_interval");
+    //remaining_time = this.get("remaining_time")-this.get("time_interval");
+    //if(remaining_time <= 0){
+    //  console.log("DEBUG: in update timer, triggering finish, currentState ---> " + this.currentState);
+    //  this.trigger("finish");
+    //  return;
+    //}
+
+    //this.set("remaining_time", remaining_time); // ENABLE FOR TESTING
+    total_elapsed_time = this._calculateTimeElapsed(); // DISABLE FOR TESTING
+    // TODO: STATE MACHINE REFACTOR
+    if(this.currentState == "running"){
+      remaining_time = this.get("timer_length") - total_elapsed_time*1000;
+    }else if(this.currentState == "on_break"){
+      remaining_time = this.get("rest_period_length") - total_elapsed_time*1000;
+    }else{
+      throw "Attempting to update timer in an invalid state"
+    }
+    //console.log("DEBUG: timer_length is ---> " + this.get("timer_length"));
+    //console.log("DEBUG: remaining_time calculation is -->" + remaining_time);
     if(remaining_time <= 0){
       console.log("DEBUG: in update timer, triggering finish, currentState ---> " + this.currentState);
       this.trigger("finish");
-      //this._timerFinished();
       return;
     }
-    // The following are two methods of keeping time. Perhaps I should 
-    // encapsulate this functionality and run an updateTime method
-    this.set("remaining_time", remaining_time); // ENABLE FOR TESTING
-    //this._verifyTime(); // DISABLE FOR TESTING
+    this.set("remaining_time", remaining_time);
   },
-
 
   // TODO: MARKED FOR REFACTOR.  This method is flawed and needs update 
   // Check the current time against the when the timer started
   // Update the remaining time accordingly
-  _verifyTime: function (){
-    var start_time, curr_time, calculated_seconds_remaining, calculated_time_remaining;
+  _calculateTimeElapsed: function (){
+    var start_time, curr_time, seconds_elapsed, elapsed_previously;
 
+    //console.log("DEBUG: in _calculateTimeElapsed~~~~~~~~~~");
     curr_time = new Date().getTime();
     start_time = this.get("start_time");
-    calculated_seconds_remaining = Math.floor((curr_time - start_time) / 1000);
-    calculated_time_remaining = calculated_seconds_remaining * 1000;
-    // NOTE: depending on the timer state, we either need to update by what time is left or
-    switch(this.get("state")){
-      case "running":
-        this.set("remaining_time", (this.get("timer_length") - calculated_time_remaining));
-        break;
-      case "break":
-        this.set("remaining_time", (this.get("rest_period_length") - calculated_time_remaining));
-        break;
-      default:
-        throw "Timer is running in an invalid state; unable to verify time remaining";
-    }
+    //console.log("DEBUG: curr_time               -> " + curr_time);
+    //console.log("DEBUG: start_time              -> " + start_time);
+
+    elapsed_previously = this.get("elapsed_time");
+
+    //console.log("DEBUG: previously_elapsed      -> " + elapsed_previously);
+
+    seconds_elapsed = Math.floor(((curr_time - start_time) / 1000) + elapsed_previously);
+
     delete curr_time; curr_time = null;
+    //console.log("DEBUG: seconds elapsed is --->" + seconds_elapsed);
+    return seconds_elapsed;
   },
 
   _windClock: function (){
