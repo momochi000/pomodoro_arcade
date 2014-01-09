@@ -30,12 +30,14 @@ period in order to truly leverage the pomodoro technique.
 
 ## CURRENT
 
+
 ---
 
 ## BACKLOG
 
-#### BUG: Pausing the timer and continuing it seems to reset it
-#### BUG: Goign back and forth with the browser resets the timer correctly but multiple callbacks are bound and the timer decremnts like mad.
+#### BUG: When (break) timer finishes, the hand isn't drawn correctly
+#### BUG: When using back and forward, the timer controls aren't presented correctly
+#### BUG: When going back and forth on browser, the wrong controls show up on the timer
 #### Update the demo timer work correctly off of the base timer
   + Perhaps demo timer should inherit from the base timer.. it needs to not 
     talk to the server
@@ -68,7 +70,7 @@ period in order to truly leverage the pomodoro technique.
 #### Play a different sound for rest timer completion
 #### Open tracker proj
   + This mess is getting too big for a text file.
-#### Refreshing the page while timer running doesn't interrupt it
+#### Ensure refreshing the page while timer running doesn't interrupt it
 #### Ensure audio play correctly on mobile devices/browsers
   + For now just check chrome on android and ios
 #### Add ability to choose icon for a timer
@@ -158,6 +160,15 @@ period in order to truly leverage the pomodoro technique.
 
 ## DONE
 
+#### BUG: Going back and forth with the browser resets the timer correctly but multiple callbacks are bound and the timer decremnts like mad.
+  + This depends on which timekeeping method we use.  Seems to work ok with the
+    simple decrement method but this isn't feasible for mobile.
+  + Fix the verification timekeeping method
+  + when transitioning to break timer, the time period seems off.  This seems
+    to happen when pausing for any period of time while the timer runs.
+  + pausing the break timer doesn't show the appropriate controls
+  + stop button doesn't work
+  + stopping timer while on break causes the timer hand to render incorrectly
 #### Fix the colors
   + color changes on the timer hand are inconsistent
 #### Build a deploy rake task
