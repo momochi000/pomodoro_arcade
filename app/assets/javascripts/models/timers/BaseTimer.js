@@ -159,6 +159,13 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     if(timer_id){ window.clearInterval(timer_id); }
   },
 
+  _resetTimer: function(){
+    this._stopTimer();
+    this._windClock();
+    this._resetStartTime();
+    this._resetElapsedTime();
+  },
+
   _recordElapsedTime: function (){
     this.set("elapsed_time", this._calculateTimeElapsed());
   },
@@ -194,20 +201,20 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     _.extend(this, Backbone.StateMachine, Backbone.Events, {
       states: {
         on_break: {},
-        paused: {},
+        paused: { enter: [self._recordElapsedTime, self._pauseTimer, self._notifyServerTimerPaused] },
         paused_break: {},
         running: {},
-        stopped: {},
+        stopped: { enter: [self._resetTimer] },
       },
       transitions: {
         init: { initialized: "stopped" },
 
         on_break: {
           pause: { enterState: "paused_break",
-            callbacks: ["recordElapsedTime", "pauseRunningTimer"]
+            callbacks: []
           },
           finish: { enterState: "stopped",
-            callbacks: ["completeBreakTimer", "resetTimer"]
+            callbacks: ["completeBreakTimer"]
           },
           reset: { enterState: "stopped",
             callbacks: ["resetTimer"]
@@ -234,7 +241,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
 
         running: {
           pause: { enterState: "paused",
-            callbacks: ["recordElapsedTime", "pauseRunningTimer"]
+            callbacks: []
           },
           reset: { enterState: "stopped",
             callbacks: ["resetTimer"]
@@ -253,7 +260,6 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
 
       //callbacks
       completeBreakTimer: function (){
-        console.log("DEBUG: in callback completeBreakTimer");
         self._notifyServerRestPeriodCompleted();
       },
 
@@ -294,10 +300,7 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
       },
 
       resetTimer: function (){
-        self._stopTimer();
-        self._windClock();
-        self._resetStartTime();
-        self._resetElapsedTime();
+        self._resetTimer();
       },
 
       resumeTimer: function (){
@@ -362,7 +365,6 @@ PomodoroArcade.Models.BaseTimer = Backbone.Model.extend({
     this.set("remaining_time", remaining_time);
   },
 
-  // TODO: MARKED FOR REFACTOR.  This method is flawed and needs update 
   // Check the current time against the when the timer started
   // Update the remaining time accordingly
   _calculateTimeElapsed: function (){

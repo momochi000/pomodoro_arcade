@@ -103,9 +103,6 @@ PomodoroArcade.Views.BaseTimer = PomodoroArcade.Views.Base.extend({
 
     // Play sound when timer completes
     this.model.on("enterState:on_break", this._playSound.bind(this));
-
-    // Redraw the arc when the timer stops
-    this.model.on("enterState:stopped", this._drawArc.bind(this));
   }, 
 
   _clearArc: function (){
