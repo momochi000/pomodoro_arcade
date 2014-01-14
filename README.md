@@ -27,20 +27,14 @@ period in order to truly leverage the pomodoro technique.
 ---
 
 ---
-
 ## CURRENT
 
+#### BUG: Rest timer icon doesn't display (on prod)
+#### BUG: Timer completion sound doesn't play (on prod)
 
 ---
-
 ## BACKLOG
 
-#### BUG: When (break) timer finishes, the hand isn't drawn correctly
-#### BUG: When using back and forward, the timer controls aren't presented correctly
-#### BUG: When going back and forth on browser, the wrong controls show up on the timer
-#### Update the demo timer work correctly off of the base timer
-  + Perhaps demo timer should inherit from the base timer.. it needs to not 
-    talk to the server
 #### Add ability to show progress 
   + (DONE)First do some design on paper as to how this should look.
   + Graph of pomodoros over time
@@ -68,6 +62,8 @@ period in order to truly leverage the pomodoro technique.
   1. install d3 (or highcharts depending on whose api is more up to date)
   2. create the backend around goals velocity etc. Must be tested
 #### Play a different sound for rest timer completion
+#### BUG: When going back and forth on browser, the wrong controls show up on the timer
+#### BUG: When using back and forward, the timer controls aren't presented correctly
 #### Open tracker proj
   + This mess is getting too big for a text file.
 #### Ensure refreshing the page while timer running doesn't interrupt it
@@ -84,6 +80,9 @@ period in order to truly leverage the pomodoro technique.
     one activity timer to their name which is the default Pomodoro. Also ensure
     the default one created by javascript doesn't get added if that database
     one is present.
+#### Update the demo timer work correctly off of the base timer
+  + Perhaps demo timer should inherit from the base timer.. it needs to not 
+    talk to the server
 #### BUG: when the progress bar renders in landscape and phone rotates to portrait
   + The progress bar is broken/shifted to the left
   + Might want to recenter on each render.
@@ -99,7 +98,10 @@ period in order to truly leverage the pomodoro technique.
     your efforts.  If you change the timer settings then we'll lose data on
     the effort you spent.  I'm thinking of delete being someting like how iOS
     handles edit/delete actions.  There's a little info button that takes you
-    to another screen where you can delete.
+    to another screen where you can delete.  On second thought, edit should be
+    acceptable.  You should be able to edit the name of the timer, the icon, 
+    and your daily goal. However you shouldn't be able to change the time.
+    If you want to change the time you should delete and create a new one.
 #### Make the audio more accomodating to more browsers
   + audio support spotty, doesn't seem to play on chrome or safari
   + http://stackoverflow.com/questions/10951524/play-and-replay-a-sound-on-safari-mobile
@@ -157,9 +159,9 @@ period in order to truly leverage the pomodoro technique.
 #### Omni auth
 
 ---
-
 ## DONE
 
+#### BUG: When (break) timer finishes, the hand isn't drawn correctly
 #### BUG: Going back and forth with the browser resets the timer correctly but multiple callbacks are bound and the timer decremnts like mad.
   + This depends on which timekeeping method we use.  Seems to work ok with the
     simple decrement method but this isn't feasible for mobile.

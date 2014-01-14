@@ -9,6 +9,7 @@ gem 'font-awesome-rails'
 #gem 'foreigner'
 gem 'haml'
 gem 'haml-rails'
+gem 'jquery-rails'
 gem 'pg'
 gem 'rails-backbone'
 #gem 'rake'
@@ -42,8 +43,6 @@ end
 group :production do
   gem 'rails_12factor'
 end
-
-gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
