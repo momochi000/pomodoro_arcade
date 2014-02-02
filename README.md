@@ -29,12 +29,11 @@ period in order to truly leverage the pomodoro technique.
 ---
 ## CURRENT
 
-#### BUG: Rest timer icon doesn't display (on prod)
-#### BUG: Timer completion sound doesn't play (on prod)
-
 ---
 ## BACKLOG
 
+#### BUG: Rest timer icon doesn't display (on prod)
+#### BUG: Timer completion sound doesn't play (on prod)
 #### Add ability to show progress 
   + (DONE)First do some design on paper as to how this should look.
   + Graph of pomodoros over time
@@ -61,11 +60,17 @@ period in order to truly leverage the pomodoro technique.
   + probably use d3
   1. install d3 (or highcharts depending on whose api is more up to date)
   2. create the backend around goals velocity etc. Must be tested
+#### Display a flash message once a timer has been completed. 
+  + Often you'll come back to the timer after it's already finished (break 
+    time finished) and it's not immediately clear that it's done.  May want
+    to indicate at what time it was completed.
 #### Play a different sound for rest timer completion
 #### BUG: When going back and forth on browser, the wrong controls show up on the timer
 #### BUG: When using back and forward, the timer controls aren't presented correctly
 #### Open tracker proj
   + This mess is getting too big for a text file.
+#### Setup paper trail to keep track of the change history to goal 
+  + Rather than the wierd hack to only count the latest goal.
 #### Ensure refreshing the page while timer running doesn't interrupt it
 #### Ensure audio play correctly on mobile devices/browsers
   + For now just check chrome on android and ios
@@ -92,16 +97,6 @@ period in order to truly leverage the pomodoro technique.
 #### Come up with a logo
   + Make a tiny version for favico
 #### Allow the tune/tone that plays to be configurable
-#### delete action/option
-  + This needs to be in a separate view, I don't think an edit action is 
-    appropriate.  You cannot edit a timer since a timer keeps track of
-    your efforts.  If you change the timer settings then we'll lose data on
-    the effort you spent.  I'm thinking of delete being someting like how iOS
-    handles edit/delete actions.  There's a little info button that takes you
-    to another screen where you can delete.  On second thought, edit should be
-    acceptable.  You should be able to edit the name of the timer, the icon, 
-    and your daily goal. However you shouldn't be able to change the time.
-    If you want to change the time you should delete and create a new one.
 #### Make the audio more accomodating to more browsers
   + audio support spotty, doesn't seem to play on chrome or safari
   + http://stackoverflow.com/questions/10951524/play-and-replay-a-sound-on-safari-mobile
@@ -161,6 +156,18 @@ period in order to truly leverage the pomodoro technique.
 ---
 ## DONE
 
+#### Delete action
+  + This needs to be in a separate view, I don't think an edit action is 
+    appropriate.  You cannot edit a timer since a timer keeps track of
+    your efforts.  If you change the timer settings then we'll lose data on
+    the effort you spent.  I'm thinking of delete being someting like how iOS
+    handles edit/delete actions.  There's a little info button that takes you
+    to another screen where you can delete.  On second thought, edit should be
+    acceptable.  You should be able to edit the name of the timer, the icon, 
+    and your daily goal. However you shouldn't be able to change the time.
+    If you want to change the time you should delete and create a new one.
+
+#### Edit action
 #### BUG: When (break) timer finishes, the hand isn't drawn correctly
 #### BUG: Going back and forth with the browser resets the timer correctly but multiple callbacks are bound and the timer decremnts like mad.
   + This depends on which timekeeping method we use.  Seems to work ok with the
