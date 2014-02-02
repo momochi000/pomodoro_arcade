@@ -1,5 +1,6 @@
-= render :file => 'backbone_templates/index'
-= render :file => 'backbone_templates/new'
-= render :file => 'backbone_templates/timers/base'
-= render :file => 'backbone_templates/timers/demo'
-= render :file => 'backbone_templates/timers/base_mini'
+-# Partial to help render the backbone templates.  Really it's just going to 
+-# render some arbitrary files. 
+-# Locals: templates(Array) set of templates to render
+
+- templates.each do |t|
+  = render :file => t

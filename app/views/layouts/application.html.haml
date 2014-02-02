@@ -13,7 +13,8 @@
 
     = yield
 
-    = render :partial => 'layouts/backbone_templates/pomodoro_arcade_templates'
+    = render_backbone_templates
+
     = javascript_include_tag "application"
     = yield :javascripts
     :javascript
