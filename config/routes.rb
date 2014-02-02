@@ -54,7 +54,7 @@ PomodoroArcade::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => 'welcome#index'
 
-  resources :timers, :only => [:index, :create, :destroy] do
+  resources :timers, :only => [:index, :create, :update, :destroy] do
     post 'started'
     post 'completed'
     post 'rest_completed'
