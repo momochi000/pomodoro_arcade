@@ -6,6 +6,7 @@ PomodoroArcade.Router = Backbone.Router.extend({
     "new/":         "new",
     "show/:id":     "show",
     "edit/:id":     "edit",
+    "delete/:id":   "delete",
   },
 
   initialize: function (options){
@@ -58,15 +59,30 @@ PomodoroArcade.Router = Backbone.Router.extend({
     this.current_view.startTimer();
   },
 
+  delete: function (id){
+    timer = this.timer_collection.get(id);
+    if(timer){
+      timer.destroy({
+        wait: true,
+        success: function (){
+          PomodoroArcade.router.navigate("index/", {trigger: true});
+        },
+        error: function (){
+          console.log("DEBUG: ERROR CONDITION ON DELETE");
+        }
+      });
+    }
+  },
+
   edit: function (id){
     if(this.current_view){this.current_view.sleep();}
     timer = this.timer_collection.get(id);
 
     if(!this.views.edit_view){
-      this.views.edit_view = new PomodoroArcade.Views.Edit({model: tiemr, id: id});
+      this.views.edit_view = new PomodoroArcade.Views.Edit({model: timer, id: id});
     }else{
-      this.views.new_view.render();
-      this.views.new_view.awaken();
+      this.views.edit_view.render();
+      this.views.edit_view.awaken();
     }
   },
 
@@ -75,15 +91,6 @@ PomodoroArcade.Router = Backbone.Router.extend({
   containerId: function (){ return this.options.container_id; },
 
   // private
-  //_handleRouteToAction: function (router, fragment, args){
-  //  console.log("DEBUG: _handleRouteToAction WAS TRIGGERED~~~~~");
-  //  console.log(router);
-  //  console.log(fragment);
-  //  console.log(args);
-  //  console.log("DEBUG: current view is --->");
-  //  console.log(this.current_view);
-  //  console.log("=================================================");
-  //},
 
   _initTimerCollection: function (collection_data){
     var collection_json;
