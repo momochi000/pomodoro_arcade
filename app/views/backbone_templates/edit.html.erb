@@ -1,5 +1,6 @@
 <script type="text/template" id="timer_edit_template">
-  <label for="edit-timer-name">Name: {{name}}</label>
+  <label for="edit-timer-title">Title</label>
+  <input name="name" id="edit-timer-title" value="{{title}}">
   <label for="edit-timer-time">Timer Length: {{timer_length_minutes}}</label>
   <label for="edit-timer-break-time">Break Time: {{rest_period_minutes}}</label>
   <label for="edit-timer-goal">Goal (number per day)</label>
@@ -7,4 +8,5 @@
 
   <div class="save-btn btn btn-primary">SAVE</div>
   <div class="back-btn btn btn-info">CANCEL</div>
+  <div class="delete-btn btn btn-danger">DELETE</div>
 </script>
