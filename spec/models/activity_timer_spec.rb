@@ -116,6 +116,9 @@ describe ActivityTimer do
         context "with an unsaved timer" do
           let(:new_timer) { FactoryGirl.build(:activity_timer) }
           let(:new_goal_value) { 30 }
+          before do
+            new_timer.goals.should be_empty
+          end
 
           it "should set the goal for the timer" do
             new_timer.goal = new_goal_value

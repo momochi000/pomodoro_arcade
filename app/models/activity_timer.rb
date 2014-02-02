@@ -54,11 +54,12 @@ class ActivityTimer < ActiveRecord::Base
   end
 
   def goal
-    curr_goals = goals.order("created_at DESC")
-    if curr_goals.empty?
-      goals.first || NullGoal.new
+    if goals.empty?
+      NullGoal.new
     else
-      curr_goals.first
+      # NOTE: Smell here, have to return goals.first if none of the goals are 
+      #   persisted, since created_at will be nil
+      goals.order("created_at DESC").first || goals.first
     end
   end
 
@@ -66,7 +67,9 @@ class ActivityTimer < ActiveRecord::Base
     create_new_goal(value)
   end
 
+  # TO BE IMPLEMENTED
   def goal_reached?(date=nil)
+    raise "IMPLEMENT ME"
   end
 
   # Number of this timer completed by a given user
@@ -118,8 +121,11 @@ class ActivityTimer < ActiveRecord::Base
     return unless new_value
     if self.persisted?
       goals.create(:value => new_value)
-    else
+    elsif goal.is_a? NullGoal
       goals.build(:value => new_value)
+    else
+      g = goals.order("created_at DESC").first
+      g.value = new_value
     end
   end
 end

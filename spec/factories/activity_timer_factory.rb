@@ -4,4 +4,8 @@ FactoryGirl.define do
     time { (rand() * 45).floor}
     break_time { (rand() * 15).floor}
   end
+
+  factory :timer_with_goal, :parent => :activity_timer do
+    goal {(rand() * 8).floor}
+  end
 end
