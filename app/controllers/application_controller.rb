@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, :if => :devise_controller?
 
+  def logged_in?
+    current_user.present?
+  end
+
   private
 
   def configure_permitted_parameters
