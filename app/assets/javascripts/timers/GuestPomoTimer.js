@@ -55,7 +55,6 @@ var GuestPomoTimer = (function($){
     renderTimer();
   };
 
-  // LEFT OFF
   timerCompleteCallback = function (){
     $.ajax()
   }
