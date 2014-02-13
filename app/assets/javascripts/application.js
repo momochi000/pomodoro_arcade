@@ -19,6 +19,8 @@
 //= require backbone_statemachine
 //= require fastclick.min
 //= require raphael
+//= require d3
+//= require nv.d3
 //= require bootstrap/collapse
 //= require bootstrap/alert
 //= require PomodoroArcade
