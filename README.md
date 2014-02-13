@@ -28,13 +28,17 @@ period in order to truly leverage the pomodoro technique.
 
 ---
 ## CURRENT
+#### Daily progress (self) analytic view
+  + list of timers with goal/velocity/current reached
+  + simple bar graphs for now.
+  + bar graph extending horizontally.
 
 ---
 ## BACKLOG
 
 #### BUG: Rest timer icon doesn't display (on prod)
 #### BUG: Timer completion sound doesn't play (on prod)
-#### Add ability to show progress 
+#### Add ability to show progress (BREAK INTO STORIES)
   + (DONE)First do some design on paper as to how this should look.
   + Graph of pomodoros over time
   + Need some kind of calendar/history view.  Realistically your goal is going 
@@ -53,13 +57,6 @@ period in order to truly leverage the pomodoro technique.
     * calendar view with blank O X * ∆
     * for none, some progress, reached velocity, reached goal, exceeded goal
   + velocity over time
-#### Daily progress (self) analytic view
-  + list of timers with goal/velocity/current reached
-  + simple bar graphs for now.
-  + must choose graphing suite
-  + probably use d3
-  1. install d3 (or highcharts depending on whose api is more up to date)
-  2. create the backend around goals velocity etc. Must be tested
 #### Display a flash message once a timer has been completed. 
   + Often you'll come back to the timer after it's already finished (break 
     time finished) and it's not immediately clear that it's done.  May want
