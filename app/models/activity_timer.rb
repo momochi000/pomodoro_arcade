@@ -78,13 +78,18 @@ class ActivityTimer < ActiveRecord::Base
   end
   alias_method :num_completed, :number_completed 
 
+  def number_completed_on_day(date)
+    completed_events_on_day(date).count
+  end
+
+  def number_completed_today
+    completed_events_today.count
+  end
+  alias_method :number_completed_events_today, :number_completed_today
+
   # Number of times the full timer cycle has completed including rest period
   def number_fully_completed
     rest_completed_events.count
-  end
-
-  def number_completed_events_today
-    completed_events_today.count
   end
 
   def rest_completed
