@@ -36,6 +36,7 @@ period in order to truly leverage the pomodoro technique.
 ---
 ## BACKLOG
 
+#### Change 'daily' progress view to say 'today'
 #### BUG: Rest timer icon doesn't display (on prod)
 #### BUG: Timer completion sound doesn't play (on prod)
 #### Add ability to show progress (BREAK INTO STORIES)
