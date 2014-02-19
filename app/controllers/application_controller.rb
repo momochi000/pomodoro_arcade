@@ -9,6 +9,13 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def authorize_user
+    unless logged_in?
+      flash[:alert] = "You must be logged in to do that"
+      return redirect_to new_user_session_path
+    end
+  end
+
   def configure_permitted_parameters
   end
 end

@@ -1,8 +1,4 @@
 PomodoroArcade::Application.routes.draw do
-  devise_for :users
-
-  match '/timers' => 'timers#index', :via => :get, :as => 'user_root'
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -50,9 +46,13 @@ PomodoroArcade::Application.routes.draw do
   #     resources :products
   #   end
 
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  root :to => 'welcome#index'
+  devise_for :users
+
+  match '/timers' => 'timers#index', :via => :get, :as => 'user_root'
+
+  resource :progress, :only => [:show] do
+    resource :daily, :only => [:show], :controller => 'progress/daily'
+  end
 
   resources :timers, :only => [:index, :create, :update, :destroy] do
     post 'started'
@@ -60,5 +60,6 @@ PomodoroArcade::Application.routes.draw do
     post 'rest_completed'
   end
 
+  root :to => 'welcome#index'
   resources :sandbox, :only => :index
 end

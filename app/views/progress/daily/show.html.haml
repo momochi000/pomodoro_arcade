@@ -1,0 +1,12 @@
+%h1 Show Daily Progress
+%hr
+
+%span Chart should appear below
+#chart1
+  %svg
+%span Chart should appear above
+
+- content_for :javascripts do
+  :javascript
+    var bar_chart = PomodoroArcade.Charts.BarChart.create("#chart1 svg", #{@chart.to_json});
+    bar_chart.render();
