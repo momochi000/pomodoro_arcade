@@ -36,6 +36,8 @@ period in order to truly leverage the pomodoro technique.
 ---
 ## BACKLOG
 
+#### Add date range to velocity
+  + Able to calculate velocity in a previous time frame
 #### Change 'daily' progress view to say 'today'
 #### BUG: Rest timer icon doesn't display (on prod)
 #### BUG: Timer completion sound doesn't play (on prod)
