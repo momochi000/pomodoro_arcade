@@ -89,6 +89,8 @@ period in order to truly leverage the pomodoro technique.
 #### BUG: when the progress bar renders in landscape and phone rotates to portrait
   + The progress bar is broken/shifted to the left
   + Might want to recenter on each render.
+#### Use html5 vibrate if phone volume is down
+  + Is this even possible?
 #### Test the timers_controller
 #### Add some jasmines, or at least a jasmine test harness
 #### Ensure the timer progress bar works properly with rest period.
@@ -139,9 +141,6 @@ period in order to truly leverage the pomodoro technique.
 #### Test that timer behaves properly when rest period begins while phone sleeps
   + It should simply start the rest period once the phone or device continues
     operation of the js
-
-#### Use html5 vibrate if phone volume is down
-  + Is this even possible?
 
 #### Add ability to reward self for progress
 #### Levels / leveling up
