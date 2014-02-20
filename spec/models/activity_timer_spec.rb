@@ -159,6 +159,16 @@ describe ActivityTimer do
           end
         end
       end
+
+      describe "#velocity" do
+        context "with a timer without completions" do
+          it "should return 0"
+        end
+
+        context "with a timer having 3 completions per day over 10 days" do
+          it "should return 3"
+        end
+      end
     end
   end
 end

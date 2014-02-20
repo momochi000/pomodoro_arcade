@@ -113,11 +113,23 @@ class ActivityTimer < ActiveRecord::Base
   end
 
   # The average number of pomos completed per day on this timer over the past 10 days
-  def velocity
-    completed_events_per_day = (1..10).map do |itor|
-      completed_events_on_day(Time.now - itor.days)
+  # TODO: add date
+  def velocity(options={})
+    days =                      options[:days] || 10
+    date =                      options[:date] || Time.now
+    precision =            options[:precision] || :integer
+
+    completed_events_per_day = (1..days).map do |itor|
+      completed_events_on_day(date - itor.days)
     end.map(&:count)
-    completed_events_per_day.sum / completed_events_per_day.count
+    case(precision)
+    when :float
+      completed_events_per_day.sum.to_f / completed_events_per_day.count
+    when :integer
+      completed_events_per_day.sum / completed_events_per_day.count
+    else
+      completed_events_per_day.sum / completed_events_per_day.count
+    end
   end
 
   private

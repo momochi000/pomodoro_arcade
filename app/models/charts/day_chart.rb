@@ -27,6 +27,7 @@ module Charts
       @data = []
       @data << build_timers_complete_on_date
       @data << build_timer_goals_on_date
+      @data << build_velocities_on_date
     end
 
     def build_timers_complete_on_date
@@ -46,11 +47,26 @@ module Charts
       output = {}
       output['key'] = (today ? 'Goals' : "Pomodoros goals on date ___") # TODO: fix the title when given a date
 
-      output['color'] = 'black'
+      output['color'] = 'gold'
       output['values'] = timers.map do |t|
         {
           :label => t.title,
           :value => t.goal.value
+        }
+      end
+      output
+    end
+
+    def build_velocities_on_date
+      output = {}
+
+      output['key'] = (today ? 'Velocity' : "Velocity on date ___") # TODO: fix the title when given a date
+
+      output['color'] = 'green'
+      output['values'] = timers.map do |t|
+        {
+          :label => t.title,
+          :value => t.velocity(:precision => :float)
         }
       end
       output
