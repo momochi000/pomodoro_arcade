@@ -28,6 +28,9 @@ period in order to truly leverage the pomodoro technique.
 
 ---
 ## CURRENT
+
+#### FIX PROD
+
 #### Daily progress (self) analytic view
   + list of timers with goal/velocity/current reached
   + simple bar graphs for now.
@@ -60,6 +63,8 @@ period in order to truly leverage the pomodoro technique.
     * calendar view with blank O X * ∆
     * for none, some progress, reached velocity, reached goal, exceeded goal
   + velocity over time
+#### Add pre-deploy tasks 
+  + change javascript files to minified versions
 #### Display a flash message once a timer has been completed. 
   + Often you'll come back to the timer after it's already finished (break 
     time finished) and it's not immediately clear that it's done.  May want

@@ -25,4 +25,4 @@ DEVNOTES.md
 
 # Ignore non-minified js
 /vendor/assets/javascripts/fastclick.js
-/vendor/assets/javascripts/nv.d3.js
+#/vendor/assets/javascripts/nv.d3.js # need it for now it seems minified is broken?
