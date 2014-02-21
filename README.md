@@ -29,19 +29,22 @@ period in order to truly leverage the pomodoro technique.
 ---
 ## CURRENT
 
-#### FIX PROD
-
-#### Daily progress (self) analytic view
-  + list of timers with goal/velocity/current reached
-  + simple bar graphs for now.
-  + bar graph extending horizontally.
+#### Change 'daily' progress view to say 'today'
 
 ---
 ## BACKLOG
 
+#### Weekly graph
+  + Show distance from your goals in a graph (bar?).
+  + Each timer each day of the week as a bar representing percentage of 
+    completion of the goal.
+#### Navigation from the main page to go to weekly graph and back etc.
+#### Monthly graph
 #### Add date range to velocity
   + Able to calculate velocity in a previous time frame
-#### Change 'daily' progress view to say 'today'
+#### What happens when multiple timers in multiple tabs are open?
+#### Security question, shouldn't the timer be tagged with some auth key?
+  + So that start and complete events can't be forged?
 #### BUG: Rest timer icon doesn't display (on prod)
 #### BUG: Timer completion sound doesn't play (on prod)
 #### Add ability to show progress (BREAK INTO STORIES)
@@ -160,6 +163,11 @@ period in order to truly leverage the pomodoro technique.
 ---
 ## DONE
 
+#### Daily progress (self) analytic view
+  + list of timers with goal/velocity/current reached
+  + simple bar graphs for now.
+  + bar graph extending horizontally.
+#### FIX PROD
 #### Delete action
   + This needs to be in a separate view, I don't think an edit action is 
     appropriate.  You cannot edit a timer since a timer keeps track of
