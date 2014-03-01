@@ -1,4 +1,5 @@
 class ActivityTimer < ActiveRecord::Base
+  WORK_DAYS_PER_WEEK = 5
   belongs_to :user
   has_many :events, :as => :target, :class_name => 'Event'
   has_many :goals, :autosave => true
@@ -34,13 +35,17 @@ class ActivityTimer < ActiveRecord::Base
   end
 
   def completed_events_on_day(date)
-    completed_events.where("created_at >= :start_date AND created_at <= :end_date", {
-      :start_date => date.beginning_of_day,
-      :end_date => date.end_of_day});
+    completed_events_within_time(date.beginning_of_day, date.end_of_day)
   end
 
   def completed_events_today
     completed_events_on_day(Time.now)
+  end
+
+  def completed_events_within_time(start_time, end_time)
+     completed_events.where("created_at >= :start_date AND created_at <= :end_date", {
+      :start_date => start_time,
+      :end_date => end_time});
   end
 
   # Takes a hash which came from a backbone model and sets the correct 
@@ -61,6 +66,10 @@ class ActivityTimer < ActiveRecord::Base
       #   persisted, since created_at will be nil
       goals.order("created_at DESC").first || goals.first
     end
+  end
+
+  def goal_value
+    goal.value
   end
 
   def goal=(value)
@@ -92,6 +101,15 @@ class ActivityTimer < ActiveRecord::Base
     rest_completed_events.count
   end
 
+  def percent_of_goal_per_week(date_in_week=nil)
+    time = date_in_week || Time.now
+    week_start = time.beginning_of_week
+    week_end = week_start.end_of_week
+    goal_for_week = self.goal_value * WORK_DAYS_PER_WEEK # TODO: SMELLY? 
+    pomos_for_week = completed_events_within_time(week_start, week_end)
+    (pomos_for_week.count.to_f / goal_for_week) * 100
+  end
+
   def rest_completed
     Event::Timer::UserCompletedRestPeriod.create(:target => self)
   end
@@ -104,7 +122,7 @@ class ActivityTimer < ActiveRecord::Base
     output = {}
     attrs_to_backbone_attrs.each do |k,v|
       if v=='goal'
-        output[v] = goal.value # TODO: SMELLY?.. KNOWLEDGE OF GOAL IS REQUIRED
+        output[v] = goal_value # TODO: SMELLY?.. KNOWLEDGE OF GOAL IS REQUIRED
       else
         output[v] = self[k.to_sym].to_s
       end

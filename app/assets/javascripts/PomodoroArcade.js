@@ -3,7 +3,8 @@ var PomodoroArcade;
 PomodoroArcade = {
   Views: {},
   Models: {},
-  Collections: {}
+  Collections: {},
+  Charts: {}
 }
 
 //= require UnderscoreConfig

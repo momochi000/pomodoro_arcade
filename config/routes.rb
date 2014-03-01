@@ -53,6 +53,7 @@ PomodoroArcade::Application.routes.draw do
   resource :progress, :only => [:show] do
     resource :daily, :only => [:show], :controller => 'progress/daily'
     resource :today, :only => [:show], :controller => 'progress/daily'
+    resource :weekly, :only => [:show], :controller => 'progress/weekly'
   end
 
   resources :timers, :only => [:index, :create, :update, :destroy] do

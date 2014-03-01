@@ -1,0 +1,12 @@
+%h1 Your Weekly Progress
+%hr
+
+%span Chart should appear below
+#weekly-chart
+  %svg.chart
+%span Chart should appear above
+
+- content_for :javascripts do
+  :javascript
+    var discrete_bar_chart = PomodoroArcade.Charts.DiscreteBarChart.create("#weekly-chart svg", #{@chart.to_json});
+    discrete_bar_chart.render();
