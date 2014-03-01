@@ -1,0 +1,10 @@
+-# Partial to render the dropdown menu for the topnav for progress pages
+
+%li{:class => "dropdown #{((request.original_url == progress_today_url) ? 'active' : '')}"}
+  %a#drop1.dropdown-toggle{:role => 'button', :href=>'#', :data => {:toggle => 'dropdown'}} Progress
+  %ul.dropdown-menu{:role => 'menu', 'aria-labelledby' => 'drop1'}
+    %li{:role => 'presentation'}
+      = link_to 'Today', progress_today_path, :role => 'menuitem'
+    %li{:role => 'presentation'}
+      = link_to 'This Week', progress_weekly_path
+

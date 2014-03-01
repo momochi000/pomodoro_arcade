@@ -21,7 +21,6 @@
 //= require raphael
 //= require d3
 //= require nv.d3
-//= require bootstrap/collapse
-//= require bootstrap/alert
+//= require bootstrap
 //= require PomodoroArcade
 //= require_tree .
