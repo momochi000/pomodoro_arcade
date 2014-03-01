@@ -29,24 +29,19 @@ period in order to truly leverage the pomodoro technique.
 ---
 ## CURRENT
 
-#### Change 'daily' progress view to say 'today'
+#### Navigation from the main page to go to weekly graph and back etc.
 
 ---
 ## BACKLOG
 
-#### Weekly graph
-  + Show distance from your goals in a graph (bar?).
-  + Each timer each day of the week as a bar representing percentage of 
-    completion of the goal.
-#### Navigation from the main page to go to weekly graph and back etc.
-#### Monthly graph
-#### Add date range to velocity
-  + Able to calculate velocity in a previous time frame
 #### What happens when multiple timers in multiple tabs are open?
 #### Security question, shouldn't the timer be tagged with some auth key?
   + So that start and complete events can't be forged?
 #### BUG: Rest timer icon doesn't display (on prod)
 #### BUG: Timer completion sound doesn't play (on prod)
+#### Monthly graph
+#### Add date range to velocity
+  + Able to calculate velocity in a previous time frame
 #### Add ability to show progress (BREAK INTO STORIES)
   + (DONE)First do some design on paper as to how this should look.
   + Graph of pomodoros over time
@@ -163,6 +158,11 @@ period in order to truly leverage the pomodoro technique.
 ---
 ## DONE
 
+#### Weekly graph
+  + Show distance from your goals in a graph (bar?).
+  + Each timer each day of the week as a bar representing percentage of 
+    completion of the goal.
+#### Change 'daily' progress view to say 'today'
 #### Daily progress (self) analytic view
   + list of timers with goal/velocity/current reached
   + simple bar graphs for now.
