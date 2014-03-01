@@ -21,8 +21,9 @@ gem 'uglifier', '>= 1.0.3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development do
-  gem 'haml-rails'
   gem 'better_errors'
+  gem 'debugger'
+  gem 'haml-rails'
   gem 'awesome_print'
 end
 
@@ -55,6 +56,3 @@ end
 
 # Deploy with Capistrano
 # gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
