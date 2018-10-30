@@ -1,17 +1,11 @@
 * Current
 * Backlog
-** TODO Recreate the app with elixir & phoenix
-*** TODO Create boilerplate pheonix app
-*** TODO Connect DB
-*** TODO Recreate current rails functionality in elixir/phoenix
-*** TODO Build out tests
 ** TODO Dockerize app
-** TODO Integrate webpack into phoenix
-** TODO Migrate javascripts over to phoenix app
-** TODO Remove rails app
 ** TODO Integrate service workers
-*** TODO Get service worker to run
+*** TODO Build dummy page and route to test workers
+*** TODO Create hello world service worker
+*** TODO Write some test/exploratory code to understand how I can leverage workers
+*** TODO Design/architect how to integrate service workers with app
 *** TODO Get service worker to "install" the app into the browser
 *** TODO Service worker allows timer to keep counting when browser "sleeps"
-
 * Roadmap
