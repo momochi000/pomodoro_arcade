@@ -1,6 +1,31 @@
 * Current
 * Backlog
 ** TODO Dockerize app
+*** DONE Create Dockerfile
+    CLOSED: [2018-10-30 Tue 17:31]
+*** DONE Create docker-compose.yml
+    CLOSED: [2018-10-30 Tue 17:31]
+*** DONE Bootstrap in yarn.lock and node_modules
+    CLOSED: [2018-10-30 Tue 17:32]
+*** DONE Run web server from docker and be able to connect
+    CLOSED: [2018-10-30 Tue 20:41]
+*** DONE Upgrade rails server
+    CLOSED: [2018-10-30 Tue 20:42]
+*** DONE Setup webpacker
+    CLOSED: [2018-10-31 Wed 15:21]
+**** DONE install webpacker with yarn
+     CLOSED: [2018-10-31 Wed 09:37]
+**** DONE Add it to gemfile
+     CLOSED: [2018-10-31 Wed 09:38]
+**** DONE bundle exec rails webpacker:install
+     CLOSED: [2018-10-31 Wed 15:21]
+     Dammit, i fucked up. Tried to separate rails and webpack but i forgot
+     webpacker requires node, so I need to cram it all into a single container
+*** DONE Build initial webpack configs
+    CLOSED: [2018-10-31 Wed 16:41]
+*** DONE Run webpack dev server and hook up layout to it
+    CLOSED: [2018-10-31 Wed 16:41]
+*** TODO Migrate js code to webpack side
 ** TODO Integrate service workers
 *** TODO Build dummy page and route to test workers
 *** TODO Create hello world service worker

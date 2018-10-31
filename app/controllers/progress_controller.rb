@@ -1,5 +1,5 @@
 class ProgressController < ApplicationController
-  before_filter :authorize_user
+  before_action :authorize_user
 
   def show
   end

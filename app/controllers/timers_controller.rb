@@ -1,6 +1,6 @@
 class TimersController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :load_timer, :except => [:index, :create]
+  before_action :authenticate_user!
+  before_action :load_timer, :except => [:index, :create]
 
   def index
     @backbone_timer_collection = current_user.activity_timers.map(&:to_backbone).to_json

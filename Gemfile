@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
-gem 'rails', '4.0.0'
+ruby '2.5.3'
+gem 'rails', '5.2.1'
 gem 'bootstrap-sass'
 gem 'd3_rails'
 gem 'devise'
@@ -13,23 +13,25 @@ gem 'jquery-rails'
 gem 'pg'
 gem 'rails-backbone'
 #gem 'rake'
-gem 'raphael-rails'
-gem 'sass-rails'
-gem 'uglifier', '>= 1.0.3'
+gem 'raphael-rails' # MARKED FOR DELETION: move to webpack
+gem 'sass-rails' # MARKED FOR DELETION: move to webpack
+gem 'webpacker', '>= 4.0.x'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development do
-  gem 'better_errors'
-  gem 'debugger'
-  gem 'haml-rails'
   gem 'awesome_print'
+  gem 'better_errors'
+  gem 'byebug'
+  #gem 'spring'
 end
 
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'pry'
+  gem 'pry-rails'
   gem 'rspec-rails'
 end
 

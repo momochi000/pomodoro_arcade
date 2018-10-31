@@ -2,8 +2,8 @@
 %html
   %head
     %meta{:name => 'viewport', :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
-    %title 
-      PomodoroArcade 
+    %title
+      PomodoroArcade
       = Rails.env.to_s unless Rails.env == 'production'
     = stylesheet_link_tag "application", :media => "all"
     = csrf_meta_tags
@@ -15,9 +15,5 @@
 
     = render_backbone_templates
 
-    = javascript_include_tag "application"
+    = javascript_pack_tag 'application'
     = yield :javascripts
-    :javascript
-      window.addEventListener('load', function() {
-        new FastClick(document.body);
-      }, false);
